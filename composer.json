@@ -1,5 +1,5 @@
 {
-    "name": "ElasticEmail/WebApiClient",
+    "name": "elastic-email/web-api-client",
     "type": "library",
     "description": "Easily send emails with Elastic Email using Web API PHP Client https://elasticemail.com/",
     "keywords": ["elastic","email", "elasticemail", "transactional", "web", "api"],
