@@ -27,6 +27,7 @@ SOFTWARE.
 namespace ElasticEmailClient;
 use ApiTypes;
 
+
 class ApiClient 
 {
     private static $apiKey = "00000000-0000-0000-0000-000000000000";
@@ -47,17 +48,25 @@ class ApiClient
 
         if ($method === "POST" && count($attachments) > 0) {
             foreach ($attachments as $k => $attachment) {
-                $data['file_'. $k] = self::attachFile($attachment);
+				$att = self::attachFile($attachment);
+				$postnameSplit = explode('/', $att->postname);
+				$att->postname = trim(end($postnameSplit));
+                $data['file_'. $k] = $att;
             }
         }
 
         if ($method === "POST") 
         {
             curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+			if (empty($attachments)) {
+				curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+			} else {
+				error_reporting(E_ALL ^ E_NOTICE);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+			}
         }
 
-        $response = curl_exec($ch);
+        $response = self::executeWithRetry($ch, true);
         if ($response === false) 
         {
             throw new ApiException($url, $method, 'Request Error: ' . curl_error($ch));
@@ -74,7 +83,36 @@ class ApiClient
             throw new ApiException($url, $method, $jsonResult->error);
         }
 
-        return $jsonResult->data;
+        return (isset($jsonResult->data)? $jsonResult->data : null);
+    }
+
+    public static function executeWithRetry($ch, $sleep = false)
+    {		
+        $counter = 0;
+        $maxRetries = 3;
+        $lastErr = null;
+        $sleepInSeconds = 5;
+
+        while ($counter < $maxRetries)
+        {
+            try
+            {
+                $response = curl_exec($ch);
+                return $response;
+            }
+            catch (\Exception $e)
+            {
+                $counter++;
+                $lastErr = $e->getMessage();
+				
+                if ($sleep) 
+                {
+                    sleep($sleepInSeconds);
+                }
+            }
+        }
+		
+        throw new \Exception('Error after '.$maxRetries.' retries: '.$lastErr);		
     }
 
     public static function getFile($target, $data) 
@@ -192,16 +230,18 @@ class Account
      * @param bool $requiresEmailCredits True, if account needs credits to send emails. Otherwise, false
      * @param bool $enableLitmusTest True, if account is able to send template tests to Litmus. Otherwise, false
      * @param bool $requiresLitmusCredits True, if account needs credits to send emails. Otherwise, false
-     * @param int $maxContacts Maximum number of contacts the account can havelkd
+     * @param int $maxContacts Maximum number of contacts the account can have
      * @param bool $enablePrivateIPRequest True, if account can request for private IP on its own. Otherwise, false
      * @param bool $sendActivation True, if you want to send activation email to this account. Otherwise, false
      * @param string $returnUrl URL to navigate to after account creation
      * @param ?ApiTypes\SendingPermission $sendingPermission Sending permission setting for account
      * @param ?bool $enableContactFeatures True, if you want to use Advanced Tools.  Otherwise, false
      * @param string $poolName Private IP required. Name of the custom IP Pool which Sub Account should use to send its emails. Leave empty for the default one or if no Private IPs have been bought
+     * @param int $emailSizeLimit Maximum size of email including attachments in MB's
+     * @param ?int $dailySendLimit Amount of emails account can send daily
      * @return string
      */
-    public function AddSubAccount($email, $password, $confirmPassword, $requiresEmailCredits = false, $enableLitmusTest = false, $requiresLitmusCredits = false, $maxContacts = 0, $enablePrivateIPRequest = true, $sendActivation = false, $returnUrl = null, $sendingPermission = null, $enableContactFeatures = null, $poolName = null) {
+    public function AddSubAccount($email, $password, $confirmPassword, $requiresEmailCredits = false, $enableLitmusTest = false, $requiresLitmusCredits = false, $maxContacts = 0, $enablePrivateIPRequest = true, $sendActivation = false, $returnUrl = null, $sendingPermission = null, $enableContactFeatures = null, $poolName = null, $emailSizeLimit = 10, $dailySendLimit = null) {
         return ApiClient::Request('account/addsubaccount', array(
                     'email' => $email,
                     'password' => $password,
@@ -215,7 +255,9 @@ class Account
                     'returnUrl' => $returnUrl,
                     'sendingPermission' => $sendingPermission,
                     'enableContactFeatures' => $enableContactFeatures,
-                    'poolName' => $poolName
+                    'poolName' => $poolName,
+                    'emailSizeLimit' => $emailSizeLimit,
+                    'dailySendLimit' => $dailySendLimit
         ));
     }
 
@@ -241,15 +283,16 @@ class Account
     /**
      * Change your email address. Remember, that your email address is used as login!
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $sourceUrl URL from which request was sent.
      * @param string $newEmail New email address.
      * @param string $confirmEmail New email address.
+     * @param string $sourceUrl URL from which request was sent.
+     * @return string
      */
-    public function ChangeEmail($sourceUrl, $newEmail, $confirmEmail) {
+    public function ChangeEmail($newEmail, $confirmEmail, $sourceUrl = "https://elasticemail.com/account/") {
         return ApiClient::Request('account/changeemail', array(
-                    'sourceUrl' => $sourceUrl,
                     'newEmail' => $newEmail,
-                    'confirmEmail' => $confirmEmail
+                    'confirmEmail' => $confirmEmail,
+                    'sourceUrl' => $sourceUrl
         ));
     }
 
@@ -562,6 +605,7 @@ class Account
      * @param ?bool $emailNotificationForError True, if you want bounce notifications returned. Otherwise, false
      * @param string $emailNotificationEmail Specific email address to send bounce email notifications to.
      * @param string $webNotificationUrl URL address to receive web notifications to parse and process.
+     * @param ?bool $webNotificationNotifyOncePerEmail True, if you want to receive notifications for each type only once per email. Otherwise, false
      * @param ?bool $webNotificationForSent True, if you want to send web notifications for sent email. Otherwise, false
      * @param ?bool $webNotificationForOpened True, if you want to send web notifications for opened email. Otherwise, false
      * @param ?bool $webNotificationForClicked True, if you want to send web notifications for clicked email. Otherwise, false
@@ -579,10 +623,12 @@ class Account
      * @param string $logoUrl URL to your logo image.
      * @param ?bool $enableTemplateScripting True, if you want to use template scripting in your emails {{}}. Otherwise, false
      * @param ?int $staleContactScore (0 means this functionality is NOT enabled) Score, depending on the number of times you have sent to a recipient, at which the given recipient should be moved to the Stale status
-     * @param ?int $staleContactInactiveDays 
+     * @param ?int $staleContactInactiveDays (0 means this functionality is NOT enabled) Number of days of inactivity for a contact after which the given recipient should be moved to the Stale status
+     * @param string $deliveryReason Why your clients are receiving your emails.
+     * @param ?bool $tutorialsEnabled 
      * @return ApiTypes\AdvancedOptions
      */
-    public function UpdateAdvancedOptions($enableClickTracking = null, $enableLinkClickTracking = null, $manageSubscriptions = null, $manageSubscribedOnly = null, $transactionalOnUnsubscribe = null, $skipListUnsubscribe = null, $autoTextFromHtml = null, $allowCustomHeaders = null, $bccEmail = null, $contentTransferEncoding = null, $emailNotificationForError = null, $emailNotificationEmail = null, $webNotificationUrl = null, $webNotificationForSent = null, $webNotificationForOpened = null, $webNotificationForClicked = null, $webNotificationForUnsubscribed = null, $webNotificationForAbuseReport = null, $webNotificationForError = null, $hubCallBackUrl = "", $inboundDomain = null, $inboundContactsOnly = null, $lowCreditNotification = null, $enableUITooltips = null, $enableContactFeatures = null, $notificationsEmails = null, $unsubscribeNotificationsEmails = null, $logoUrl = null, $enableTemplateScripting = true, $staleContactScore = null, $staleContactInactiveDays = null) {
+    public function UpdateAdvancedOptions($enableClickTracking = null, $enableLinkClickTracking = null, $manageSubscriptions = null, $manageSubscribedOnly = null, $transactionalOnUnsubscribe = null, $skipListUnsubscribe = null, $autoTextFromHtml = null, $allowCustomHeaders = null, $bccEmail = null, $contentTransferEncoding = null, $emailNotificationForError = null, $emailNotificationEmail = null, $webNotificationUrl = null, $webNotificationNotifyOncePerEmail = null, $webNotificationForSent = null, $webNotificationForOpened = null, $webNotificationForClicked = null, $webNotificationForUnsubscribed = null, $webNotificationForAbuseReport = null, $webNotificationForError = null, $hubCallBackUrl = "", $inboundDomain = null, $inboundContactsOnly = null, $lowCreditNotification = null, $enableUITooltips = null, $enableContactFeatures = null, $notificationsEmails = null, $unsubscribeNotificationsEmails = null, $logoUrl = null, $enableTemplateScripting = true, $staleContactScore = null, $staleContactInactiveDays = null, $deliveryReason = null, $tutorialsEnabled = null) {
         return ApiClient::Request('account/updateadvancedoptions', array(
                     'enableClickTracking' => $enableClickTracking,
                     'enableLinkClickTracking' => $enableLinkClickTracking,
@@ -597,6 +643,7 @@ class Account
                     'emailNotificationForError' => $emailNotificationForError,
                     'emailNotificationEmail' => $emailNotificationEmail,
                     'webNotificationUrl' => $webNotificationUrl,
+                    'webNotificationNotifyOncePerEmail' => $webNotificationNotifyOncePerEmail,
                     'webNotificationForSent' => $webNotificationForSent,
                     'webNotificationForOpened' => $webNotificationForOpened,
                     'webNotificationForClicked' => $webNotificationForClicked,
@@ -614,7 +661,9 @@ class Account
                     'logoUrl' => $logoUrl,
                     'enableTemplateScripting' => $enableTemplateScripting,
                     'staleContactScore' => $staleContactScore,
-                    'staleContactInactiveDays' => $staleContactInactiveDays
+                    'staleContactInactiveDays' => $staleContactInactiveDays,
+                    'deliveryReason' => $deliveryReason,
+                    'tutorialsEnabled' => $tutorialsEnabled
         ));
     }
 
@@ -645,11 +694,13 @@ class Account
      * Update http notification URL.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param string $url URL of notification.
+     * @param bool $notifyOncePerEmail True, if you want to receive notifications for each type only once per email. Otherwise, false
      * @param string $settings Http notification settings serialized to JSON 
      */
-    public function UpdateHttpNotification($url, $settings = null) {
+    public function UpdateHttpNotification($url, $notifyOncePerEmail = false, $settings = null) {
         return ApiClient::Request('account/updatehttpnotification', array(
                     'url' => $url,
+                    'notifyOncePerEmail' => $notifyOncePerEmail,
                     'settings' => $settings
         ));
     }
@@ -664,8 +715,7 @@ class Account
      * @param string $state State or province.
      * @param string $zip Zip/postal code.
      * @param int $countryID Numeric ID of country. A file with the list of countries is available <a href="http://api.elasticemail.com/public/countries"><b>here</b></a>
-     * @param string $deliveryReason Why your clients are receiving your emails.
-     * @param bool $marketingConsent True if you want to receive newsletters from Elastic Email. Otherwise, false.
+     * @param ?bool $marketingConsent True if you want to receive newsletters from Elastic Email. Otherwise, false. Empty to leave the current value.
      * @param string $address2 Second line of address.
      * @param string $company Company name.
      * @param string $website HTTP address of your website.
@@ -673,7 +723,7 @@ class Account
      * @param string $taxCode Code used for tax purposes.
      * @param string $phone Phone number
      */
-    public function UpdateProfile($firstName, $lastName, $address1, $city, $state, $zip, $countryID, $deliveryReason = null, $marketingConsent = false, $address2 = null, $company = null, $website = null, $logoUrl = null, $taxCode = null, $phone = null) {
+    public function UpdateProfile($firstName, $lastName, $address1, $city, $state, $zip, $countryID, $marketingConsent = null, $address2 = null, $company = null, $website = null, $logoUrl = null, $taxCode = null, $phone = null) {
         return ApiClient::Request('account/updateprofile', array(
                     'firstName' => $firstName,
                     'lastName' => $lastName,
@@ -682,7 +732,6 @@ class Account
                     'state' => $state,
                     'zip' => $zip,
                     'countryID' => $countryID,
-                    'deliveryReason' => $deliveryReason,
                     'marketingConsent' => $marketingConsent,
                     'address2' => $address2,
                     'company' => $company,
@@ -700,17 +749,17 @@ class Account
      * @param int $monthlyRefillCredits Amount of credits added to account automatically
      * @param bool $requiresLitmusCredits True, if account needs credits to send emails. Otherwise, false
      * @param bool $enableLitmusTest True, if account is able to send template tests to Litmus. Otherwise, false
-     * @param int $dailySendLimit Amount of emails account can send daily
+     * @param ?int $dailySendLimit Amount of emails account can send daily
      * @param int $emailSizeLimit Maximum size of email including attachments in MB's
      * @param bool $enablePrivateIPRequest True, if account can request for private IP on its own. Otherwise, false
-     * @param int $maxContacts Maximum number of contacts the account can havelkd
+     * @param int $maxContacts Maximum number of contacts the account can have
      * @param string $subAccountEmail Email address of sub-account
      * @param string $publicAccountID Public key of sub-account to update. Use subAccountEmail or publicAccountID not both.
      * @param ?ApiTypes\SendingPermission $sendingPermission Sending permission setting for account
      * @param ?bool $enableContactFeatures True, if you want to use Advanced Tools.  Otherwise, false
      * @param string $poolName Name of your custom IP Pool to be used in the sending process
      */
-    public function UpdateSubAccountSettings($requiresEmailCredits = false, $monthlyRefillCredits = 0, $requiresLitmusCredits = false, $enableLitmusTest = false, $dailySendLimit = 50, $emailSizeLimit = 10, $enablePrivateIPRequest = false, $maxContacts = 0, $subAccountEmail = null, $publicAccountID = null, $sendingPermission = null, $enableContactFeatures = null, $poolName = null) {
+    public function UpdateSubAccountSettings($requiresEmailCredits = false, $monthlyRefillCredits = 0, $requiresLitmusCredits = false, $enableLitmusTest = false, $dailySendLimit = null, $emailSizeLimit = 10, $enablePrivateIPRequest = false, $maxContacts = 0, $subAccountEmail = null, $publicAccountID = null, $sendingPermission = null, $enableContactFeatures = null, $poolName = null) {
         return ApiClient::Request('account/updatesubaccountsettings', array(
                     'requiresEmailCredits' => $requiresEmailCredits,
                     'monthlyRefillCredits' => $monthlyRefillCredits,
@@ -749,13 +798,11 @@ class Attachment
     /**
      * Gets address of chosen Attachment
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $fileName Name of your file.
      * @param long $attachmentID ID number of your attachment.
      * @return File
      */
-    public function Get($fileName, $attachmentID) {
+    public function Get($attachmentID) {
         return ApiClient::getFile('attachment/get', array(
-                    'fileName' => $fileName,
                     'attachmentID' => $attachmentID
         ));
     }
@@ -825,6 +872,7 @@ class Campaign
      * Copy selected campaign
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param int $channelID ID number of selected Channel.
+     * @return int
      */
     public function EECopy($channelID) {
         return ApiClient::Request('campaign/copy', array(
@@ -847,7 +895,7 @@ class Campaign
      * Export selected campaigns to chosen file format.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param array<int> $channelIDs List of campaign IDs used for processing
-     * @param ApiTypes\ExportFileFormats $fileFormat 
+     * @param ApiTypes\ExportFileFormats $fileFormat Format of the exported file
      * @param ApiTypes\CompressionFormat $compressionFormat FileResponse compression format. None or Zip.
      * @param string $fileName Name of your file.
      * @return ApiTypes\ExportLink
@@ -998,19 +1046,6 @@ class Channel
 class Contact
 {
     /**
-     * Activate contacts that are currently blocked.
-     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param bool $activateAllBlocked Activate all your blocked contacts.  Passing True will override email list and activate all your blocked contacts.
-     * @param array<string> $emails Comma delimited list of contact emails
-     */
-    public function ActivateBlocked($activateAllBlocked = false, array $emails = array()) {
-        return ApiClient::Request('contact/activateblocked', array(
-                    'activateAllBlocked' => $activateAllBlocked,
-                    'emails' => (count($emails) === 0) ? null : join(';', $emails)
-        ));
-    }
-
-    /**
      * Add a new contact and optionally to one of your lists.  Note that your API KEY is not required for this call.
      * @param string $publicAccountID Public key for limited access to your account such as contact/add so you can use it safely on public websites.
      * @param string $email Proper email address.
@@ -1046,8 +1081,7 @@ class Contact
      * @return string
      */
     public function Add($publicAccountID, $email, array $publicListID = array(), array $listName = array(), $title = null, $firstName = null, $lastName = null, $phone = null, $mobileNumber = null, $notes = null, $gender = null, $birthDate = null, $city = null, $state = null, $postalCode = null, $country = null, $organizationName = null, $website = null, $annualRevenue = null, $industry = null, $numberOfEmployees = null, $source = ApiTypes\ContactSource::ContactApi, $returnUrl = null, $sourceUrl = null, $activationReturnUrl = null, $activationTemplate = null, $sendActivation = true, $consentDate = null, $consentIP = null, array $field = array(), $notifyEmail = null) {
-        return ApiClient::Request('contact/add', array(
-                    'publicAccountID' => $publicAccountID,
+        $arr = array('publicAccountID' => $publicAccountID,
                     'email' => $email,
                     'publicListID' => (count($publicListID) === 0) ? null : join(';', $publicListID),
                     'listName' => (count($listName) === 0) ? null : join(';', $listName),
@@ -1076,9 +1110,11 @@ class Contact
                     'sendActivation' => $sendActivation,
                     'consentDate' => $consentDate,
                     'consentIP' => $consentIP,
-                    'field' => $field,
-                    'notifyEmail' => $notifyEmail
-        ));
+                    'notifyEmail' => $notifyEmail        );
+        foreach(array_keys($field) as $key) {
+            $arr['field_'.$key] = $field[$key]; 
+        }
+        return ApiClient::Request('contact/add', $arr);
     }
 
     /**
@@ -1158,7 +1194,7 @@ class Contact
     /**
      * Export selected Contacts to JSON.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param ApiTypes\ExportFileFormats $fileFormat 
+     * @param ApiTypes\ExportFileFormats $fileFormat Format of the exported file
      * @param string $rule Query used for filtering.
      * @param array<string> $emails Comma delimited list of contact emails
      * @param bool $allContacts True: Include every Contact in your Account. Otherwise, false
@@ -1242,8 +1278,8 @@ class Contact
     /**
      * Load blocked contacts
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param array<ApiTypes\ContactStatus> $statuses List of comma separated message statuses: 0 or all, 1 for ReadyToSend, 2 for InProgress, 4 for Bounced, 5 for Sent, 6 for Opened, 7 for Clicked, 8 for Unsubscribed, 9 for Abuse Report
-     * @param string $search List of blocked statuses: Abuse, Bounced or Unsubscribed
+     * @param array<ApiTypes\ContactStatus> $statuses List of blocked statuses: Abuse, Bounced or Unsubscribed
+     * @param string $search Text fragment used for searching.
      * @param int $limit Maximum of loaded items.
      * @param int $offset How many items should be loaded ahead.
      * @return Array<ApiTypes\BlockedContact>
@@ -1329,6 +1365,17 @@ class Contact
     }
 
     /**
+     * Basic double opt-in email subscribe form for your account.  This can be used for contacts that need to re-subscribe as well.
+     * @param string $publicAccountID Public key for limited access to your account such as contact/add so you can use it safely on public websites.
+     * @return string
+     */
+    public function Subscribe($publicAccountID) {
+        return ApiClient::Request('contact/subscribe', array(
+                    'publicAccountID' => $publicAccountID
+        ));
+    }
+
+    /**
      * Update selected contact. Omitted contact's fields will be reset by default (see the clearRestOfFields parameter)
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param string $email Proper email address.
@@ -1367,8 +1414,7 @@ class Contact
      * @return ApiTypes\Contact
      */
     public function Update($email, $firstName = null, $lastName = null, $organizationName = null, $title = null, $city = null, $state = null, $country = null, $zip = null, $birthDate = null, $gender = null, $phone = null, $activate = null, $industry = null, $numberOfEmployees = 0, $annualRevenue = null, $purchaseCount = 0, $firstPurchase = null, $lastPurchase = null, $notes = null, $websiteUrl = null, $mobileNumber = null, $faxNumber = null, $linkedInBio = null, $linkedInConnections = 0, $twitterBio = null, $twitterUsername = null, $twitterProfilePhoto = null, $twitterFollowerCount = 0, $pageViews = 0, $visits = 0, $clearRestOfFields = true, array $field = array()) {
-        return ApiClient::Request('contact/update', array(
-                    'email' => $email,
+        $arr = array('email' => $email,
                     'firstName' => $firstName,
                     'lastName' => $lastName,
                     'organizationName' => $organizationName,
@@ -1400,8 +1446,11 @@ class Contact
                     'pageViews' => $pageViews,
                     'visits' => $visits,
                     'clearRestOfFields' => $clearRestOfFields,
-                    'field' => $field
-        ));
+        );
+        foreach(array_keys($field) as $key) {
+            $arr['field_'.$key] = $field[$key]; 
+        }
+        return ApiClient::Request('contact/update', $arr);
     }
 
     /**
@@ -1529,59 +1578,6 @@ class Domain
 /**
  * 
  */
-class Eksport
-{
-    /**
-     * Check the current status of the export.
-     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param Guid $publicExportID 
-     * @return ApiTypes\ExportStatus
-     */
-    public function CheckStatus($publicExportID) {
-        return ApiClient::Request('eksport/checkstatus', array(
-                    'publicExportID' => $publicExportID
-        ));
-    }
-
-    /**
-     * Summary of export type counts.
-     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @return ApiTypes\ExportTypeCounts
-     */
-    public function CountByType() {
-        return ApiClient::Request('eksport/countbytype');
-    }
-
-    /**
-     * Delete the specified export.
-     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param Guid $publicExportID 
-     */
-    public function EEDelete($publicExportID) {
-        return ApiClient::Request('eksport/delete', array(
-                    'publicExportID' => $publicExportID
-        ));
-    }
-
-    /**
-     * Returns a list of all exported data.
-     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param int $limit Maximum of loaded items.
-     * @param int $offset How many items should be loaded ahead.
-     * @return Array<ApiTypes\Export>
-     */
-    public function EEList($limit = 0, $offset = 0) {
-        return ApiClient::Request('eksport/list', array(
-                    'limit' => $limit,
-                    'offset' => $offset
-        ));
-    }
-
-}
-
-/**
- * 
- */
 class Email
 {
     /**
@@ -1589,7 +1585,8 @@ class Email
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param string $transactionID Transaction identifier
      * @param bool $showFailed Include Bounced email addresses.
-     * @param bool $showDelivered Include Sent email addresses.
+     * @param bool $showSent Include Sent email addresses.
+     * @param bool $showDelivered Include all delivered email addresses.
      * @param bool $showPending Include Ready to send email addresses.
      * @param bool $showOpened Include Opened email addresses.
      * @param bool $showClicked Include Clicked email addresses.
@@ -1599,10 +1596,11 @@ class Email
      * @param bool $showMessageIDs Include all MessageIDs for this transaction
      * @return ApiTypes\EmailJobStatus
      */
-    public function GetStatus($transactionID, $showFailed = false, $showDelivered = false, $showPending = false, $showOpened = false, $showClicked = false, $showAbuse = false, $showUnsubscribed = false, $showErrors = false, $showMessageIDs = false) {
+    public function GetStatus($transactionID, $showFailed = false, $showSent = false, $showDelivered = false, $showPending = false, $showOpened = false, $showClicked = false, $showAbuse = false, $showUnsubscribed = false, $showErrors = false, $showMessageIDs = false) {
         return ApiClient::Request('email/getstatus', array(
                     'transactionID' => $transactionID,
                     'showFailed' => $showFailed,
+                    'showSent' => $showSent,
                     'showDelivered' => $showDelivered,
                     'showPending' => $showPending,
                     'showOpened' => $showOpened,
@@ -1640,7 +1638,7 @@ class Email
      * @param string $charsetBodyHtml Sets charset for body html MIME part (overrides default value from charset parameter)
      * @param string $charsetBodyText Sets charset for body text MIME part (overrides default value from charset parameter)
      * @param ApiTypes\EncodingType $encodingType 0 for None, 1 for Raw7Bit, 2 for Raw8Bit, 3 for QuotedPrintable, 4 for Base64 (Default), 5 for Uue  note that you can also provide the text version such as "Raw7Bit" for value 1.  NOTE: Base64 or QuotedPrintable is recommended if you are validating your domain(s) with DKIM.
-     * @param string $template The name of an email template you have created in your account.
+     * @param string $template The ID of an email template you have created in your account.
      * @param array<File> $attachmentFiles Attachment files. These files should be provided with the POST multipart file upload, not directly in the request's URL. Should also include merge CSV file
      * @param array<string, string> $headers Optional Custom Headers. Request parameters prefixed by headers_ like headers_customheader1, headers_customheader2. Note: a space is required after the colon before the custom header value. headers_xmailer=xmailer: header-value1
      * @param string $postBack Optional header returned in notifications.
@@ -1651,8 +1649,7 @@ class Email
      * @return ApiTypes\EmailSend
      */
     public function Send($subject = null, $from = null, $fromName = null, $sender = null, $senderName = null, $msgFrom = null, $msgFromName = null, $replyTo = null, $replyToName = null, array $to = array(), array $msgTo = array(), array $msgCC = array(), array $msgBcc = array(), array $lists = array(), array $segments = array(), $mergeSourceFilename = null, $channel = null, $bodyHtml = null, $bodyText = null, $charset = null, $charsetBodyHtml = null, $charsetBodyText = null, $encodingType = ApiTypes\EncodingType::None, $template = null, array $attachmentFiles = array(), array $headers = array(), $postBack = null, array $merge = array(), $timeOffSetMinutes = null, $poolName = null, $isTransactional = false) {
-        return ApiClient::Request('email/send', array(
-                    'subject' => $subject,
+        $arr = array('subject' => $subject,
                     'from' => $from,
                     'fromName' => $fromName,
                     'sender' => $sender,
@@ -1676,13 +1673,17 @@ class Email
                     'charsetBodyText' => $charsetBodyText,
                     'encodingType' => $encodingType,
                     'template' => $template,
-                    'headers' => $headers,
                     'postBack' => $postBack,
-                    'merge' => $merge,
                     'timeOffSetMinutes' => $timeOffSetMinutes,
                     'poolName' => $poolName,
-                    'isTransactional' => $isTransactional
-        ), "POST", $attachmentFiles);
+                    'isTransactional' => $isTransactional        );
+        foreach(array_keys($headers) as $key) {
+            $arr['headers_'.$key] = $key.': '.$headers[$key]; 
+        }
+        foreach(array_keys($merge) as $key) {
+            $arr['merge_'.$key] = $merge[$key]; 
+        }
+        return ApiClient::Request('email/send', $arr, "POST", $attachmentFiles);
     }
 
     /**
@@ -1705,6 +1706,59 @@ class Email
     public function View($messageID) {
         return ApiClient::Request('email/view', array(
                     'messageID' => $messageID
+        ));
+    }
+
+}
+
+/**
+ * 
+ */
+class Export
+{
+    /**
+     * Check the current status of the export.
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param Guid $publicExportID 
+     * @return ApiTypes\ExportStatus
+     */
+    public function CheckStatus($publicExportID) {
+        return ApiClient::Request('export/checkstatus', array(
+                    'publicExportID' => $publicExportID
+        ));
+    }
+
+    /**
+     * Summary of export type counts.
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @return ApiTypes\ExportTypeCounts
+     */
+    public function CountByType() {
+        return ApiClient::Request('export/countbytype');
+    }
+
+    /**
+     * Delete the specified export.
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param Guid $publicExportID 
+     */
+    public function EEDelete($publicExportID) {
+        return ApiClient::Request('export/delete', array(
+                    'publicExportID' => $publicExportID
+        ));
+    }
+
+    /**
+     * Returns a list of all exported data.
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param int $limit Maximum of loaded items.
+     * @param int $offset How many items should be loaded ahead.
+     * @return Array<ApiTypes\Export>
+     */
+    public function EEList($limit = 0, $offset = 0) {
+        return ApiClient::Request('export/list', array(
+                    'limit' => $limit,
+                    'offset' => $offset
         ));
     }
 
@@ -1738,7 +1792,7 @@ class EEList
     }
 
     /**
-     * Add Contacts to chosen list
+     * Add existing Contacts to chosen list
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param string $listName Name of your list.
      * @param string $rule Query used for filtering.
@@ -1848,7 +1902,7 @@ class EEList
      * Exports all the contacts from the provided list
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param string $listName Name of your list.
-     * @param ApiTypes\ExportFileFormats $fileFormat 
+     * @param ApiTypes\ExportFileFormats $fileFormat Format of the exported file
      * @param ApiTypes\CompressionFormat $compressionFormat FileResponse compression format. None or Zip.
      * @param string $fileName Name of your file.
      * @return ApiTypes\ExportLink
@@ -1960,8 +2014,8 @@ class Log
     /**
      * Export email log information to the specified file format.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param array<ApiTypes\LogJobStatus> $statuses List of comma separated message statuses: 0 or all, 1 for ReadyToSend, 2 for InProgress, 4 for Bounced, 5 for Sent, 6 for Opened, 7 for Clicked, 8 for Unsubscribed, 9 for Abuse Report
-     * @param ApiTypes\ExportFileFormats $fileFormat 
+     * @param array<ApiTypes\LogJobStatus> $statuses List of comma separated message statuses: 0 for all, 1 for ReadyToSend, 2 for InProgress, 4 for Bounced, 5 for Sent, 6 for Opened, 7 for Clicked, 8 for Unsubscribed, 9 for Abuse Report
+     * @param ApiTypes\ExportFileFormats $fileFormat Format of the exported file
      * @param ?DateTime $from Start date.
      * @param ?DateTime $to End date.
      * @param int $channelID ID number of selected Channel.
@@ -1997,9 +2051,9 @@ class Log
      * Export detailed link tracking information to the specified file format.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param int $channelID ID number of selected Channel.
-     * @param ?DateTime $from Start date.
-     * @param ?DateTime $to End Date.
-     * @param ApiTypes\ExportFileFormats $fileFormat 
+     * @param ?DateTime $from Starting date for search in YYYY-MM-DDThh:mm:ss format.
+     * @param ?DateTime $to Ending date for search in YYYY-MM-DDThh:mm:ss format.
+     * @param ApiTypes\ExportFileFormats $fileFormat Format of the exported file
      * @param int $limit Maximum of loaded items.
      * @param int $offset How many items should be loaded ahead.
      * @param ApiTypes\CompressionFormat $compressionFormat FileResponse compression format. None or Zip.
@@ -2042,7 +2096,7 @@ class Log
     /**
      * Returns logs filtered by specified parameters.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param array<ApiTypes\LogJobStatus> $statuses List of comma separated message statuses: 0 or all, 1 for ReadyToSend, 2 for InProgress, 4 for Bounced, 5 for Sent, 6 for Opened, 7 for Clicked, 8 for Unsubscribed, 9 for Abuse Report
+     * @param array<ApiTypes\LogJobStatus> $statuses List of comma separated message statuses: 0 for all, 1 for ReadyToSend, 2 for InProgress, 4 for Bounced, 5 for Sent, 6 for Opened, 7 for Clicked, 8 for Unsubscribed, 9 for Abuse Report
      * @param ?DateTime $from Starting date for search in YYYY-MM-DDThh:mm:ss format.
      * @param ?DateTime $to Ending date for search in YYYY-MM-DDThh:mm:ss format.
      * @param string $channelName Name of selected channel.
@@ -2052,9 +2106,10 @@ class Log
      * @param bool $includeSms True: Search includes SMS. Otherwise, false.
      * @param array<ApiTypes\MessageCategory> $messageCategory ID of message category
      * @param string $email Proper email address.
+     * @param bool $useStatusChangeDate True, if 'from' and 'to' parameters should resolve to the Status Change date. To resolve to the creation date - false
      * @return ApiTypes\Log
      */
-    public function Load($statuses, $from = null, $to = null, $channelName = null, $limit = 0, $offset = 0, $includeEmail = true, $includeSms = true, array $messageCategory = array(), $email = null) {
+    public function Load($statuses, $from = null, $to = null, $channelName = null, $limit = 0, $offset = 0, $includeEmail = true, $includeSms = true, array $messageCategory = array(), $email = null, $useStatusChangeDate = false) {
         return ApiClient::Request('log/load', array(
                     'statuses' => (count($statuses) === 0) ? null : join(';', $statuses),
                     'from' => $from,
@@ -2065,7 +2120,34 @@ class Log
                     'includeEmail' => $includeEmail,
                     'includeSms' => $includeSms,
                     'messageCategory' => (count($messageCategory) === 0) ? null : join(';', $messageCategory),
-                    'email' => $email
+                    'email' => $email,
+                    'useStatusChangeDate' => $useStatusChangeDate
+        ));
+    }
+
+    /**
+     * Returns notification logs filtered by specified parameters.
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param array<ApiTypes\LogJobStatus> $statuses List of comma separated message statuses: 0 for all, 1 for ReadyToSend, 2 for InProgress, 4 for Bounced, 5 for Sent, 6 for Opened, 7 for Clicked, 8 for Unsubscribed, 9 for Abuse Report
+     * @param ?DateTime $from Starting date for search in YYYY-MM-DDThh:mm:ss format.
+     * @param ?DateTime $to Ending date for search in YYYY-MM-DDThh:mm:ss format.
+     * @param int $limit Maximum of loaded items.
+     * @param int $offset How many items should be loaded ahead.
+     * @param array<ApiTypes\MessageCategory> $messageCategory ID of message category
+     * @param bool $useStatusChangeDate True, if 'from' and 'to' parameters should resolve to the Status Change date. To resolve to the creation date - false
+     * @param ApiTypes\NotificationType $notificationType 
+     * @return ApiTypes\Log
+     */
+    public function LoadNotifications($statuses, $from = null, $to = null, $limit = 0, $offset = 0, array $messageCategory = array(), $useStatusChangeDate = false, $notificationType = ApiTypes\NotificationType::All) {
+        return ApiClient::Request('log/loadnotifications', array(
+                    'statuses' => (count($statuses) === 0) ? null : join(';', $statuses),
+                    'from' => $from,
+                    'to' => $to,
+                    'limit' => $limit,
+                    'offset' => $offset,
+                    'messageCategory' => (count($messageCategory) === 0) ? null : join(';', $messageCategory),
+                    'useStatusChangeDate' => $useStatusChangeDate,
+                    'notificationType' => $notificationType
         ));
     }
 
@@ -2086,11 +2168,11 @@ class Log
      * @param DateTime $from Starting date for search in YYYY-MM-DDThh:mm:ss format.
      * @param DateTime $to Ending date for search in YYYY-MM-DDThh:mm:ss format.
      * @param string $channelName Name of selected channel.
-     * @param string $interval 'Hourly' for detailed information, 'summary' for daily overview
+     * @param ApiTypes\IntervalType $interval 'Hourly' for detailed information, 'summary' for daily overview
      * @param string $transactionID ID number of transaction
      * @return ApiTypes\LogSummary
      */
-    public function Summary($from, $to, $channelName = null, $interval = "summary", $transactionID = null) {
+    public function Summary($from, $to, $channelName = null, $interval = ApiTypes\IntervalType::Summary, $transactionID = null) {
         return ApiClient::Request('log/summary', array(
                     'from' => $from,
                     'to' => $to,
@@ -2152,7 +2234,7 @@ class Segment
      * Exports all the contacts from the provided segment
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param string $segmentName Name of your segment.
-     * @param ApiTypes\ExportFileFormats $fileFormat 
+     * @param ApiTypes\ExportFileFormats $fileFormat Format of the exported file
      * @param ApiTypes\CompressionFormat $compressionFormat FileResponse compression format. None or Zip.
      * @param string $fileName Name of your file.
      * @return ApiTypes\ExportLink
@@ -2170,8 +2252,8 @@ class Segment
      * Lists all your available Segments
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param bool $includeHistory True: Include history of last 30 days. Otherwise, false.
-     * @param ?DateTime $from From what date should the segment history be shown
-     * @param ?DateTime $to To what date should the segment history be shown
+     * @param ?DateTime $from From what date should the segment history be shown. In YYYY-MM-DDThh:mm:ss format.
+     * @param ?DateTime $to To what date should the segment history be shown. In YYYY-MM-DDThh:mm:ss format.
      * @return Array<ApiTypes\Segment>
      */
     public function EEList($includeHistory = false, $from = null, $to = null) {
@@ -2187,8 +2269,8 @@ class Segment
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param array<string> $segmentNames Names of segments you want to load. Will load all contacts if left empty or the 'All Contacts' name has been provided
      * @param bool $includeHistory True: Include history of last 30 days. Otherwise, false.
-     * @param ?DateTime $from From what date should the segment history be shown
-     * @param ?DateTime $to To what date should the segment history be shown
+     * @param ?DateTime $from From what date should the segment history be shown. In YYYY-MM-DDThh:mm:ss format.
+     * @param ?DateTime $to To what date should the segment history be shown. In YYYY-MM-DDThh:mm:ss format.
      * @return Array<ApiTypes\Segment>
      */
     public function LoadByName($segmentNames, $includeHistory = false, $from = null, $to = null) {
@@ -2271,7 +2353,7 @@ class Survey
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param Guid $publicSurveyID Survey identifier
      * @param string $fileName Name of your file.
-     * @param ApiTypes\ExportFileFormats $fileFormat 
+     * @param ApiTypes\ExportFileFormats $fileFormat Format of the exported file
      * @param ApiTypes\CompressionFormat $compressionFormat FileResponse compression format. None or Zip.
      * @return ApiTypes\ExportLink
      */
@@ -2868,6 +2950,11 @@ class AdvancedOptions
     public /*bool*/ $WebNotificationForError;
 
     /**
+     * True, if you want to receive notifications for each type only once per email. Otherwise, false
+     */
+    public /*bool*/ $WebNotificationNotifyOncePerEmail;
+
+    /**
      * True, if you want to receive low credit email notifications. Otherwise, false
      */
     public /*bool*/ $LowCreditNotification;
@@ -2978,9 +3065,14 @@ class AdvancedOptions
     public /*int*/ $StaleContactScore;
 
     /**
-     * 
+     * (0 means this functionality is NOT enabled) Number of days of inactivity for a contact after which the given recipient should be moved to the Stale status
      */
     public /*int*/ $StaleContactInactiveDays;
+
+    /**
+     * Why your clients are receiving your emails.
+     */
+    public /*string*/ $DeliveryReason;
 
 }
 
@@ -3020,7 +3112,7 @@ class Attachment
     /**
      * ID number of your attachment
      */
-    public /*string*/ $ID;
+    public /*long*/ $ID;
 
     /**
      * Size of your attachment.
@@ -3159,7 +3251,7 @@ class Campaign
     public /*ApiTypes\CampaignStatus*/ $Status;
 
     /**
-     * List of Segment and List IDs, comma separated
+     * List of Segment and List IDs, preceded with 'l' for Lists and 's' for Segments, comma separated
      */
     public /*Array<string>*/ $Targets;
 
@@ -3179,12 +3271,12 @@ class Campaign
     public /*double*/ $TriggerDelay;
 
     /**
-     * When your next automatic mail will be sent, in days
+     * When your next automatic mail will be sent, in minutes
      */
     public /*double*/ $TriggerFrequency;
 
     /**
-     * Date of send
+     * How many times should the campaign be sent
      */
     public /*int*/ $TriggerCount;
 
@@ -3271,7 +3363,7 @@ class CampaignChannel
     public /*int*/ $ParentChannelID;
 
     /**
-     * List of Segment and List IDs, comma separated
+     * List of Segment and List IDs, preceded with 'l' for Lists and 's' for Segments, comma separated
      */
     public /*Array<string>*/ $Targets;
 
@@ -3291,12 +3383,12 @@ class CampaignChannel
     public /*double*/ $TriggerDelay;
 
     /**
-     * When your next automatic mail will be sent, in days
+     * When your next automatic mail will be sent, in minutes
      */
     public /*double*/ $TriggerFrequency;
 
     /**
-     * Date of send
+     * How many times should the campaign be sent
      */
     public /*int*/ $TriggerCount;
 
@@ -3951,6 +4043,16 @@ class ContactHistory
      */
     public /*string*/ $TemplateName;
 
+    /**
+     * IP Address of the event.
+     */
+    public /*string*/ $IPAddress;
+
+    /**
+     * Country of the event.
+     */
+    public /*string*/ $Country;
+
 }
 
 /**
@@ -4032,6 +4134,11 @@ abstract class ContactStatus
      */
     const Stale = 5;
 
+    /**
+     * Contact has not confirmed their double opt-in activation and is not eligible to be sent to.
+     */
+    const NotConfirmed = 6;
+
 }
 
 /**
@@ -4078,6 +4185,11 @@ class ContactStatusCounts
      * 
      */
     public /*long*/ $Stale;
+
+    /**
+     * 
+     */
+    public /*long*/ $NotConfirmed;
 
 }
 
@@ -4301,6 +4413,16 @@ class EmailJobStatus
      * Total emails sent.
      */
     public /*int*/ $FailedCount;
+
+    /**
+     * 
+     */
+    public /*Array<string>*/ $Sent;
+
+    /**
+     * Total emails sent.
+     */
+    public /*int*/ $SentCount;
 
     /**
      * Number of delivered messages
@@ -4636,6 +4758,24 @@ class ExportTypeCounts
 }
 
 /**
+ * 
+ * Enum class
+ */
+abstract class IntervalType
+{
+    /**
+     * Daily overview
+     */
+    const Summary = 0;
+
+    /**
+     * Hourly, detailed information
+     */
+    const Hourly = 1;
+
+}
+
+/**
  * Object containig tracking data.
  */
 class LinkTrackingDetails
@@ -4658,7 +4798,7 @@ class LinkTrackingDetails
 }
 
 /**
- * List of Contacts, with detailed data about its contents.
+ * List of Lists, with detailed data about its contents.
  */
 class EEList
 {
@@ -4744,6 +4884,11 @@ class Log
  */
 abstract class LogJobStatus
 {
+    /**
+     * All emails
+     */
+    const All = 0;
+
     /**
      * Email has been submitted successfully and is queued for sending.
      */
@@ -5036,6 +5181,29 @@ class NotificationQueue
 }
 
 /**
+ * 
+ * Enum class
+ */
+abstract class NotificationType
+{
+    /**
+     * Both, email and web, notifications
+     */
+    const All = 0;
+
+    /**
+     * Only email notifications
+     */
+    const Email = 1;
+
+    /**
+     * Only web notifications
+     */
+    const Web = 2;
+
+}
+
+/**
  * Detailed information about existing money transfers.
  */
 class Payment
@@ -5256,6 +5424,11 @@ class Recipient
      * Comma separated ID numbers of messages.
      */
     public /*string*/ $MessageSid;
+
+    /**
+     * Recipient's last bounce error because of which this e-mail was suppressed
+     */
+    public /*string*/ $ContactLastError;
 
 }
 
@@ -5786,6 +5959,26 @@ class SubAccount
      */
     public /*string*/ $Status;
 
+    /**
+     * Maximum size of email including attachments in MB's
+     */
+    public /*int*/ $EmailSizeLimit;
+
+    /**
+     * Maximum number of contacts the account can have
+     */
+    public /*int*/ $MaxContacts;
+
+    /**
+     * True, if you want to use Advanced Tools.  Otherwise, false
+     */
+    public /*bool*/ $EnableContactFeatures;
+
+    /**
+     * Sending permission setting for account
+     */
+    public /*ApiTypes\SendingPermission*/ $SendingPermission;
+
 }
 
 /**
@@ -5839,7 +6032,7 @@ class SubAccountSettings
     public /*int*/ $DailySendLimit;
 
     /**
-     * Maximum number of contacts the account can havelkd
+     * Maximum number of contacts the account can have
      */
     public /*int*/ $MaxContacts;
 
@@ -5891,6 +6084,11 @@ class Survey
     public /*?DateTime*/ $DateUpdated;
 
     /**
+     * 
+     */
+    public /*?DateTime*/ $ExpiryDate;
+
+    /**
      * Filename
      */
     public /*string*/ $Name;
@@ -5906,9 +6104,9 @@ class Survey
     public /*int*/ $ResultCount;
 
     /**
-     * Survey's steps info
+     * 
      */
-    public /*Array<ApiTypes\SurveyStep>*/ $SurveyStep;
+    public /*Array<ApiTypes\SurveyStep>*/ $SurveySteps;
 
     /**
      * URL of the survey
@@ -5972,19 +6170,24 @@ class SurveyResultInfo
 }
 
 /**
- * Summary with all the answers
+ * 
  */
-class SurveyResultsSummary
+class SurveyResultsAnswer
 {
     /**
-     * Answers' statistics
+     * Identifier of the answer of the step
      */
-    public /*array<string, int>*/ $Answers;
+    public /*string*/ $SurveyStepAnswerID;
 
     /**
-     * Open answers for the question
+     * Number of items.
      */
-    public /*Array<string>*/ $OpenAnswers;
+    public /*int*/ $Count;
+
+    /**
+     * Answer's content
+     */
+    public /*string*/ $Content;
 
 }
 
@@ -6001,7 +6204,7 @@ class SurveyResultsSummaryInfo
     /**
      * Summary statistics
      */
-    public /*array<int, ApiTypes\SurveyResultsSummary>*/ $Summary;
+    public /*array<int, ApiTypes\List`1>*/ $Summary;
 
 }
 
@@ -6019,7 +6222,7 @@ abstract class SurveyStatus
     /**
      * The survey is not receiving result for now
      */
-    const Paused = 0;
+    const Expired = 0;
 
     /**
      * The survey is active and receiving answers
@@ -6064,9 +6267,9 @@ class SurveyStep
     public /*int*/ $Sequence;
 
     /**
-     * Answer object of the step
+     * 
      */
-    public /*Array<ApiTypes\SurveyStepAnswer>*/ $SurveyStepAnswer;
+    public /*Array<ApiTypes\SurveyStepAnswer>*/ $SurveyStepAnswers;
 
 }
 
@@ -6290,5 +6493,122 @@ abstract class TrackingType
  */
 class Usage
 {
+    /**
+     * Proper email address.
+     */
+    public /*string*/ $Email;
+
+    /**
+     * True, if this account is a sub-account. Otherwise, false
+     */
+    public /*bool*/ $IsSubAccount;
+
+    /**
+     * 
+     */
+    public /*Array<ApiTypes\UsageData>*/ $List;
+
+}
+
+/**
+ * Detailed data about daily usage
+ */
+class UsageData
+{
+    /**
+     * Date in YYYY-MM-DDThh:ii:ss format
+     */
+    public /*DateTime*/ $Date;
+
+    /**
+     * Number of finished tasks
+     */
+    public /*int*/ $JobCount;
+
+    /**
+     * Overall number of recipients
+     */
+    public /*int*/ $RecipientCount;
+
+    /**
+     * Number of inbound emails
+     */
+    public /*int*/ $InboundCount;
+
+    /**
+     * Number of attachments sent
+     */
+    public /*int*/ $AttachmentCount;
+
+    /**
+     * Size of attachments sent
+     */
+    public /*long*/ $AttachmentsSize;
+
+    /**
+     * Calculated cost of sending
+     */
+    public /*decimal*/ $Cost;
+
+    /**
+     * Number of pricate IPs
+     */
+    public /*?int*/ $PrivateIPCount;
+
+    /**
+     * 
+     */
+    public /*decimal*/ $PrivateIPCost;
+
+    /**
+     * Number of SMS
+     */
+    public /*?int*/ $SmsCount;
+
+    /**
+     * Overall cost of SMS
+     */
+    public /*decimal*/ $SmsCost;
+
+    /**
+     * Cost of templates
+     */
+    public /*decimal*/ $TemplateCost;
+
+    /**
+     * Cost of email credits
+     */
+    public /*?int*/ $EmailCreditsCost;
+
+    /**
+     * Cost of template credit
+     */
+    public /*?int*/ $TemplateCreditsCost;
+
+    /**
+     * Cost of litmus credits
+     */
+    public /*decimal*/ $LitmusCost;
+
+    /**
+     * Cost of 1 litmus credit
+     */
+    public /*decimal*/ $LitmusCreditsCost;
+
+    /**
+     * Daily cost of Advanced Tools
+     */
+    public /*decimal*/ $ContactCost;
+
+    /**
+     * Number of contacts
+     */
+    public /*long*/ $ContactCount;
+
+    /**
+     * 
+     */
+    public /*decimal*/ $SupportCost;
+
 }
 
