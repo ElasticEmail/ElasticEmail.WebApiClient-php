@@ -27,7 +27,7 @@ SOFTWARE.
 namespace ElasticEmailClient;
 use ApiTypes;
 
-
+// API version 2.22.0
 class ApiClient 
 {
     private static $apiKey = "00000000-0000-0000-0000-000000000000";
@@ -235,7 +235,7 @@ class Account
      * @param bool $sendActivation True, if you want to send activation email to this account. Otherwise, false
      * @param string $returnUrl URL to navigate to after account creation
      * @param ?ApiTypes\SendingPermission $sendingPermission Sending permission setting for account
-     * @param ?bool $enableContactFeatures True, if you want to use Advanced Tools.  Otherwise, false
+     * @param ?bool $enableContactFeatures True, if you want to use Contact Delivery Tools.  Otherwise, false
      * @param string $poolName Private IP required. Name of the custom IP Pool which Sub Account should use to send its emails. Leave empty for the default one or if no Private IPs have been bought
      * @param int $emailSizeLimit Maximum size of email including attachments in MB's
      * @param ?int $dailySendLimit Amount of emails account can send daily
@@ -577,6 +577,14 @@ class Account
     }
 
     /**
+     * Request premium support for your account
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     */
+    public function RequestPremiumSupport() {
+        return ApiClient::Request('account/requestpremiumsupport');
+    }
+
+    /**
      * Request a private IP for your Account
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param int $count Number of items.
@@ -617,7 +625,7 @@ class Account
      * @param ?bool $inboundContactsOnly True, if you want inbound email to only process contacts from your account. Otherwise, false
      * @param ?bool $lowCreditNotification True, if you want to receive low credit email notifications. Otherwise, false
      * @param ?bool $enableUITooltips True, if account has tooltips active. Otherwise, false
-     * @param ?bool $enableContactFeatures True, if you want to use Advanced Tools.  Otherwise, false
+     * @param ?bool $enableContactFeatures True, if you want to use Contact Delivery Tools.  Otherwise, false
      * @param string $notificationsEmails Email addresses to send a copy of all notifications from our system. Separated by semicolon
      * @param string $unsubscribeNotificationsEmails Emails, separated by semicolon, to which the notification about contact unsubscribing should be sent to
      * @param string $logoUrl URL to your logo image.
@@ -756,7 +764,7 @@ class Account
      * @param string $subAccountEmail Email address of sub-account
      * @param string $publicAccountID Public key of sub-account to update. Use subAccountEmail or publicAccountID not both.
      * @param ?ApiTypes\SendingPermission $sendingPermission Sending permission setting for account
-     * @param ?bool $enableContactFeatures True, if you want to use Advanced Tools.  Otherwise, false
+     * @param ?bool $enableContactFeatures True, if you want to use Contact Delivery Tools.  Otherwise, false
      * @param string $poolName Name of your custom IP Pool to be used in the sending process
      */
     public function UpdateSubAccountSettings($requiresEmailCredits = false, $monthlyRefillCredits = 0, $requiresLitmusCredits = false, $enableLitmusTest = false, $dailySendLimit = null, $emailSizeLimit = 10, $enablePrivateIPRequest = false, $maxContacts = 0, $subAccountEmail = null, $publicAccountID = null, $sendingPermission = null, $enableContactFeatures = null, $poolName = null) {
@@ -1118,7 +1126,7 @@ class Contact
     }
 
     /**
-     * Manually add or update a contacts status to Abuse, Bounced or Unsubscribed status (blocked).
+     * Manually add or update a contacts status to Abuse or Unsubscribed status (blocked).
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param string $email Proper email address.
      * @param ApiTypes\ContactStatus $status Name of status: Active, Engaged, Inactive, Abuse, Bounced, Unsubscribed.
@@ -1174,6 +1182,15 @@ class Contact
                     'rule' => $rule,
                     'allContacts' => $allContacts
         ));
+    }
+
+    /**
+     * Returns count of unsubscribe reasons for unsubscribed and complaint contacts.
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @return ApiTypes\ContactUnsubscribeReasonCounts
+     */
+    public function CountByUnsubscribeReason() {
+        return ApiClient::Request('contact/countbyunsubscribereason');
     }
 
     /**
@@ -1643,7 +1660,7 @@ class Email
      * @param array<string, string> $headers Optional Custom Headers. Request parameters prefixed by headers_ like headers_customheader1, headers_customheader2. Note: a space is required after the colon before the custom header value. headers_xmailer=xmailer: header-value1
      * @param string $postBack Optional header returned in notifications.
      * @param array<string, string> $merge Request parameters prefixed by merge_ like merge_firstname, merge_lastname. If sending to a template you can send merge_ fields to merge data with the template. Template fields are entered with {firstname}, {lastname} etc.
-     * @param string $timeOffSetMinutes Number of minutes in the future this email should be sent
+     * @param string $timeOffSetMinutes Number of minutes in the future this email should be sent up to a maximum of 1 year (524160 minutes)
      * @param string $poolName Name of your custom IP Pool to be used in the sending process
      * @param bool $isTransactional True, if email is transactional (non-bulk, non-marketing, non-commercial). Otherwise, false
      * @return ApiTypes\EmailSend
@@ -1950,14 +1967,16 @@ class EEList
      * @param array<string> $emails Comma delimited list of contact emails
      * @param ?bool $moveAll TRUE - moves all contacts; FALSE - moves contacts provided in the 'emails' parameter. This is ignored if the 'statuses' parameter has been provided
      * @param array<ApiTypes\ContactStatus> $statuses List of contact statuses which are eligible to move. This ignores the 'moveAll' parameter
+     * @param string $rule Query used for filtering.
      */
-    public function MoveContacts($oldListName, $newListName, array $emails = array(), $moveAll = null, array $statuses = array()) {
+    public function MoveContacts($oldListName, $newListName, array $emails = array(), $moveAll = null, array $statuses = array(), $rule = null) {
         return ApiClient::Request('list/movecontacts', array(
                     'oldListName' => $oldListName,
                     'newListName' => $newListName,
                     'emails' => (count($emails) === 0) ? null : join(';', $emails),
                     'moveAll' => $moveAll,
-                    'statuses' => (count($statuses) === 0) ? null : join(';', $statuses)
+                    'statuses' => (count($statuses) === 0) ? null : join(';', $statuses),
+                    'rule' => $rule
         ));
     }
 
@@ -2816,7 +2835,7 @@ class Account
     public /*decimal*/ $LitmusCredits;
 
     /**
-     * Enable advanced tools on your Account.
+     * Enable contact delivery and optimization tools on your Account.
      */
     public /*bool*/ $EnableContactFeatures;
 
@@ -3050,7 +3069,7 @@ class AdvancedOptions
     public /*bool*/ $EnableUITooltips;
 
     /**
-     * True, if you want to use Advanced Tools.  Otherwise, false
+     * True, if you want to use Contact Delivery Tools.  Otherwise, false
      */
     public /*bool*/ $EnableContactFeatures;
 
@@ -3623,6 +3642,34 @@ abstract class CampaignTriggerType
 }
 
 /**
+ * 
+ * Enum class
+ */
+abstract class CertificateValidationStatus
+{
+    /**
+     * 
+     */
+    const ErrorOccured = -2;
+
+    /**
+     * 
+     */
+    const CertNotSet = 0;
+
+    /**
+     * 
+     */
+    const Valid = 1;
+
+    /**
+     * 
+     */
+    const NotValid = 2;
+
+}
+
+/**
  * SMTP and HTTP API channel for grouping email delivery
  */
 class Channel
@@ -3972,6 +4019,11 @@ class Contact
      */
     public /*string*/ $GravatarHash;
 
+    /**
+     * 
+     */
+    public /*array<string, string>*/ $CustomFields;
+
 }
 
 /**
@@ -4194,6 +4246,63 @@ class ContactStatusCounts
 }
 
 /**
+ * Number of Unsubscribed or Complaint Contacts, grouped by Unsubscribe Reason;
+ */
+class ContactUnsubscribeReasonCounts
+{
+    /**
+     * 
+     */
+    public /*long*/ $Unknown;
+
+    /**
+     * 
+     */
+    public /*long*/ $NoLongerWant;
+
+    /**
+     * 
+     */
+    public /*long*/ $IrrelevantContent;
+
+    /**
+     * 
+     */
+    public /*long*/ $TooFrequent;
+
+    /**
+     * 
+     */
+    public /*long*/ $NeverConsented;
+
+    /**
+     * 
+     */
+    public /*long*/ $DeceptiveContent;
+
+    /**
+     * 
+     */
+    public /*long*/ $AbuseReported;
+
+    /**
+     * 
+     */
+    public /*long*/ $ThirdParty;
+
+    /**
+     * 
+     */
+    public /*long*/ $ListUnsubscribe;
+
+    /**
+     * 
+     */
+    public /*long*/ $FromJourney;
+
+}
+
+/**
  * Type of credits
  * Enum class
  */
@@ -4327,6 +4436,28 @@ class DomainDetail
      * 
      */
     public /*ApiTypes\TrackingType*/ $Type;
+
+    /**
+     * 0 - NotValidated, 1 - Validated successfully, 2 - Invalid, 3 - Broken (tracking was frequnetly verfied in given period and still is invalid)
+            For statuses: 0, 1, 3 tracking will be verified in normal periods
+            For status 2 tracking will be verified in high frequent periods
+     */
+    public /*ApiTypes\TrackingValidationStatus*/ $TrackingStatus;
+
+    /**
+     * 
+     */
+    public /*ApiTypes\CertificateValidationStatus*/ $CertificateStatus;
+
+    /**
+     * 
+     */
+    public /*string*/ $CertificateValidationError;
+
+    /**
+     * 
+     */
+    public /*?ApiTypes\TrackingType*/ $TrackingTypeUserRequest;
 
 }
 
@@ -5361,9 +5492,24 @@ class Recipient
     public /*string*/ $Channel;
 
     /**
-     * Date in YYYY-MM-DDThh:ii:ss format
+     * Creation date
      */
     public /*string*/ $Date;
+
+    /**
+     * 
+     */
+    public /*string*/ $DateSent;
+
+    /**
+     * 
+     */
+    public /*string*/ $DateOpened;
+
+    /**
+     * 
+     */
+    public /*string*/ $DateClicked;
 
     /**
      * Content of message, HTML encoded
@@ -5970,7 +6116,7 @@ class SubAccount
     public /*int*/ $MaxContacts;
 
     /**
-     * True, if you want to use Advanced Tools.  Otherwise, false
+     * True, if you want to use Contact Delivery Tools.  Otherwise, false
      */
     public /*bool*/ $EnableContactFeatures;
 
@@ -6042,7 +6188,7 @@ class SubAccountSettings
     public /*bool*/ $EnablePrivateIPRequest;
 
     /**
-     * True, if you want to use Advanced Tools.  Otherwise, false
+     * True, if you want to use Contact Delivery Tools.  Otherwise, false
      */
     public /*bool*/ $EnableContactFeatures;
 
@@ -6479,12 +6625,60 @@ abstract class TrackingType
     /**
      * 
      */
+    const None = -2;
+
+    /**
+     * 
+     */
+    const EEDelete = -1;
+
+    /**
+     * 
+     */
     const Http = 0;
 
     /**
      * 
      */
     const ExternalHttps = 1;
+
+    /**
+     * 
+     */
+    const InternalCertHttps = 2;
+
+    /**
+     * 
+     */
+    const LetsEncryptCert = 3;
+
+}
+
+/**
+ * Status of ValidDomain used by DomainValidationService to determine how often tracking validation should be performed.
+ * Enum class
+ */
+abstract class TrackingValidationStatus
+{
+    /**
+     * 
+     */
+    const Validated = 0;
+
+    /**
+     * 
+     */
+    const NotValidated = 1;
+
+    /**
+     * 
+     */
+    const Invalid = 2;
+
+    /**
+     * 
+     */
+    const Broken = 3;
 
 }
 
@@ -6596,7 +6790,7 @@ class UsageData
     public /*decimal*/ $LitmusCreditsCost;
 
     /**
-     * Daily cost of Advanced Tools
+     * Daily cost of Contact Delivery Tools
      */
     public /*decimal*/ $ContactCost;
 
@@ -6609,6 +6803,11 @@ class UsageData
      * 
      */
     public /*decimal*/ $SupportCost;
+
+    /**
+     * 
+     */
+    public /*decimal*/ $EmailCost;
 
 }
 
