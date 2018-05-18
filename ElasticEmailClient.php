@@ -83,7 +83,7 @@ class ApiClient
             throw new ApiException($url, $method, $jsonResult->error);
         }
 
-        return (isset($jsonResult->data)? $jsonResult->data : null);
+        return (isset($jsonResult->data)? $jsonResult->data : $response);
     }
 
     public static function executeWithRetry($ch, $sleep = false)
