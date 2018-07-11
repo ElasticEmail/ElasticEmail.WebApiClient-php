@@ -154,12 +154,12 @@ class CampaignChannel
     public /*int*/ $SentCount;
 
     /**
-     * Total emails sent.
+     * Total emails failed.
      */
     public /*int*/ $FailedCount;
 
     /**
-     * Total emails clicked
+     * Total emails unsubscribed
      */
     public /*int*/ $UnsubscribedCount;
 

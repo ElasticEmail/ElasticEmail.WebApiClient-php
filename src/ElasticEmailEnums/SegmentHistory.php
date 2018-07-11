@@ -39,7 +39,7 @@ class SegmentHistory
     public /*long*/ $BouncedCount;
 
     /**
-     * Total emails clicked
+     * Total emails unsubscribed
      */
     public /*long*/ $UnsubscribedCount;
 

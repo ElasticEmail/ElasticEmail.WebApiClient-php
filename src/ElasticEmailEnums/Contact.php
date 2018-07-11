@@ -49,7 +49,7 @@ class Contact
     public /*int*/ $TotalSent;
 
     /**
-     * Total emails sent.
+     * Total emails failed.
      */
     public /*int*/ $TotalFailed;
 

@@ -24,7 +24,7 @@ class EmailJobStatus
     public /*Array<\ElasticEmailEnums\EmailJobFailedStatus>*/ $Failed;
 
     /**
-     * Total emails sent.
+     * Total emails failed.
      */
     public /*int*/ $FailedCount;
 
@@ -84,7 +84,7 @@ class EmailJobStatus
     public /*Array<string>*/ $Unsubscribed;
 
     /**
-     * Total emails clicked
+     * Total emails unsubscribed
      */
     public /*int*/ $UnsubscribedCount;
 

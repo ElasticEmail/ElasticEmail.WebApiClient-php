@@ -85,42 +85,29 @@ class Account extends \ElasticEmailClient\ElasticRequest
     /**
      * Create new password for your account. Password needs to be at least 6 characters long.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $currentPassword Current password.
      * @param string $newPassword New password for account.
      * @param string $confirmPassword Repeat new password.
+     * @param string $currentPassword Current password.
      */
-    public function ChangePassword($currentPassword, $newPassword, $confirmPassword) {
+    public function ChangePassword($newPassword, $confirmPassword, $currentPassword = null) {
         return $this->sendRequest('account/changepassword', array(
-                    'currentPassword' => $currentPassword,
                     'newPassword' => $newPassword,
-                    'confirmPassword' => $confirmPassword
+                    'confirmPassword' => $confirmPassword,
+                    'currentPassword' => $currentPassword
         ));
     }
 
     /**
      * Deletes specified Subaccount
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param bool $notify True, if you want to send an email notification. Otherwise, false
      * @param string $subAccountEmail Email address of sub-account
      * @param string $publicAccountID Public key of sub-account to delete. Use subAccountEmail or publicAccountID not both.
-     * @param bool $deleteDomains 
      */
-    public function DeleteSubAccount($notify = true, $subAccountEmail = null, $publicAccountID = null, $deleteDomains = true) {
+    public function DeleteSubAccount($subAccountEmail = null, $publicAccountID = null) {
         return $this->sendRequest('account/deletesubaccount', array(
-                    'notify' => $notify,
                     'subAccountEmail' => $subAccountEmail,
-                    'publicAccountID' => $publicAccountID,
-                    'deleteDomains' => $deleteDomains
+                    'publicAccountID' => $publicAccountID
         ));
-    }
-
-    /**
-     * Validate account's ability to send e-mail
-     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @return \ElasticEmailEnums\AccountSendStatus
-     */
-    public function GetAccountAbilityToSendEmail() {
-        return $this->sendRequest('account/getaccountabilitytosendemail');
     }
 
     /**
