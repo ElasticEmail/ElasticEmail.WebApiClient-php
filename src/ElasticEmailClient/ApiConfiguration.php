@@ -3,7 +3,7 @@
 
     class ApiConfiguration
     {
-        public const AVAILABLE_REQUEST_METHODS = ['GET', 'POST'];
+        const AVAILABLE_REQUEST_METHODS = ['GET', 'POST'];
 
         /**
          * @var string
