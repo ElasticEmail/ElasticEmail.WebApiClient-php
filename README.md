@@ -7,7 +7,7 @@
 ```
 composer require elastic-email/web-api-client
 ```
-## API ##
+# API #
 API documentation you can find on [Elastic Email website](https://api.elasticemail.com/public/help).
 
 # Examples #
@@ -66,4 +66,4 @@ ElasticEmail.WebApiClient is guided and supported by the ElasticEmail Dev Team.
 
 ElasticEmail.WebApiClient is maintained and funded by Elastic Email Inc. The names and logos for ElasticEmail.WebApiClient are trademarks of Elastic Email Inc.
 
-![logo](https://elasticemail.com/files/ee_200x200.png
+![logo](https://elasticemail.com/files/ee_200x200.png)
