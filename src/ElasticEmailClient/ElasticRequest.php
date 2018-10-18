@@ -37,10 +37,10 @@
         {
             $method = strtoupper($method);
 
-                    if (!in_array($method, \ElasticEmailClient\ApiConfiguration::AVAILABLE_REQUEST_METHODS))
-                    {
-                        throw new \Exception('Unallowed request method type');
-                    }
+            if (!in_array($method, ApiConfiguration::AVAILABLE_REQUEST_METHODS))
+            {
+                throw new \Exception('Unallowed request method type');
+            }
 
             $options = [];
             $data['apikey'] = $this->configuration->getApiKey();
@@ -69,7 +69,9 @@
                 throw new \Exception($resp->error);
             }
 
-            if ($resp->data) { return $resp->data; }
+            if (isset($resp->data) && $resp->data) {
+                return $resp->data;
+            }
              
             return $resp;
         }
