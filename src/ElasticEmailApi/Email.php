@@ -35,8 +35,18 @@ class Email extends \ElasticEmailClient\ElasticRequest
                     'showAbuse' => $showAbuse,
                     'showUnsubscribed' => $showUnsubscribed,
                     'showErrors' => $showErrors,
-                    'showMessageIDs' => $showMessageIDs
-        ));
+                    'showMessageIDs' => $showMessageIDs));
+    }
+
+    /**
+     * Lists the file attachments for the specified email.
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param string $msgID ID number of selected message.
+     * @return Array<\ElasticEmailEnums\File>
+     */
+    public function ListAttachments($msgID) {
+        return $this->sendRequest('email/listattachments', array(
+                    'msgID' => $msgID));
     }
 
     /**
@@ -58,7 +68,7 @@ class Email extends \ElasticEmailClient\ElasticRequest
      * @param array<string> $lists The name of a contact list you would like to send to. Separate multiple contact lists by commas or semicolons.
      * @param array<string> $segments The name of a segment you would like to send to. Separate multiple segments by comma or semicolon. Insert "0" for all Active contacts.
      * @param string $mergeSourceFilename File name one of attachments which is a CSV list of Recipients.
-     * @param string $dataSource Name or ID of the previously uploaded file which should be a CSV list of Recipients.
+     * @param string $dataSource Name or ID of the previously uploaded file (via the File/Upload request) which should be a CSV list of Recipients.
      * @param string $channel An ID field (max 191 chars) that can be used for reporting [will default to HTTP API or SMTP API]
      * @param string $bodyHtml Html email body
      * @param string $bodyText Text email body
@@ -67,20 +77,27 @@ class Email extends \ElasticEmailClient\ElasticRequest
      * @param string $charsetBodyText Sets charset for body text MIME part (overrides default value from charset parameter)
      * @param \ElasticEmailEnums\EncodingType $encodingType 0 for None, 1 for Raw7Bit, 2 for Raw8Bit, 3 for QuotedPrintable, 4 for Base64 (Default), 5 for Uue  note that you can also provide the text version such as "Raw7Bit" for value 1.  NOTE: Base64 or QuotedPrintable is recommended if you are validating your domain(s) with DKIM.
      * @param string $template The ID of an email template you have created in your account.
-     * @param array<File> $attachmentFiles Attachment files. These files should be provided with the POST multipart file upload, not directly in the request's URL. Can also include merge CSV file
+     * @param array<File> $attachmentFiles Attachment files. These files should be provided with the POST multipart file upload and not directly in the request's URL. Can also include merge CSV file
      * @param array<string, string> $headers Optional Custom Headers. Request parameters prefixed by headers_ like headers_customheader1, headers_customheader2. Note: a space is required after the colon before the custom header value. headers_xmailer=xmailer: header-value1
      * @param string $postBack Optional header returned in notifications.
      * @param array<string, string> $merge Request parameters prefixed by merge_ like merge_firstname, merge_lastname. If sending to a template you can send merge_ fields to merge data with the template. Template fields are entered with {firstname}, {lastname} etc.
      * @param string $timeOffSetMinutes Number of minutes in the future this email should be sent up to a maximum of 1 year (524160 minutes)
      * @param string $poolName Name of your custom IP Pool to be used in the sending process
      * @param bool $isTransactional True, if email is transactional (non-bulk, non-marketing, non-commercial). Otherwise, false
-     * @param array<string> $attachments Names or IDs of attachments previously uploaded to your account that should be sent with this e-mail.
-     * @param ?bool $trackOpens Should the opens be tracked? If no value has been provided, account's default setting will be used.
-     * @param ?bool $trackClicks Should the clicks be tracked? If no value has been provided, account's default setting will be used.
+     * @param array<string> $attachments Names or IDs of attachments previously uploaded to your account (via the File/Upload request) that should be sent with this e-mail.
+     * @param ?bool $trackOpens Should the opens be tracked? If no value has been provided, Account's default setting will be used.
+     * @param ?bool $trackClicks Should the clicks be tracked? If no value has been provided, Account's default setting will be used.
+     * @param string $utmSource The utm_source marketing parameter appended to each link in the campaign.
+     * @param string $utmMedium The utm_medium marketing parameter appended to each link in the campaign.
+     * @param string $utmCampaign The utm_campaign marketing parameter appended to each link in the campaign.
+     * @param string $utmContent The utm_content marketing parameter appended to each link in the campaign.
+     * @param string $bodyAmp AMP email body
+     * @param string $charsetBodyAmp Sets charset for body AMP MIME part (overrides default value from charset parameter)
      * @return \ElasticEmailEnums\EmailSend
      */
-    public function Send($subject = null, $from = null, $fromName = null, $sender = null, $senderName = null, $msgFrom = null, $msgFromName = null, $replyTo = null, $replyToName = null, array $to = array(), array $msgTo = array(), array $msgCC = array(), array $msgBcc = array(), array $lists = array(), array $segments = array(), $mergeSourceFilename = null, $dataSource = null, $channel = null, $bodyHtml = null, $bodyText = null, $charset = null, $charsetBodyHtml = null, $charsetBodyText = null, $encodingType = \ElasticEmailEnums\EncodingType::None, $template = null, array $attachmentFiles = array(), array $headers = array(), $postBack = null, array $merge = array(), $timeOffSetMinutes = null, $poolName = null, $isTransactional = false, array $attachments = array(), $trackOpens = null, $trackClicks = null) {
-        $arr = array('subject' => $subject,
+    public function Send($subject = null, $from = null, $fromName = null, $sender = null, $senderName = null, $msgFrom = null, $msgFromName = null, $replyTo = null, $replyToName = null, array $to = array(), array $msgTo = array(), array $msgCC = array(), array $msgBcc = array(), array $lists = array(), array $segments = array(), $mergeSourceFilename = null, $dataSource = null, $channel = null, $bodyHtml = null, $bodyText = null, $charset = null, $charsetBodyHtml = null, $charsetBodyText = null, $encodingType = \ElasticEmailEnums\EncodingType::None, $template = null, array $attachmentFiles = array(), array $headers = array(), $postBack = null, array $merge = array(), $timeOffSetMinutes = null, $poolName = null, $isTransactional = false, array $attachments = array(), $trackOpens = null, $trackClicks = null, $utmSource = null, $utmMedium = null, $utmCampaign = null, $utmContent = null, $bodyAmp = null, $charsetBodyAmp = null) {
+        $arr = array(
+                    'subject' => $subject,
                     'from' => $from,
                     'fromName' => $fromName,
                     'sender' => $sender,
@@ -111,7 +128,13 @@ class Email extends \ElasticEmailClient\ElasticRequest
                     'isTransactional' => $isTransactional,
                     'attachments' => (count($attachments) === 0) ? null : join(';', $attachments),
                     'trackOpens' => $trackOpens,
-                    'trackClicks' => $trackClicks        );
+                    'trackClicks' => $trackClicks,
+                    'utmSource' => $utmSource,
+                    'utmMedium' => $utmMedium,
+                    'utmCampaign' => $utmCampaign,
+                    'utmContent' => $utmContent,
+                    'bodyAmp' => $bodyAmp,
+                    'charsetBodyAmp' => $charsetBodyAmp);
         foreach(array_keys($headers) as $key) {
             $arr['headers_'.$key] = $key.': '.$headers[$key]; 
         }
@@ -129,19 +152,51 @@ class Email extends \ElasticEmailClient\ElasticRequest
      */
     public function Status($messageID) {
         return $this->sendRequest('email/status', array(
-                    'messageID' => $messageID
-        ));
+                    'messageID' => $messageID));
+    }
+
+    /**
+     * Checks if verification emails is completed.
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param Guid $txID 
+     * @return \ElasticEmailEnums\Export
+     */
+    public function VerificationResult($txID) {
+        return $this->sendRequest('email/verificationresult', array(
+                    'txID' => $txID));
+    }
+
+    /**
+     * Verify single email address
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param string $email Proper email address.
+     * @return \ElasticEmailEnums\EmailValidationResult
+     */
+    public function Verify($email) {
+        return $this->sendRequest('email/verify', array(
+                    'email' => $email));
+    }
+
+    /**
+     * Verify list of email addresses from file. Each email has to be in new line. This is asynchronous task. To check if task is completed use VerificationResult with returned task ID.
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param File $emails Comma delimited list of contact emails
+     * @return string
+     */
+    public function VerifyList($emails) {
+        return $this->sendRequest('email/verifylist', array(), array(), "POST", $emails);
     }
 
     /**
      * View email
      * @param string $messageID Message identifier
+     * @param bool $enableTracking 
      * @return \ElasticEmailEnums\EmailView
      */
-    public function View($messageID) {
+    public function View($messageID, $enableTracking = false) {
         return $this->sendRequest('email/view', array(
-                    'messageID' => $messageID
-        ));
+                    'messageID' => $messageID,
+                    'enableTracking' => $enableTracking));
     }
 
 }

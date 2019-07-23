@@ -16,8 +16,28 @@ class Log extends \ElasticEmailClient\ElasticRequest
     public function CancelInProgress($channelName = null, $transactionID = null) {
         return $this->sendRequest('log/cancelinprogress', array(
                     'channelName' => $channelName,
-                    'transactionID' => $transactionID
-        ));
+                    'transactionID' => $transactionID));
+    }
+
+    /**
+     * Returns log of delivery events filtered by specified parameters.
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param array<\ElasticEmailEnums\LogEventStatus> $statuses List of comma separated message statuses: 0 for all, 1 for ReadyToSend, 2 for InProgress, 4 for Bounced, 5 for Sent, 6 for Opened, 7 for Clicked, 8 for Unsubscribed, 9 for Abuse Report
+     * @param ?DateTime $from Starting date for search in YYYY-MM-DDThh:mm:ss format.
+     * @param ?DateTime $to Ending date for search in YYYY-MM-DDThh:mm:ss format.
+     * @param string $channelName Name of selected channel.
+     * @param int $limit Maximum number of returned items.
+     * @param int $offset How many items should be returned ahead.
+     * @return \ElasticEmailEnums\EventLog
+     */
+    public function Events(array $statuses = array(), $from = null, $to = null, $channelName = null, $limit = 0, $offset = 0) {
+        return $this->sendRequest('log/events', array(
+                    'statuses' => (count($statuses) === 0) ? null : join(';', $statuses),
+                    'from' => $from,
+                    'to' => $to,
+                    'channelName' => $channelName,
+                    'limit' => $limit,
+                    'offset' => $offset));
     }
 
     /**
@@ -32,7 +52,7 @@ class Log extends \ElasticEmailClient\ElasticRequest
      * @param bool $includeSms True: Search includes SMS. Otherwise, false.
      * @param array<\ElasticEmailEnums\MessageCategory> $messageCategory ID of message category
      * @param \ElasticEmailEnums\CompressionFormat $compressionFormat FileResponse compression format. None or Zip.
-     * @param string $fileName Name of your file.
+     * @param string $fileName Name of your file including extension.
      * @param string $email Proper email address.
      * @return \ElasticEmailEnums\ExportLink
      */
@@ -48,8 +68,30 @@ class Log extends \ElasticEmailClient\ElasticRequest
                     'messageCategory' => (count($messageCategory) === 0) ? null : join(';', $messageCategory),
                     'compressionFormat' => $compressionFormat,
                     'fileName' => $fileName,
-                    'email' => $email
-        ));
+                    'email' => $email));
+    }
+
+    /**
+     * Export delivery events log information to the specified file format.
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param array<\ElasticEmailEnums\LogEventStatus> $statuses List of comma separated message statuses: 0 for all, 1 for ReadyToSend, 2 for InProgress, 4 for Bounced, 5 for Sent, 6 for Opened, 7 for Clicked, 8 for Unsubscribed, 9 for Abuse Report
+     * @param ?DateTime $from Starting date for search in YYYY-MM-DDThh:mm:ss format.
+     * @param ?DateTime $to Ending date for search in YYYY-MM-DDThh:mm:ss format.
+     * @param string $channelName Name of selected channel.
+     * @param \ElasticEmailEnums\ExportFileFormats $fileFormat Format of the exported file
+     * @param \ElasticEmailEnums\CompressionFormat $compressionFormat FileResponse compression format. None or Zip.
+     * @param string $fileName Name of your file including extension.
+     * @return \ElasticEmailEnums\ExportLink
+     */
+    public function ExportEvents(array $statuses = array(), $from = null, $to = null, $channelName = null, $fileFormat = \ElasticEmailEnums\ExportFileFormats::Csv, $compressionFormat = \ElasticEmailEnums\CompressionFormat::None, $fileName = null) {
+        return $this->sendRequest('log/exportevents', array(
+                    'statuses' => (count($statuses) === 0) ? null : join(';', $statuses),
+                    'from' => $from,
+                    'to' => $to,
+                    'channelName' => $channelName,
+                    'fileFormat' => $fileFormat,
+                    'compressionFormat' => $compressionFormat,
+                    'fileName' => $fileName));
     }
 
     /**
@@ -59,10 +101,10 @@ class Log extends \ElasticEmailClient\ElasticRequest
      * @param ?DateTime $to Ending date for search in YYYY-MM-DDThh:mm:ss format.
      * @param string $channelName Name of selected channel.
      * @param \ElasticEmailEnums\ExportFileFormats $fileFormat Format of the exported file
-     * @param int $limit Maximum of loaded items.
-     * @param int $offset How many items should be loaded ahead.
+     * @param int $limit Maximum number of returned items.
+     * @param int $offset How many items should be returned ahead.
      * @param \ElasticEmailEnums\CompressionFormat $compressionFormat FileResponse compression format. None or Zip.
-     * @param string $fileName Name of your file.
+     * @param string $fileName Name of your file including extension.
      * @return \ElasticEmailEnums\ExportLink
      */
     public function ExportLinkTracking($from, $to, $channelName = null, $fileFormat = \ElasticEmailEnums\ExportFileFormats::Csv, $limit = 0, $offset = 0, $compressionFormat = \ElasticEmailEnums\CompressionFormat::None, $fileName = null) {
@@ -74,8 +116,7 @@ class Log extends \ElasticEmailClient\ElasticRequest
                     'limit' => $limit,
                     'offset' => $offset,
                     'compressionFormat' => $compressionFormat,
-                    'fileName' => $fileName
-        ));
+                    'fileName' => $fileName));
     }
 
     /**
@@ -83,8 +124,8 @@ class Log extends \ElasticEmailClient\ElasticRequest
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param ?DateTime $from Starting date for search in YYYY-MM-DDThh:mm:ss format.
      * @param ?DateTime $to Ending date for search in YYYY-MM-DDThh:mm:ss format.
-     * @param int $limit Maximum of loaded items.
-     * @param int $offset How many items should be loaded ahead.
+     * @param int $limit Maximum number of returned items.
+     * @param int $offset How many items should be returned ahead.
      * @param string $channelName Name of selected channel.
      * @return \ElasticEmailEnums\LinkTrackingDetails
      */
@@ -94,8 +135,7 @@ class Log extends \ElasticEmailClient\ElasticRequest
                     'to' => $to,
                     'limit' => $limit,
                     'offset' => $offset,
-                    'channelName' => $channelName
-        ));
+                    'channelName' => $channelName));
     }
 
     /**
@@ -105,16 +145,16 @@ class Log extends \ElasticEmailClient\ElasticRequest
      * @param ?DateTime $from Starting date for search in YYYY-MM-DDThh:mm:ss format.
      * @param ?DateTime $to Ending date for search in YYYY-MM-DDThh:mm:ss format.
      * @param string $channelName Name of selected channel.
-     * @param int $limit Maximum of loaded items.
-     * @param int $offset How many items should be loaded ahead.
+     * @param int $limit Maximum number of returned items.
+     * @param int $offset How many items should be returned ahead.
      * @param bool $includeEmail True: Search includes emails. Otherwise, false.
      * @param bool $includeSms True: Search includes SMS. Otherwise, false.
      * @param array<\ElasticEmailEnums\MessageCategory> $messageCategory ID of message category
      * @param string $email Proper email address.
-     * @param bool $useStatusChangeDate True, if 'from' and 'to' parameters should resolve to the Status Change date. To resolve to the creation date - false
+     * @param string $ipaddress Search for recipients that we sent through this IP address
      * @return \ElasticEmailEnums\Log
      */
-    public function Load($statuses, $from = null, $to = null, $channelName = null, $limit = 0, $offset = 0, $includeEmail = true, $includeSms = true, array $messageCategory = array(), $email = null, $useStatusChangeDate = false) {
+    public function Load($statuses, $from = null, $to = null, $channelName = null, $limit = 0, $offset = 0, $includeEmail = true, $includeSms = true, array $messageCategory = array(), $email = null, $ipaddress = null) {
         return $this->sendRequest('log/load', array(
                     'statuses' => (count($statuses) === 0) ? null : join(';', $statuses),
                     'from' => $from,
@@ -126,8 +166,7 @@ class Log extends \ElasticEmailClient\ElasticRequest
                     'includeSms' => $includeSms,
                     'messageCategory' => (count($messageCategory) === 0) ? null : join(';', $messageCategory),
                     'email' => $email,
-                    'useStatusChangeDate' => $useStatusChangeDate
-        ));
+                    'ipaddress' => $ipaddress));
     }
 
     /**
@@ -136,8 +175,8 @@ class Log extends \ElasticEmailClient\ElasticRequest
      * @param array<\ElasticEmailEnums\LogJobStatus> $statuses List of comma separated message statuses: 0 for all, 1 for ReadyToSend, 2 for InProgress, 4 for Bounced, 5 for Sent, 6 for Opened, 7 for Clicked, 8 for Unsubscribed, 9 for Abuse Report
      * @param ?DateTime $from Starting date for search in YYYY-MM-DDThh:mm:ss format.
      * @param ?DateTime $to Ending date for search in YYYY-MM-DDThh:mm:ss format.
-     * @param int $limit Maximum of loaded items.
-     * @param int $offset How many items should be loaded ahead.
+     * @param int $limit Maximum number of returned items.
+     * @param int $offset How many items should be returned ahead.
      * @param array<\ElasticEmailEnums\MessageCategory> $messageCategory ID of message category
      * @param bool $useStatusChangeDate True, if 'from' and 'to' parameters should resolve to the Status Change date. To resolve to the creation date - false
      * @param \ElasticEmailEnums\NotificationType $notificationType 
@@ -152,19 +191,7 @@ class Log extends \ElasticEmailClient\ElasticRequest
                     'offset' => $offset,
                     'messageCategory' => (count($messageCategory) === 0) ? null : join(';', $messageCategory),
                     'useStatusChangeDate' => $useStatusChangeDate,
-                    'notificationType' => $notificationType
-        ));
-    }
-
-    /**
-     * Retry sending of temporarily not delivered message.
-     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $msgID ID number of selected message.
-     */
-    public function RetryNow($msgID) {
-        return $this->sendRequest('log/retrynow', array(
-                    'msgID' => $msgID
-        ));
+                    'notificationType' => $notificationType));
     }
 
     /**
@@ -183,8 +210,7 @@ class Log extends \ElasticEmailClient\ElasticRequest
                     'to' => $to,
                     'channelName' => $channelName,
                     'interval' => $interval,
-                    'transactionID' => $transactionID
-        ));
+                    'transactionID' => $transactionID));
     }
 
 }

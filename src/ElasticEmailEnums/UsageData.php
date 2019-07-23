@@ -59,29 +59,9 @@ class UsageData
     public /*decimal*/ $SmsCost;
 
     /**
-     * Cost of templates
-     */
-    public /*decimal*/ $TemplateCost;
-
-    /**
      * Cost of email credits
      */
     public /*?int*/ $EmailCreditsCost;
-
-    /**
-     * Cost of template credit
-     */
-    public /*?int*/ $TemplateCreditsCost;
-
-    /**
-     * Cost of litmus credits
-     */
-    public /*decimal*/ $LitmusCost;
-
-    /**
-     * Cost of 1 litmus credit
-     */
-    public /*decimal*/ $LitmusCreditsCost;
 
     /**
      * Daily cost of Contact Delivery Tools
@@ -102,5 +82,25 @@ class UsageData
      * 
      */
     public /*decimal*/ $EmailCost;
+
+    /**
+     * 
+     */
+    public /*decimal*/ $VerificationCost;
+
+    /**
+     * 
+     */
+    public /*int*/ $VerificationCount;
+
+    /**
+     * 
+     */
+    public /*decimal*/ $InboundEmailCost;
+
+    /**
+     * 
+     */
+    public /*int*/ $InboundEmailCount;
 
 }

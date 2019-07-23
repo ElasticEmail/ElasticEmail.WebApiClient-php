@@ -49,6 +49,11 @@ class Template
     public /*string*/ $BodyHtml;
 
     /**
+     * AMP code of email (needs escaping).
+     */
+    public /*string*/ $BodyAmp;
+
+    /**
      * Text body of email.
      */
     public /*string*/ $BodyText;
@@ -59,8 +64,18 @@ class Template
     public /*int*/ $OriginalTemplateID;
 
     /**
+     * 
+     */
+    public /*string*/ $OriginalTemplateName;
+
+    /**
      * Enum: 0 - private, 1 - public, 2 - mockup
      */
     public /*\ElasticEmailEnums\TemplateScope*/ $TemplateScope;
+
+    /**
+     * Template's Tags
+     */
+    public /*Array<string>*/ $Tags;
 
 }

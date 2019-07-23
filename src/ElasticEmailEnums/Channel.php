@@ -4,6 +4,11 @@
 class Channel
 {
     /**
+     * Channel identifier.
+     */
+    public /*int*/ $ChannelID;
+
+    /**
      * Descriptive name of the channel.
      */
     public /*string*/ $Name;

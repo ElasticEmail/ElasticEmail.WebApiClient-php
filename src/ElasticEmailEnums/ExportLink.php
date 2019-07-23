@@ -8,4 +8,9 @@ class ExportLink
      */
     public /*string*/ $Link;
 
+    /**
+     * ID of the exported file
+     */
+    public /*Guid*/ $PublicExportID;
+
 }

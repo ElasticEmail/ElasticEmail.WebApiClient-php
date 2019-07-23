@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/ElasticEmailApi.html">\ElasticEmailApi</a></li>
+                                                        <li><a href="../namespaces/ElasticEmailClient.html">\ElasticEmailClient</a></li>
+                                                        <li><a href="../namespaces/ElasticEmailEnums.html">\ElasticEmailEnums</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">1147</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-89851662"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-89851662" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-542709417"></a>
+                                <a href="../namespaces/ElasticEmailApi.html" style="margin-left: 30px; padding-left: 0">ElasticEmailApi</a>
+            </div>
+            <div id="namespace-542709417" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/ElasticEmailApi.AccessToken.html">AccessToken</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Account.html">Account</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Campaign.html">Campaign</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Channel.html">Channel</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Contact.html">Contact</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Domain.html">Domain</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.EEList.html">EEList</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Email.html">Email</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Export.html">Export</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.File.html">File</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Log.html">Log</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Segment.html">Segment</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.SMS.html">SMS</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Survey.html">Survey</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Template.html">Template</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1108017713"></a>
+                                <a href="../namespaces/ElasticEmailClient.html" style="margin-left: 30px; padding-left: 0">ElasticEmailClient</a>
+            </div>
+            <div id="namespace-1108017713" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/ElasticEmailClient.ElasticClient.html">ElasticClient</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailClient.ElasticRequest.html">ElasticRequest</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-648966641"></a>
+                                <a href="../namespaces/ElasticEmailEnums.html" style="margin-left: 30px; padding-left: 0">ElasticEmailEnums</a>
+            </div>
+            <div id="namespace-648966641" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AccessLevel.html">AccessLevel</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AccessToken.html">AccessToken</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Account.html">Account</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AccountOverview.html">AccountOverview</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AccountSendStatus.html">AccountSendStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AdvancedOptions.html">AdvancedOptions</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.BlockedContact.html">BlockedContact</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.BouncedCategorySummary.html">BouncedCategorySummary</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Campaign.html">Campaign</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CampaignChannel.html">CampaignChannel</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CampaignStatus.html">CampaignStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CampaignTemplate.html">CampaignTemplate</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CampaignTriggerType.html">CampaignTriggerType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CertificateValidationStatus.html">CertificateValidationStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Channel.html">Channel</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CompressionFormat.html">CompressionFormat</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ConsentTracking.html">ConsentTracking</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Contact.html">Contact</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactCollection.html">ContactCollection</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactContainer.html">ContactContainer</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactHistEventType.html">ContactHistEventType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactHistory.html">ContactHistory</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactSource.html">ContactSource</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactStatus.html">ContactStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactStatusCounts.html">ContactStatusCounts</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactUnsubscribeReasonCounts.html">ContactUnsubscribeReasonCounts</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CreditType.html">CreditType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.DailyLogStatusSummary.html">DailyLogStatusSummary</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.DomainDetail.html">DomainDetail</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EEList.html">EEList</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailCredits.html">EmailCredits</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailJobFailedStatus.html">EmailJobFailedStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailJobStatus.html">EmailJobStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailSend.html">EmailSend</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailStatus.html">EmailStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailView.html">EmailView</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EncodingType.html">EncodingType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Export.html">Export</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ExportFileFormats.html">ExportFileFormats</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ExportLink.html">ExportLink</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ExportStatus.html">ExportStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ExportTypeCounts.html">ExportTypeCounts</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.File.html">File</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.IntervalType.html">IntervalType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LinkTrackingDetails.html">LinkTrackingDetails</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LitmusCredits.html">LitmusCredits</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Log.html">Log</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LogJobStatus.html">LogJobStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LogStatusSummary.html">LogStatusSummary</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LogSummary.html">LogSummary</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.MessageCategory.html">MessageCategory</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.NotificationQueue.html">NotificationQueue</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.NotificationType.html">NotificationType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Payment.html">Payment</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Profile.html">Profile</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.QuestionType.html">QuestionType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Recipient.html">Recipient</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Referral.html">Referral</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ReputationDetail.html">ReputationDetail</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ReputationHistory.html">ReputationHistory</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ReputationImpact.html">ReputationImpact</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Segment.html">Segment</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SegmentHistory.html">SegmentHistory</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SendingPermission.html">SendingPermission</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SpamCheck.html">SpamCheck</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SpamRule.html">SpamRule</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SplitOptimization.html">SplitOptimization</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SubAccount.html">SubAccount</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SubAccountSettings.html">SubAccountSettings</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Survey.html">Survey</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyResultAnswerInfo.html">SurveyResultAnswerInfo</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyResultInfo.html">SurveyResultInfo</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyResultsAnswer.html">SurveyResultsAnswer</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyResultsSummaryInfo.html">SurveyResultsSummaryInfo</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyStatus.html">SurveyStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyStep.html">SurveyStep</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyStepAnswer.html">SurveyStepAnswer</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyStepType.html">SurveyStepType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Template.html">Template</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TemplateList.html">TemplateList</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TemplateScope.html">TemplateScope</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TemplateType.html">TemplateType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TrackedLink.html">TrackedLink</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TrackingType.html">TrackingType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TrackingValidationStatus.html">TrackingValidationStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Usage.html">Usage</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.UsageData.html">UsageData</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/ElasticEmailEnums.html">\ElasticEmailEnums</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\ElasticEmailEnums</small>CampaignTemplate</h1>
+                    <p><em></em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <em>No public methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/ElasticEmailEnums.CampaignTemplate.html#property_ChannelID" class="">$ChannelID</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.CampaignTemplate.html#property_Status" class="">$Status</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.CampaignTemplate.html#property_PoolName" class="">$PoolName</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.CampaignTemplate.html#property_TemplateID" class="">$TemplateID</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.CampaignTemplate.html#property_TemplateSubject" class="">$TemplateSubject</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.CampaignTemplate.html#property_TemplateFromEmail" class="">$TemplateFromEmail</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.CampaignTemplate.html#property_TemplateFromName" class="">$TemplateFromName</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.CampaignTemplate.html#property_TemplateReplyEmail" class="">$TemplateReplyEmail</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.CampaignTemplate.html#property_TemplateReplyName" class="">$TemplateReplyName</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/ElasticEmailEnums.CampaignTemplate.html"><div class="path-wrapper">ElasticEmailEnums/CampaignTemplate.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\ElasticEmailEnums\CampaignTemplate</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_ChannelID" name="property_ChannelID" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$ChannelID</h3>
+                <pre class="signature">$ChannelID : </pre>
+                <p><em>ID number of selected Channel.</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_Status" name="property_Status" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$Status</h3>
+                <pre class="signature">$Status : </pre>
+                <p><em>Name of campaign&#039;s status</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_PoolName" name="property_PoolName" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$PoolName</h3>
+                <pre class="signature">$PoolName : </pre>
+                <p><em>Name of your custom IP Pool to be used in the sending process</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_TemplateID" name="property_TemplateID" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$TemplateID</h3>
+                <pre class="signature">$TemplateID : </pre>
+                <p><em>ID number of template.</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_TemplateSubject" name="property_TemplateSubject" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$TemplateSubject</h3>
+                <pre class="signature">$TemplateSubject : </pre>
+                <p><em>Default subject of email.</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_TemplateFromEmail" name="property_TemplateFromEmail" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$TemplateFromEmail</h3>
+                <pre class="signature">$TemplateFromEmail : </pre>
+                <p><em>Default From: email address.</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_TemplateFromName" name="property_TemplateFromName" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$TemplateFromName</h3>
+                <pre class="signature">$TemplateFromName : </pre>
+                <p><em>Default From: name.</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_TemplateReplyEmail" name="property_TemplateReplyEmail" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$TemplateReplyEmail</h3>
+                <pre class="signature">$TemplateReplyEmail : </pre>
+                <p><em>Default Reply: email address.</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_TemplateReplyName" name="property_TemplateReplyName" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$TemplateReplyName</h3>
+                <pre class="signature">$TemplateReplyName : </pre>
+                <p><em>Default Reply: name.</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                            
+                                </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">CampaignTemplate.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/ElasticEmailEnums/CampaignTemplate.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/ElasticEmailApi.html">\ElasticEmailApi</a></li>
+                                                                            <li><a href="../namespaces/ElasticEmailClient.html">\ElasticEmailClient</a></li>
+                                                                            <li><a href="../namespaces/ElasticEmailEnums.html">\ElasticEmailEnums</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on June 16th, 2018 at 13:29.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

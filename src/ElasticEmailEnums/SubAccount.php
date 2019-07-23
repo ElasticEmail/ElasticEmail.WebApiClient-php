@@ -4,7 +4,7 @@
 class SubAccount
 {
     /**
-     * Public key for limited access to your account such as contact/add so you can use it safely on public websites.
+     * 
      */
     public /*string*/ $PublicAccountID;
 
@@ -29,7 +29,7 @@ class SubAccount
     public /*string*/ $PoolName;
 
     /**
-     * Date of last activity on account
+     * Date of last activity on Account
      */
     public /*string*/ $LastActivity;
 
@@ -39,47 +39,22 @@ class SubAccount
     public /*string*/ $EmailCredits;
 
     /**
-     * True, if account needs credits to send emails. Otherwise, false
+     * True, if Account needs credits to send emails. Otherwise, false
      */
     public /*bool*/ $RequiresEmailCredits;
 
     /**
-     * Amount of credits added to account automatically
+     * Amount of credits added to Account automatically
      */
     public /*double*/ $MonthlyRefillCredits;
 
     /**
-     * True, if account needs credits to buy templates. Otherwise, false
-     */
-    public /*bool*/ $RequiresTemplateCredits;
-
-    /**
-     * Amount of Litmus credits
-     */
-    public /*decimal*/ $LitmusCredits;
-
-    /**
-     * True, if account is able to send template tests to Litmus. Otherwise, false
-     */
-    public /*bool*/ $EnableLitmusTest;
-
-    /**
-     * True, if account needs credits to send emails. Otherwise, false
-     */
-    public /*bool*/ $RequiresLitmusCredits;
-
-    /**
-     * True, if account can buy templates on its own. Otherwise, false
-     */
-    public /*bool*/ $EnablePremiumTemplates;
-
-    /**
-     * True, if account can request for private IP on its own. Otherwise, false
+     * True, if Account can request for private IP on its own. Otherwise, false
      */
     public /*bool*/ $EnablePrivateIPRequest;
 
     /**
-     * Amount of emails sent from this account
+     * Amount of emails sent from this Account
      */
     public /*long*/ $TotalEmailsSent;
 
@@ -104,12 +79,12 @@ class SubAccount
     public /*double*/ $Reputation;
 
     /**
-     * Amount of emails account can send daily
+     * Amount of emails Account can send daily
      */
     public /*long*/ $DailySendLimit;
 
     /**
-     * Name of account's status: Deleted, Disabled, UnderReview, NoPaymentsAllowed, NeverSignedIn, Active, SystemPaused
+     * Account's current status.
      */
     public /*string*/ $Status;
 
@@ -119,18 +94,23 @@ class SubAccount
     public /*int*/ $EmailSizeLimit;
 
     /**
-     * Maximum number of contacts the account can have
+     * Maximum number of contacts the Account can have
      */
     public /*int*/ $MaxContacts;
 
     /**
-     * True, if you want to use Contact Delivery Tools.  Otherwise, false
-     */
-    public /*bool*/ $EnableContactFeatures;
-
-    /**
-     * Sending permission setting for account
+     * Sending permission setting for Account
      */
     public /*\ElasticEmailEnums\SendingPermission*/ $SendingPermission;
+
+    /**
+     * 
+     */
+    public /*bool*/ $HasModify2FA;
+
+    /**
+     * 
+     */
+    public /*int*/ $ContactsCount;
 
 }

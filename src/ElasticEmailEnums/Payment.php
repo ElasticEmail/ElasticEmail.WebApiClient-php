@@ -14,6 +14,16 @@ class Payment
     public /*decimal*/ $Amount;
 
     /**
+     * 
+     */
+    public /*decimal*/ $RegularAmount;
+
+    /**
+     * 
+     */
+    public /*decimal*/ $DiscountPercent;
+
+    /**
      * Source of URL of payment
      */
     public /*string*/ $Source;

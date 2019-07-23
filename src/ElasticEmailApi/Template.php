@@ -14,39 +14,39 @@ class Template extends \ElasticEmailClient\ElasticRequest
      * @param string $subject Default subject of email.
      * @param string $fromEmail Default From: email address.
      * @param string $fromName Default From: name.
-     * @param \ElasticEmailEnums\TemplateType $templateType 0 for API connections
      * @param \ElasticEmailEnums\TemplateScope $templateScope Enum: 0 - private, 1 - public, 2 - mockup
      * @param string $bodyHtml HTML code of email (needs escaping).
      * @param string $bodyText Text body of email.
      * @param string $css CSS style
      * @param int $originalTemplateID ID number of original template.
+     * @param array<string> $tags 
+     * @param string $bodyAmp AMP code of email (needs escaping).
      * @return int
      */
-    public function Add($name, $subject, $fromEmail, $fromName, $templateType = \ElasticEmailEnums\TemplateType::RawHTML, $templateScope = \ElasticEmailEnums\TemplateScope::EEPrivate, $bodyHtml = null, $bodyText = null, $css = null, $originalTemplateID = 0) {
+    public function Add($name, $subject, $fromEmail, $fromName, $templateScope = \ElasticEmailEnums\TemplateScope::EEPrivate, $bodyHtml = null, $bodyText = null, $css = null, $originalTemplateID = 0, array $tags = array(), $bodyAmp = null) {
         return $this->sendRequest('template/add', array(
                     'name' => $name,
                     'subject' => $subject,
                     'fromEmail' => $fromEmail,
                     'fromName' => $fromName,
-                    'templateType' => $templateType,
                     'templateScope' => $templateScope,
                     'bodyHtml' => $bodyHtml,
                     'bodyText' => $bodyText,
                     'css' => $css,
-                    'originalTemplateID' => $originalTemplateID
-        ));
+                    'originalTemplateID' => $originalTemplateID,
+                    'tags' => (count($tags) === 0) ? null : join(';', $tags),
+                    'bodyAmp' => $bodyAmp));
     }
 
     /**
-     * Check if template is used by campaign.
+     * Create a new Tag to be used in your Templates
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param int $templateID ID number of template.
-     * @return bool
+     * @param string $tag Tag's value
+     * @return \ElasticEmailEnums\TemplateTag
      */
-    public function CheckUsage($templateID) {
-        return $this->sendRequest('template/checkusage', array(
-                    'templateID' => $templateID
-        ));
+    public function AddTag($tag) {
+        return $this->sendRequest('template/addtag', array(
+                    'tag' => $tag));
     }
 
     /**
@@ -65,8 +65,7 @@ class Template extends \ElasticEmailClient\ElasticRequest
                     'name' => $name,
                     'subject' => $subject,
                     'fromEmail' => $fromEmail,
-                    'fromName' => $fromName
-        ));
+                    'fromName' => $fromName));
     }
 
     /**
@@ -76,73 +75,88 @@ class Template extends \ElasticEmailClient\ElasticRequest
      */
     public function EEDelete($templateID) {
         return $this->sendRequest('template/delete', array(
-                    'templateID' => $templateID
-        ));
+                    'templateID' => $templateID));
     }
 
     /**
-     * Search for references to images and replaces them with base64 code.
+     * Delete templates with the specified ID
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param int $templateID ID number of template.
-     * @return string
+     * @param array<int> $templateIDs 
      */
-    public function GetEmbeddedHtml($templateID) {
-        return $this->sendRequest('template/getembeddedhtml', array(
-                    'templateID' => $templateID
-        ));
+    public function DeleteBulk($templateIDs) {
+        return $this->sendRequest('template/deletebulk', array(
+                    'templateIDs' => (count($templateIDs) === 0) ? null : join(';', $templateIDs)));
     }
 
     /**
-     * Lists your templates
+     * Delete a tag, removing it from all Templates
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param int $limit Maximum of loaded items.
-     * @param int $offset How many items should be loaded ahead.
+     * @param string $tag 
+     */
+    public function DeleteTag($tag) {
+        return $this->sendRequest('template/deletetag', array(
+                    'tag' => $tag));
+    }
+
+    /**
+     * Lists your templates, optionally searching by Tags
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param array<string> $tags 
+     * @param array<\ElasticEmailEnums\TemplateType> $templateTypes 
+     * @param int $limit If provided, returns templates with these tags
+     * @param int $offset Filters on template type
      * @return \ElasticEmailEnums\TemplateList
      */
-    public function GetList($limit = 500, $offset = 0) {
+    public function GetList(array $tags = array(), array $templateTypes = array(), $limit = 500, $offset = 0) {
         return $this->sendRequest('template/getlist', array(
+                    'tags' => (count($tags) === 0) ? null : join(';', $tags),
+                    'templateTypes' => (count($templateTypes) === 0) ? null : join(';', $templateTypes),
                     'limit' => $limit,
-                    'offset' => $offset
-        ));
+                    'offset' => $offset));
+    }
+
+    /**
+     * Retrieve a list of your Tags
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @return \ElasticEmailEnums\TemplateTagList
+     */
+    public function GetTagList() {
+        return $this->sendRequest('template/gettaglist', array());
+    }
+
+    /**
+     * Check if template is used by campaign.
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param int $templateID ID number of template.
+     * @return bool
+     */
+    public function IsUsedByCampaign($templateID) {
+        return $this->sendRequest('template/isusedbycampaign', array(
+                    'templateID' => $templateID));
     }
 
     /**
      * Load template with content
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param int $templateID ID number of template.
-     * @param bool $ispublic 
      * @return \ElasticEmailEnums\Template
      */
-    public function LoadTemplate($templateID, $ispublic = false) {
+    public function LoadTemplate($templateID) {
         return $this->sendRequest('template/loadtemplate', array(
-                    'templateID' => $templateID,
-                    'ispublic' => $ispublic
-        ));
+                    'templateID' => $templateID));
     }
 
     /**
-     * Removes previously generated screenshot of template
+     * Read Rss feed
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param int $templateID ID number of template.
-     */
-    public function RemoveScreenshot($templateID) {
-        return $this->sendRequest('template/removescreenshot', array(
-                    'templateID' => $templateID
-        ));
-    }
-
-    /**
-     * Saves screenshot of chosen Template
-     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $base64Image Image, base64 coded.
-     * @param int $templateID ID number of template.
+     * @param string $url Rss feed url.
+     * @param int $count Number of item tags to read.
      * @return string
      */
-    public function SaveScreenshot($base64Image, $templateID) {
-        return $this->sendRequest('template/savescreenshot', array(
-                    'base64Image' => $base64Image,
-                    'templateID' => $templateID
-        ));
+    public function ReadRssFeed($url, $count = 3) {
+        return $this->sendRequest('template/readrssfeed', array(
+                    'url' => $url,
+                    'count' => $count));
     }
 
     /**
@@ -158,8 +172,10 @@ class Template extends \ElasticEmailClient\ElasticRequest
      * @param string $bodyText Text body of email.
      * @param string $css CSS style
      * @param bool $removeScreenshot 
+     * @param array<string> $tags 
+     * @param string $bodyAmp AMP code of email (needs escaping).
      */
-    public function Update($templateID, $templateScope = \ElasticEmailEnums\TemplateScope::EEPrivate, $name = null, $subject = null, $fromEmail = null, $fromName = null, $bodyHtml = null, $bodyText = null, $css = null, $removeScreenshot = true) {
+    public function Update($templateID, $templateScope = \ElasticEmailEnums\TemplateScope::EEPrivate, $name = null, $subject = null, $fromEmail = null, $fromName = null, $bodyHtml = null, $bodyText = null, $css = null, $removeScreenshot = true, array $tags = array(), $bodyAmp = null) {
         return $this->sendRequest('template/update', array(
                     'templateID' => $templateID,
                     'templateScope' => $templateScope,
@@ -170,8 +186,27 @@ class Template extends \ElasticEmailClient\ElasticRequest
                     'bodyHtml' => $bodyHtml,
                     'bodyText' => $bodyText,
                     'css' => $css,
-                    'removeScreenshot' => $removeScreenshot
-        ));
+                    'removeScreenshot' => $removeScreenshot,
+                    'tags' => (count($tags) === 0) ? null : join(';', $tags),
+                    'bodyAmp' => $bodyAmp));
+    }
+
+    /**
+     * Bulk change default options and the scope of your templates
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param array<int> $templateIDs 
+     * @param string $subject Default subject of email.
+     * @param string $fromEmail Default From: email address.
+     * @param string $fromName Default From: name.
+     * @param \ElasticEmailEnums\TemplateScope $templateScope Enum: 0 - private, 1 - public, 2 - mockup
+     */
+    public function UpdateDefaultOptions($templateIDs, $subject = null, $fromEmail = null, $fromName = null, $templateScope = \ElasticEmailEnums\TemplateScope::EEPrivate) {
+        return $this->sendRequest('template/updatedefaultoptions', array(
+                    'templateIDs' => (count($templateIDs) === 0) ? null : join(';', $templateIDs),
+                    'subject' => $subject,
+                    'fromEmail' => $fromEmail,
+                    'fromName' => $fromName,
+                    'templateScope' => $templateScope));
     }
 
 }

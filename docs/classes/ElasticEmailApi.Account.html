@@ -1,0 +1,2523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/ElasticEmailApi.html">\ElasticEmailApi</a></li>
+                                                        <li><a href="../namespaces/ElasticEmailClient.html">\ElasticEmailClient</a></li>
+                                                        <li><a href="../namespaces/ElasticEmailEnums.html">\ElasticEmailEnums</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">1147</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2058596865"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-2058596865" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-647316557"></a>
+                                <a href="../namespaces/ElasticEmailApi.html" style="margin-left: 30px; padding-left: 0">ElasticEmailApi</a>
+            </div>
+            <div id="namespace-647316557" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/ElasticEmailApi.AccessToken.html">AccessToken</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Account.html">Account</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Campaign.html">Campaign</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Channel.html">Channel</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Contact.html">Contact</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Domain.html">Domain</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.EEList.html">EEList</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Email.html">Email</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Export.html">Export</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.File.html">File</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Log.html">Log</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Segment.html">Segment</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.SMS.html">SMS</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Survey.html">Survey</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Template.html">Template</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2048306089"></a>
+                                <a href="../namespaces/ElasticEmailClient.html" style="margin-left: 30px; padding-left: 0">ElasticEmailClient</a>
+            </div>
+            <div id="namespace-2048306089" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/ElasticEmailClient.ElasticClient.html">ElasticClient</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailClient.ElasticRequest.html">ElasticRequest</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1896512159"></a>
+                                <a href="../namespaces/ElasticEmailEnums.html" style="margin-left: 30px; padding-left: 0">ElasticEmailEnums</a>
+            </div>
+            <div id="namespace-1896512159" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AccessLevel.html">AccessLevel</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AccessToken.html">AccessToken</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Account.html">Account</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AccountOverview.html">AccountOverview</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AccountSendStatus.html">AccountSendStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AdvancedOptions.html">AdvancedOptions</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.BlockedContact.html">BlockedContact</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.BouncedCategorySummary.html">BouncedCategorySummary</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Campaign.html">Campaign</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CampaignChannel.html">CampaignChannel</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CampaignStatus.html">CampaignStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CampaignTemplate.html">CampaignTemplate</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CampaignTriggerType.html">CampaignTriggerType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CertificateValidationStatus.html">CertificateValidationStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Channel.html">Channel</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CompressionFormat.html">CompressionFormat</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ConsentTracking.html">ConsentTracking</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Contact.html">Contact</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactCollection.html">ContactCollection</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactContainer.html">ContactContainer</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactHistEventType.html">ContactHistEventType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactHistory.html">ContactHistory</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactSource.html">ContactSource</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactStatus.html">ContactStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactStatusCounts.html">ContactStatusCounts</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactUnsubscribeReasonCounts.html">ContactUnsubscribeReasonCounts</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CreditType.html">CreditType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.DailyLogStatusSummary.html">DailyLogStatusSummary</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.DomainDetail.html">DomainDetail</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EEList.html">EEList</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailCredits.html">EmailCredits</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailJobFailedStatus.html">EmailJobFailedStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailJobStatus.html">EmailJobStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailSend.html">EmailSend</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailStatus.html">EmailStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailView.html">EmailView</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EncodingType.html">EncodingType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Export.html">Export</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ExportFileFormats.html">ExportFileFormats</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ExportLink.html">ExportLink</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ExportStatus.html">ExportStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ExportTypeCounts.html">ExportTypeCounts</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.File.html">File</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.IntervalType.html">IntervalType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LinkTrackingDetails.html">LinkTrackingDetails</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LitmusCredits.html">LitmusCredits</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Log.html">Log</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LogJobStatus.html">LogJobStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LogStatusSummary.html">LogStatusSummary</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LogSummary.html">LogSummary</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.MessageCategory.html">MessageCategory</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.NotificationQueue.html">NotificationQueue</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.NotificationType.html">NotificationType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Payment.html">Payment</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Profile.html">Profile</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.QuestionType.html">QuestionType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Recipient.html">Recipient</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Referral.html">Referral</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ReputationDetail.html">ReputationDetail</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ReputationHistory.html">ReputationHistory</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ReputationImpact.html">ReputationImpact</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Segment.html">Segment</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SegmentHistory.html">SegmentHistory</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SendingPermission.html">SendingPermission</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SpamCheck.html">SpamCheck</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SpamRule.html">SpamRule</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SplitOptimization.html">SplitOptimization</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SubAccount.html">SubAccount</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SubAccountSettings.html">SubAccountSettings</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Survey.html">Survey</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyResultAnswerInfo.html">SurveyResultAnswerInfo</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyResultInfo.html">SurveyResultInfo</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyResultsAnswer.html">SurveyResultsAnswer</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyResultsSummaryInfo.html">SurveyResultsSummaryInfo</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyStatus.html">SurveyStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyStep.html">SurveyStep</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyStepAnswer.html">SurveyStepAnswer</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyStepType.html">SurveyStepType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Template.html">Template</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TemplateList.html">TemplateList</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TemplateScope.html">TemplateScope</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TemplateType.html">TemplateType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TrackedLink.html">TrackedLink</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TrackingType.html">TrackingType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TrackingValidationStatus.html">TrackingValidationStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Usage.html">Usage</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.UsageData.html">UsageData</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/ElasticEmailApi.html">\ElasticEmailApi</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\ElasticEmailApi</small>Account</h1>
+                    <p><em></em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/ElasticEmailClient.ElasticRequest.html#method_setHttpClient" class="">setHttpClient()</a><br />
+                                                                    <a href="../classes/ElasticEmailClient.ElasticRequest.html#method_getHttpClient" class="">getHttpClient()</a><br />
+                                                                    <a href="../classes/ElasticEmailClient.ElasticRequest.html#method_setConfiguration" class="">setConfiguration()</a><br />
+                                                                    <a href="../classes/ElasticEmailClient.ElasticRequest.html#method_getConfiguration" class="">getConfiguration()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_AddSubAccount" class="">AddSubAccount()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_AddSubAccountCredits" class="">AddSubAccountCredits()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_ChangeEmail" class="">ChangeEmail()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_ChangePassword" class="">ChangePassword()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_DeleteSubAccount" class="">DeleteSubAccount()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_GetAccountAbilityToSendEmail" class="">GetAccountAbilityToSendEmail()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_GetSubAccountApiKey" class="">GetSubAccountApiKey()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_GetSubAccountList" class="">GetSubAccountList()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_Load" class="">Load()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadAdvancedOptions" class="">LoadAdvancedOptions()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadEmailCreditsHistory" class="">LoadEmailCreditsHistory()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadInfo" class="">LoadInfo()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadLitmusCreditsHistory" class="">LoadLitmusCreditsHistory()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadNotificationQueue" class="">LoadNotificationQueue()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadPaymentHistory" class="">LoadPaymentHistory()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadPayoutHistory" class="">LoadPayoutHistory()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadReferralDetails" class="">LoadReferralDetails()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadReputationHistory" class="">LoadReputationHistory()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadReputationImpact" class="">LoadReputationImpact()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadSpamCheck" class="">LoadSpamCheck()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadSubAccountsEmailCreditsHistory" class="">LoadSubAccountsEmailCreditsHistory()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadSubAccountSettings" class="">LoadSubAccountSettings()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadSubAccountsLitmusCreditsHistory" class="">LoadSubAccountsLitmusCreditsHistory()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_LoadUsage" class="">LoadUsage()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_Overview" class="">Overview()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_ProfileOverview" class="">ProfileOverview()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_RemoveSubAccountCredits" class="">RemoveSubAccountCredits()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_RequestNewApiKey" class="">RequestNewApiKey()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_RequestPremiumSupport" class="">RequestPremiumSupport()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_RequestPrivateIP" class="">RequestPrivateIP()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_UpdateAdvancedOptions" class="">UpdateAdvancedOptions()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_UpdateCustomBranding" class="">UpdateCustomBranding()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_UpdateHttpNotification" class="">UpdateHttpNotification()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_UpdateProfile" class="">UpdateProfile()</a><br />
+                                                                    <a href="../classes/ElasticEmailApi.Account.html#method_UpdateSubAccountSettings" class="">UpdateSubAccountSettings()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <a href="../classes/ElasticEmailClient.ElasticRequest.html#method_sendRequest" class="">sendRequest()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/ElasticEmailClient.ElasticRequest.html#property_configuration" class="">$configuration</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <a href="../classes/ElasticEmailClient.ElasticRequest.html#method_parseMultipart" class="">parseMultipart()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/ElasticEmailClient.ElasticRequest.html#property_httpClient" class="">$httpClient</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/ElasticEmailApi.Account.html"><div class="path-wrapper">ElasticEmailApi/Account.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper"><a href="../classes/ElasticEmailClient.ElasticRequest.html">\ElasticEmailClient\ElasticRequest</a></div>
+                                                                                                    <div class="namespace-wrapper">\ElasticEmailApi\Account</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_configuration" name="property_configuration" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$configuration</h3>
+                <pre class="signature">$configuration : \ElasticEmailClient\ApiConfiguration</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                \ElasticEmailClient\ApiConfiguration
+                &mdash; ApiConfiguration                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ElasticEmailClient.ElasticRequest.html"><div class="path-wrapper">\ElasticEmailClient\ElasticRequest</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_httpClient" name="property_httpClient" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$httpClient</h3>
+                <pre class="signature">$httpClient : \GuzzleHttp\ClientInterface</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                \GuzzleHttp\ClientInterface
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ElasticEmailClient.ElasticRequest.html"><div class="path-wrapper">\ElasticEmailClient\ElasticRequest</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(\ElasticEmailClient\ApiConfiguration  <span class="argument">$apiConfiguration</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\ElasticEmailClient\ApiConfiguration</td>
+                                <td>$apiConfiguration </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setHttpClient" name="method_setHttpClient" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setHttpClient()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setHttpClient(  <span class="argument">$client</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$client </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ElasticEmailClient.ElasticRequest.html"><div class="path-wrapper">\ElasticEmailClient\ElasticRequest</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getHttpClient" name="method_getHttpClient" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getHttpClient()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getHttpClient() : \GuzzleHttp\ClientInterface</pre>
+                <p><em></em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \GuzzleHttp\ClientInterface
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ElasticEmailClient.ElasticRequest.html"><div class="path-wrapper">\ElasticEmailClient\ElasticRequest</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setConfiguration" name="method_setConfiguration" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">setConfiguration()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setConfiguration(\ElasticEmailClient\ApiConfiguration  <span class="argument">$config</span>) : $this</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\ElasticEmailClient\ApiConfiguration</td>
+                                <td>$config </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    $this
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ElasticEmailClient.ElasticRequest.html"><div class="path-wrapper">\ElasticEmailClient\ElasticRequest</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getConfiguration" name="method_getConfiguration" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getConfiguration()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getConfiguration() : \ElasticEmailClient\ApiConfiguration</pre>
+                <p><em></em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \ElasticEmailClient\ApiConfiguration
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ElasticEmailClient.ElasticRequest.html"><div class="path-wrapper">\ElasticEmailClient\ElasticRequest</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_AddSubAccount" name="method_AddSubAccount" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">AddSubAccount()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">AddSubAccount(string  <span class="argument">$email</span>, string  <span class="argument">$password</span>, string  <span class="argument">$confirmPassword</span>, boolean  <span class="argument">$requiresEmailCredits = false</span>, boolean  <span class="argument">$enableLitmusTest = false</span>, boolean  <span class="argument">$requiresLitmusCredits = false</span>, integer  <span class="argument">$maxContacts</span>, boolean  <span class="argument">$enablePrivateIPRequest = true</span>, boolean  <span class="argument">$sendActivation = false</span>, string  <span class="argument">$returnUrl = null</span>, \ElasticEmailApi\?\ElasticEmailEnums\SendingPermission  <span class="argument">$sendingPermission = null</span>, \ElasticEmailApi\?bool  <span class="argument">$enableContactFeatures = null</span>, string  <span class="argument">$poolName = null</span>, integer  <span class="argument">$emailSizeLimit = 10</span>, \ElasticEmailApi\?int  <span class="argument">$dailySendLimit = null</span>) : string</pre>
+                <p><em>Create new subaccount and provide most important data about it.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$email </td>
+                                <td><p>Proper email address.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$password </td>
+                                <td><p>Current password.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$confirmPassword </td>
+                                <td><p>Repeat new password.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$requiresEmailCredits </td>
+                                <td><p>True, if account needs credits to send emails. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$enableLitmusTest </td>
+                                <td><p>True, if account is able to send template tests to Litmus. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$requiresLitmusCredits </td>
+                                <td><p>True, if account needs credits to send emails. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$maxContacts </td>
+                                <td><p>Maximum number of contacts the account can have</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$enablePrivateIPRequest </td>
+                                <td><p>True, if account can request for private IP on its own. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$sendActivation </td>
+                                <td><p>True, if you want to send activation email to this account. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$returnUrl </td>
+                                <td><p>URL to navigate to after account creation</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?\ElasticEmailEnums\SendingPermission</td>
+                                <td>$sendingPermission </td>
+                                <td><p>Sending permission setting for account</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$enableContactFeatures </td>
+                                <td><p>True, if you want to use Contact Delivery Tools.  Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$poolName </td>
+                                <td><p>Private IP required. Name of the custom IP Pool which Sub Account should use to send its emails. Leave empty for the default one or if no Private IPs have been bought</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$emailSizeLimit </td>
+                                <td><p>Maximum size of email including attachments in MB's</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?int</td>
+                                <td>$dailySendLimit </td>
+                                <td><p>Amount of emails account can send daily</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_AddSubAccountCredits" name="method_AddSubAccountCredits" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">AddSubAccountCredits()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">AddSubAccountCredits(integer  <span class="argument">$credits</span>, string  <span class="argument">$notes</span>, \ElasticEmailEnums\CreditType  <span class="argument">$creditType = \ElasticEmailEnums\CreditType::Email</span>, string  <span class="argument">$subAccountEmail = null</span>, string  <span class="argument">$publicAccountID = null</span>) </pre>
+                <p><em>Add email, template or litmus credits to a sub-account</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$credits </td>
+                                <td><p>Amount of credits to add</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$notes </td>
+                                <td><p>Specific notes about the transaction</p></td>
+                            </tr>
+                                                    <tr>
+                                <td><a href="../classes/ElasticEmailEnums.CreditType.html">\ElasticEmailEnums\CreditType</a></td>
+                                <td>$creditType </td>
+                                <td><p>Type of credits to add (Email or Litmus)</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$subAccountEmail </td>
+                                <td><p>Email address of sub-account</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$publicAccountID </td>
+                                <td><p>Public key of sub-account to add credits to. Use subAccountEmail or publicAccountID not both.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ChangeEmail" name="method_ChangeEmail" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">ChangeEmail()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ChangeEmail(string  <span class="argument">$newEmail</span>, string  <span class="argument">$confirmEmail</span>, string  <span class="argument">$sourceUrl = &quot;https://elasticemail.com/account/&quot;</span>) : string</pre>
+                <p><em>Change your email address. Remember, that your email address is used as login!</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$newEmail </td>
+                                <td><p>New email address.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$confirmEmail </td>
+                                <td><p>New email address.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$sourceUrl </td>
+                                <td><p>URL from which request was sent.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ChangePassword" name="method_ChangePassword" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">ChangePassword()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ChangePassword(string  <span class="argument">$currentPassword</span>, string  <span class="argument">$newPassword</span>, string  <span class="argument">$confirmPassword</span>) </pre>
+                <p><em>Create new password for your account. Password needs to be at least 6 characters long.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$currentPassword </td>
+                                <td><p>Current password.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$newPassword </td>
+                                <td><p>New password for account.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$confirmPassword </td>
+                                <td><p>Repeat new password.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_DeleteSubAccount" name="method_DeleteSubAccount" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">DeleteSubAccount()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">DeleteSubAccount(boolean  <span class="argument">$notify = true</span>, string  <span class="argument">$subAccountEmail = null</span>, string  <span class="argument">$publicAccountID = null</span>, boolean  <span class="argument">$deleteDomains = true</span>) </pre>
+                <p><em>Deletes specified Subaccount</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$notify </td>
+                                <td><p>True, if you want to send an email notification. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$subAccountEmail </td>
+                                <td><p>Email address of sub-account</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$publicAccountID </td>
+                                <td><p>Public key of sub-account to delete. Use subAccountEmail or publicAccountID not both.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$deleteDomains </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_GetAccountAbilityToSendEmail" name="method_GetAccountAbilityToSendEmail" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">GetAccountAbilityToSendEmail()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">GetAccountAbilityToSendEmail() : \ElasticEmailEnums\AccountSendStatus</pre>
+                <p><em>Validate account&#039;s ability to send e-mail</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/ElasticEmailEnums.AccountSendStatus.html">\ElasticEmailEnums\AccountSendStatus</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_GetSubAccountApiKey" name="method_GetSubAccountApiKey" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">GetSubAccountApiKey()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">GetSubAccountApiKey(string  <span class="argument">$subAccountEmail = null</span>, string  <span class="argument">$publicAccountID = null</span>) : string</pre>
+                <p><em>Returns API Key for the given Sub Account.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$subAccountEmail </td>
+                                <td><p>Email address of sub-account</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$publicAccountID </td>
+                                <td><p>Public key of sub-account to retrieve sub-account API Key. Use subAccountEmail or publicAccountID not both.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_GetSubAccountList" name="method_GetSubAccountList" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">GetSubAccountList()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">GetSubAccountList(integer  <span class="argument">$limit</span>, integer  <span class="argument">$offset</span>) : \ElasticEmailApi\Array&lt;\ElasticEmailEnums\SubAccount&gt;</pre>
+                <p><em>Lists all of your subaccounts</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$limit </td>
+                                <td><p>Maximum of loaded items.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$offset </td>
+                                <td><p>How many items should be loaded ahead.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \ElasticEmailApi\Array<\ElasticEmailEnums\SubAccount>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_Load" name="method_Load" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">Load()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">Load() : \ElasticEmailEnums\Account</pre>
+                <p><em>Loads your account. Returns detailed information about your account.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/ElasticEmailEnums.Account.html">\ElasticEmailEnums\Account</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadAdvancedOptions" name="method_LoadAdvancedOptions" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadAdvancedOptions()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadAdvancedOptions() : \ElasticEmailEnums\AdvancedOptions</pre>
+                <p><em>Load advanced options of your account</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html">\ElasticEmailEnums\AdvancedOptions</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadEmailCreditsHistory" name="method_LoadEmailCreditsHistory" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadEmailCreditsHistory()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadEmailCreditsHistory() : \ElasticEmailApi\Array&lt;\ElasticEmailEnums\EmailCredits&gt;</pre>
+                <p><em>Lists email credits history</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \ElasticEmailApi\Array<\ElasticEmailEnums\EmailCredits>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadInfo" name="method_LoadInfo" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadInfo()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadInfo() : \ElasticEmailEnums\Account</pre>
+                <p><em>Loads your account. Returns detailed information about your account.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/ElasticEmailEnums.Account.html">\ElasticEmailEnums\Account</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadLitmusCreditsHistory" name="method_LoadLitmusCreditsHistory" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadLitmusCreditsHistory()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadLitmusCreditsHistory() : \ElasticEmailApi\Array&lt;\ElasticEmailEnums\LitmusCredits&gt;</pre>
+                <p><em>Lists litmus credits history</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \ElasticEmailApi\Array<\ElasticEmailEnums\LitmusCredits>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadNotificationQueue" name="method_LoadNotificationQueue" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadNotificationQueue()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadNotificationQueue() : \ElasticEmailApi\Array&lt;\ElasticEmailEnums\NotificationQueue&gt;</pre>
+                <p><em>Shows queue of newest notifications - very useful when you want to check what happened with mails that were not received.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \ElasticEmailApi\Array<\ElasticEmailEnums\NotificationQueue>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadPaymentHistory" name="method_LoadPaymentHistory" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadPaymentHistory()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadPaymentHistory(integer  <span class="argument">$limit</span>, integer  <span class="argument">$offset</span>, \ElasticEmailApi\DateTime  <span class="argument">$fromDate</span>, \ElasticEmailApi\DateTime  <span class="argument">$toDate</span>) : \ElasticEmailApi\Array&lt;\ElasticEmailEnums\Payment&gt;</pre>
+                <p><em>Lists all payments</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$limit </td>
+                                <td><p>Maximum of loaded items.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$offset </td>
+                                <td><p>How many items should be loaded ahead.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\DateTime</td>
+                                <td>$fromDate </td>
+                                <td><p>Starting date for search in YYYY-MM-DDThh:mm:ss format.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\DateTime</td>
+                                <td>$toDate </td>
+                                <td><p>Ending date for search in YYYY-MM-DDThh:mm:ss format.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \ElasticEmailApi\Array<\ElasticEmailEnums\Payment>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadPayoutHistory" name="method_LoadPayoutHistory" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadPayoutHistory()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadPayoutHistory() : \ElasticEmailApi\Array&lt;\ElasticEmailEnums\Payment&gt;</pre>
+                <p><em>Lists all referral payout history</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \ElasticEmailApi\Array<\ElasticEmailEnums\Payment>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadReferralDetails" name="method_LoadReferralDetails" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadReferralDetails()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadReferralDetails() : \ElasticEmailEnums\Referral</pre>
+                <p><em>Shows information about your referral details</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/ElasticEmailEnums.Referral.html">\ElasticEmailEnums\Referral</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadReputationHistory" name="method_LoadReputationHistory" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadReputationHistory()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadReputationHistory(integer  <span class="argument">$limit = 20</span>, integer  <span class="argument">$offset</span>) : \ElasticEmailApi\Array&lt;\ElasticEmailEnums\ReputationHistory&gt;</pre>
+                <p><em>Shows latest changes in your sending reputation</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$limit </td>
+                                <td><p>Maximum of loaded items.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$offset </td>
+                                <td><p>How many items should be loaded ahead.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \ElasticEmailApi\Array<\ElasticEmailEnums\ReputationHistory>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadReputationImpact" name="method_LoadReputationImpact" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadReputationImpact()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadReputationImpact() : \ElasticEmailEnums\ReputationDetail</pre>
+                <p><em>Shows detailed information about your actual reputation score</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/ElasticEmailEnums.ReputationDetail.html">\ElasticEmailEnums\ReputationDetail</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadSpamCheck" name="method_LoadSpamCheck" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadSpamCheck()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadSpamCheck(integer  <span class="argument">$limit = 20</span>, integer  <span class="argument">$offset</span>) : \ElasticEmailApi\Array&lt;\ElasticEmailEnums\SpamCheck&gt;</pre>
+                <p><em>Returns detailed spam check.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$limit </td>
+                                <td><p>Maximum of loaded items.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$offset </td>
+                                <td><p>How many items should be loaded ahead.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \ElasticEmailApi\Array<\ElasticEmailEnums\SpamCheck>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadSubAccountsEmailCreditsHistory" name="method_LoadSubAccountsEmailCreditsHistory" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadSubAccountsEmailCreditsHistory()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadSubAccountsEmailCreditsHistory(string  <span class="argument">$subAccountEmail = null</span>, string  <span class="argument">$publicAccountID = null</span>) : \ElasticEmailApi\Array&lt;\ElasticEmailEnums\EmailCredits&gt;</pre>
+                <p><em>Lists email credits history for sub-account</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$subAccountEmail </td>
+                                <td><p>Email address of sub-account</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$publicAccountID </td>
+                                <td><p>Public key of sub-account to list history for. Use subAccountEmail or publicAccountID not both.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \ElasticEmailApi\Array<\ElasticEmailEnums\EmailCredits>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadSubAccountSettings" name="method_LoadSubAccountSettings" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadSubAccountSettings()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadSubAccountSettings(string  <span class="argument">$subAccountEmail = null</span>, string  <span class="argument">$publicAccountID = null</span>) : \ElasticEmailEnums\SubAccountSettings</pre>
+                <p><em>Loads settings of subaccount</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$subAccountEmail </td>
+                                <td><p>Email address of sub-account</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$publicAccountID </td>
+                                <td><p>Public key of sub-account to load settings for. Use subAccountEmail or publicAccountID not both.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/ElasticEmailEnums.SubAccountSettings.html">\ElasticEmailEnums\SubAccountSettings</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadSubAccountsLitmusCreditsHistory" name="method_LoadSubAccountsLitmusCreditsHistory" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadSubAccountsLitmusCreditsHistory()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadSubAccountsLitmusCreditsHistory(string  <span class="argument">$subAccountEmail = null</span>, string  <span class="argument">$publicAccountID = null</span>) : \ElasticEmailApi\Array&lt;\ElasticEmailEnums\LitmusCredits&gt;</pre>
+                <p><em>Lists litmus credits history for sub-account</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$subAccountEmail </td>
+                                <td><p>Email address of sub-account</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$publicAccountID </td>
+                                <td><p>Public key of sub-account to list history for. Use subAccountEmail or publicAccountID not both.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \ElasticEmailApi\Array<\ElasticEmailEnums\LitmusCredits>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_LoadUsage" name="method_LoadUsage" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">LoadUsage()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">LoadUsage(\ElasticEmailApi\DateTime  <span class="argument">$from</span>, \ElasticEmailApi\DateTime  <span class="argument">$to</span>) : \ElasticEmailApi\Array&lt;\ElasticEmailEnums\Usage&gt;</pre>
+                <p><em>Shows usage of your account in given time.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\ElasticEmailApi\DateTime</td>
+                                <td>$from </td>
+                                <td><p>Starting date for search in YYYY-MM-DDThh:mm:ss format.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\DateTime</td>
+                                <td>$to </td>
+                                <td><p>Ending date for search in YYYY-MM-DDThh:mm:ss format.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \ElasticEmailApi\Array<\ElasticEmailEnums\Usage>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_Overview" name="method_Overview" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">Overview()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">Overview() : \ElasticEmailEnums\AccountOverview</pre>
+                <p><em>Shows summary for your account.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/ElasticEmailEnums.AccountOverview.html">\ElasticEmailEnums\AccountOverview</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_ProfileOverview" name="method_ProfileOverview" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">ProfileOverview()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">ProfileOverview() : \ElasticEmailEnums\Profile</pre>
+                <p><em>Shows you account&#039;s profile basic overview</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/ElasticEmailEnums.Profile.html">\ElasticEmailEnums\Profile</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_RemoveSubAccountCredits" name="method_RemoveSubAccountCredits" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">RemoveSubAccountCredits()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">RemoveSubAccountCredits(\ElasticEmailEnums\CreditType  <span class="argument">$creditType</span>, string  <span class="argument">$notes</span>, string  <span class="argument">$subAccountEmail = null</span>, string  <span class="argument">$publicAccountID = null</span>, \ElasticEmailApi\?int  <span class="argument">$credits = null</span>, boolean  <span class="argument">$removeAll = false</span>) </pre>
+                <p><em>Remove email, template or litmus credits from a sub-account</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/ElasticEmailEnums.CreditType.html">\ElasticEmailEnums\CreditType</a></td>
+                                <td>$creditType </td>
+                                <td><p>Type of credits to add (Email or Litmus)</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$notes </td>
+                                <td><p>Specific notes about the transaction</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$subAccountEmail </td>
+                                <td><p>Email address of sub-account</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$publicAccountID </td>
+                                <td><p>Public key of sub-account to remove credits from. Use subAccountEmail or publicAccountID not both.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?int</td>
+                                <td>$credits </td>
+                                <td><p>Amount of credits to remove</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$removeAll </td>
+                                <td><p>Remove all credits of this type from sub-account (overrides credits if provided)</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_RequestNewApiKey" name="method_RequestNewApiKey" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">RequestNewApiKey()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">RequestNewApiKey() : string</pre>
+                <p><em>Request a new default APIKey.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_RequestPremiumSupport" name="method_RequestPremiumSupport" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">RequestPremiumSupport()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">RequestPremiumSupport() </pre>
+                <p><em>Request premium support for your account</em></p>
+                
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_RequestPrivateIP" name="method_RequestPrivateIP" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">RequestPrivateIP()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">RequestPrivateIP(integer  <span class="argument">$count</span>, string  <span class="argument">$notes</span>) </pre>
+                <p><em>Request a private IP for your Account</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$count </td>
+                                <td><p>Number of items.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$notes </td>
+                                <td><p>Free form field of notes</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_UpdateAdvancedOptions" name="method_UpdateAdvancedOptions" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">UpdateAdvancedOptions()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">UpdateAdvancedOptions(\ElasticEmailApi\?bool  <span class="argument">$enableClickTracking = null</span>, \ElasticEmailApi\?bool  <span class="argument">$enableLinkClickTracking = null</span>, \ElasticEmailApi\?bool  <span class="argument">$manageSubscriptions = null</span>, \ElasticEmailApi\?bool  <span class="argument">$manageSubscribedOnly = null</span>, \ElasticEmailApi\?bool  <span class="argument">$transactionalOnUnsubscribe = null</span>, \ElasticEmailApi\?bool  <span class="argument">$skipListUnsubscribe = null</span>, \ElasticEmailApi\?bool  <span class="argument">$autoTextFromHtml = null</span>, \ElasticEmailApi\?bool  <span class="argument">$allowCustomHeaders = null</span>, string  <span class="argument">$bccEmail = null</span>, string  <span class="argument">$contentTransferEncoding = null</span>, \ElasticEmailApi\?bool  <span class="argument">$emailNotificationForError = null</span>, string  <span class="argument">$emailNotificationEmail = null</span>, string  <span class="argument">$webNotificationUrl = null</span>, \ElasticEmailApi\?bool  <span class="argument">$webNotificationNotifyOncePerEmail = null</span>, \ElasticEmailApi\?bool  <span class="argument">$webNotificationForSent = null</span>, \ElasticEmailApi\?bool  <span class="argument">$webNotificationForOpened = null</span>, \ElasticEmailApi\?bool  <span class="argument">$webNotificationForClicked = null</span>, \ElasticEmailApi\?bool  <span class="argument">$webNotificationForUnsubscribed = null</span>, \ElasticEmailApi\?bool  <span class="argument">$webNotificationForAbuseReport = null</span>, \ElasticEmailApi\?bool  <span class="argument">$webNotificationForError = null</span>, string  <span class="argument">$hubCallBackUrl = &quot;&quot;</span>, string  <span class="argument">$inboundDomain = null</span>, \ElasticEmailApi\?bool  <span class="argument">$inboundContactsOnly = null</span>, \ElasticEmailApi\?bool  <span class="argument">$lowCreditNotification = null</span>, \ElasticEmailApi\?bool  <span class="argument">$enableUITooltips = null</span>, \ElasticEmailApi\?bool  <span class="argument">$enableContactFeatures = null</span>, string  <span class="argument">$notificationsEmails = null</span>, string  <span class="argument">$unsubscribeNotificationsEmails = null</span>, string  <span class="argument">$logoUrl = null</span>, \ElasticEmailApi\?bool  <span class="argument">$enableTemplateScripting = true</span>, \ElasticEmailApi\?int  <span class="argument">$staleContactScore = null</span>, \ElasticEmailApi\?int  <span class="argument">$staleContactInactiveDays = null</span>, string  <span class="argument">$deliveryReason = null</span>, \ElasticEmailApi\?bool  <span class="argument">$tutorialsEnabled = null</span>, \ElasticEmailApi\?bool  <span class="argument">$enableOpenTracking = null</span>, \ElasticEmailApi\?bool  <span class="argument">$consentTrackingOnUnsubscribe = null</span>) : \ElasticEmailEnums\AdvancedOptions</pre>
+                <p><em>Update sending and tracking options of your account.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$enableClickTracking </td>
+                                <td><p>True, if you want to track clicks. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$enableLinkClickTracking </td>
+                                <td><p>True, if you want to track by link tracking. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$manageSubscriptions </td>
+                                <td><p>True, if you want to display your labels on your unsubscribe form. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$manageSubscribedOnly </td>
+                                <td><p>True, if you want to only display labels that the contact is subscribed to on your unsubscribe form. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$transactionalOnUnsubscribe </td>
+                                <td><p>True, if you want to display an option for the contact to opt into transactional email only on your unsubscribe form. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$skipListUnsubscribe </td>
+                                <td><p>True, if you do not want to use list-unsubscribe headers. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$autoTextFromHtml </td>
+                                <td><p>True, if text BODY of message should be created automatically. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$allowCustomHeaders </td>
+                                <td><p>True, if you want to apply custom headers to your emails. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$bccEmail </td>
+                                <td><p>Email address to send a copy of all email to.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$contentTransferEncoding </td>
+                                <td><p>Type of content encoding</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$emailNotificationForError </td>
+                                <td><p>True, if you want bounce notifications returned. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$emailNotificationEmail </td>
+                                <td><p>Specific email address to send bounce email notifications to.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$webNotificationUrl </td>
+                                <td><p>URL address to receive web notifications to parse and process.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$webNotificationNotifyOncePerEmail </td>
+                                <td><p>True, if you want to receive notifications for each type only once per email. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$webNotificationForSent </td>
+                                <td><p>True, if you want to send web notifications for sent email. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$webNotificationForOpened </td>
+                                <td><p>True, if you want to send web notifications for opened email. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$webNotificationForClicked </td>
+                                <td><p>True, if you want to send web notifications for clicked email. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$webNotificationForUnsubscribed </td>
+                                <td><p>True, if you want to send web notifications for unsubscribed email. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$webNotificationForAbuseReport </td>
+                                <td><p>True, if you want to send web notifications for complaint email. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$webNotificationForError </td>
+                                <td><p>True, if you want to send web notifications for bounced email. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$hubCallBackUrl </td>
+                                <td><p>URL used for tracking action of inbound emails</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$inboundDomain </td>
+                                <td><p>Domain you use as your inbound domain</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$inboundContactsOnly </td>
+                                <td><p>True, if you want inbound email to only process contacts from your account. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$lowCreditNotification </td>
+                                <td><p>True, if you want to receive low credit email notifications. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$enableUITooltips </td>
+                                <td><p>True, if account has tooltips active. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$enableContactFeatures </td>
+                                <td><p>True, if you want to use Contact Delivery Tools.  Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$notificationsEmails </td>
+                                <td><p>Email addresses to send a copy of all notifications from our system. Separated by semicolon</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$unsubscribeNotificationsEmails </td>
+                                <td><p>Emails, separated by semicolon, to which the notification about contact unsubscribing should be sent to</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$logoUrl </td>
+                                <td><p>URL to your logo image.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$enableTemplateScripting </td>
+                                <td><p>True, if you want to use template scripting in your emails {{}}. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?int</td>
+                                <td>$staleContactScore </td>
+                                <td><p>(0 means this functionality is NOT enabled) Score, depending on the number of times you have sent to a recipient, at which the given recipient should be moved to the Stale status</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?int</td>
+                                <td>$staleContactInactiveDays </td>
+                                <td><p>(0 means this functionality is NOT enabled) Number of days of inactivity for a contact after which the given recipient should be moved to the Stale status</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$deliveryReason </td>
+                                <td><p>Why your clients are receiving your emails.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$tutorialsEnabled </td>
+                                <td><p>True, if you want to enable Dashboard Tutotials</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$enableOpenTracking </td>
+                                <td><p>True, if you want to track opens. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$consentTrackingOnUnsubscribe </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html">\ElasticEmailEnums\AdvancedOptions</a>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_UpdateCustomBranding" name="method_UpdateCustomBranding" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">UpdateCustomBranding()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">UpdateCustomBranding(boolean  <span class="argument">$enablePrivateBranding = false</span>, string  <span class="argument">$logoUrl = null</span>, string  <span class="argument">$supportLink = null</span>, string  <span class="argument">$privateBrandingUrl = null</span>, string  <span class="argument">$smtpAddress = null</span>, string  <span class="argument">$smtpAlternative = null</span>, string  <span class="argument">$paymentUrl = null</span>) </pre>
+                <p><em>Update settings of your private branding. These settings are needed, if you want to use Elastic Email under your brand.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$enablePrivateBranding </td>
+                                <td><p>True: Turn on or off ability to send mails under your brand. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$logoUrl </td>
+                                <td><p>URL to your logo image.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$supportLink </td>
+                                <td><p>Address to your support.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$privateBrandingUrl </td>
+                                <td><p>Subdomain for your rebranded service</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$smtpAddress </td>
+                                <td><p>Address of SMTP server.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$smtpAlternative </td>
+                                <td><p>Address of alternative SMTP server.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$paymentUrl </td>
+                                <td><p>URL for making payments.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_UpdateHttpNotification" name="method_UpdateHttpNotification" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">UpdateHttpNotification()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">UpdateHttpNotification(string  <span class="argument">$url</span>, boolean  <span class="argument">$notifyOncePerEmail = false</span>, string  <span class="argument">$settings = null</span>) </pre>
+                <p><em>Update http notification URL.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$url </td>
+                                <td><p>URL of notification.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$notifyOncePerEmail </td>
+                                <td><p>True, if you want to receive notifications for each type only once per email. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$settings </td>
+                                <td><p>Http notification settings serialized to JSON</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_UpdateProfile" name="method_UpdateProfile" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">UpdateProfile()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">UpdateProfile(string  <span class="argument">$firstName</span>, string  <span class="argument">$lastName</span>, string  <span class="argument">$address1</span>, string  <span class="argument">$city</span>, string  <span class="argument">$state</span>, string  <span class="argument">$zip</span>, integer  <span class="argument">$countryID</span>, \ElasticEmailApi\?bool  <span class="argument">$marketingConsent = null</span>, string  <span class="argument">$address2 = null</span>, string  <span class="argument">$company = null</span>, string  <span class="argument">$website = null</span>, string  <span class="argument">$logoUrl = null</span>, string  <span class="argument">$taxCode = null</span>, string  <span class="argument">$phone = null</span>) </pre>
+                <p><em>Update your profile.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$firstName </td>
+                                <td><p>First name.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$lastName </td>
+                                <td><p>Last name.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$address1 </td>
+                                <td><p>First line of address.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$city </td>
+                                <td><p>City.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$state </td>
+                                <td><p>State or province.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$zip </td>
+                                <td><p>Zip/postal code.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$countryID </td>
+                                <td><p>Numeric ID of country. A file with the list of countries is available <a href="http://api.elasticemail.com/public/countries"><b>here</b></a></p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$marketingConsent </td>
+                                <td><p>True if you want to receive newsletters from Elastic Email. Otherwise, false. Empty to leave the current value.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$address2 </td>
+                                <td><p>Second line of address.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$company </td>
+                                <td><p>Company name.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$website </td>
+                                <td><p>HTTP address of your website.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$logoUrl </td>
+                                <td><p>URL to your logo image.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$taxCode </td>
+                                <td><p>Code used for tax purposes.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$phone </td>
+                                <td><p>Phone number</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_UpdateSubAccountSettings" name="method_UpdateSubAccountSettings" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">UpdateSubAccountSettings()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">UpdateSubAccountSettings(boolean  <span class="argument">$requiresEmailCredits = false</span>, integer  <span class="argument">$monthlyRefillCredits</span>, boolean  <span class="argument">$requiresLitmusCredits = false</span>, boolean  <span class="argument">$enableLitmusTest = false</span>, \ElasticEmailApi\?int  <span class="argument">$dailySendLimit = null</span>, integer  <span class="argument">$emailSizeLimit = 10</span>, boolean  <span class="argument">$enablePrivateIPRequest = false</span>, integer  <span class="argument">$maxContacts</span>, string  <span class="argument">$subAccountEmail = null</span>, string  <span class="argument">$publicAccountID = null</span>, \ElasticEmailApi\?\ElasticEmailEnums\SendingPermission  <span class="argument">$sendingPermission = null</span>, \ElasticEmailApi\?bool  <span class="argument">$enableContactFeatures = null</span>, string  <span class="argument">$poolName = null</span>) </pre>
+                <p><em>Updates settings of specified subaccount</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$requiresEmailCredits </td>
+                                <td><p>True, if account needs credits to send emails. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$monthlyRefillCredits </td>
+                                <td><p>Amount of credits added to account automatically</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$requiresLitmusCredits </td>
+                                <td><p>True, if account needs credits to send emails. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$enableLitmusTest </td>
+                                <td><p>True, if account is able to send template tests to Litmus. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?int</td>
+                                <td>$dailySendLimit </td>
+                                <td><p>Amount of emails account can send daily</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$emailSizeLimit </td>
+                                <td><p>Maximum size of email including attachments in MB's</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>boolean</td>
+                                <td>$enablePrivateIPRequest </td>
+                                <td><p>True, if account can request for private IP on its own. Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$maxContacts </td>
+                                <td><p>Maximum number of contacts the account can have</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$subAccountEmail </td>
+                                <td><p>Email address of sub-account</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$publicAccountID </td>
+                                <td><p>Public key of sub-account to update. Use subAccountEmail or publicAccountID not both.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?\ElasticEmailEnums\SendingPermission</td>
+                                <td>$sendingPermission </td>
+                                <td><p>Sending permission setting for account</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\ElasticEmailApi\?bool</td>
+                                <td>$enableContactFeatures </td>
+                                <td><p>True, if you want to use Contact Delivery Tools.  Otherwise, false</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$poolName </td>
+                                <td><p>Name of your custom IP Pool to be used in the sending process</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_sendRequest" name="method_sendRequest" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">sendRequest()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">sendRequest(string  <span class="argument">$url</span>, array  <span class="argument">$data = array()</span>, string  <span class="argument">$method = &#039;POST&#039;</span>, array  <span class="argument">$attachments = array()</span>) : \Psr\Http\Message\ResponseInterface</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$url </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$data </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$method </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$attachments </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                                    <h4>Throws</h4>
+                    <dl>
+                                                    <dt>\Exception</dt>
+                            <dd></dd>
+                                                                    </dl>
+                
+                                    <h4>Returns</h4>
+                    \Psr\Http\Message\ResponseInterface
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ElasticEmailClient.ElasticRequest.html"><div class="path-wrapper">\ElasticEmailClient\ElasticRequest</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_parseMultipart" name="method_parseMultipart" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">parseMultipart()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">parseMultipart(array  <span class="argument">$attachments</span>, array  <span class="argument">$params</span>) : array</pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$attachments </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$params </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/ElasticEmailClient.ElasticRequest.html"><div class="path-wrapper">\ElasticEmailClient\ElasticRequest</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">Account.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/ElasticEmailApi/Account.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/ElasticEmailApi.html">\ElasticEmailApi</a></li>
+                                                                            <li><a href="../namespaces/ElasticEmailClient.html">\ElasticEmailClient</a></li>
+                                                                            <li><a href="../namespaces/ElasticEmailEnums.html">\ElasticEmailEnums</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on June 16th, 2018 at 13:29.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

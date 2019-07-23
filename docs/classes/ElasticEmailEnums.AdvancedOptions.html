@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/ElasticEmailApi.html">\ElasticEmailApi</a></li>
+                                                        <li><a href="../namespaces/ElasticEmailClient.html">\ElasticEmailClient</a></li>
+                                                        <li><a href="../namespaces/ElasticEmailEnums.html">\ElasticEmailEnums</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">1147</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-553699090"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-553699090" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1645376419"></a>
+                                <a href="../namespaces/ElasticEmailApi.html" style="margin-left: 30px; padding-left: 0">ElasticEmailApi</a>
+            </div>
+            <div id="namespace-1645376419" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/ElasticEmailApi.AccessToken.html">AccessToken</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Account.html">Account</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Campaign.html">Campaign</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Channel.html">Channel</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Contact.html">Contact</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Domain.html">Domain</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.EEList.html">EEList</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Email.html">Email</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Export.html">Export</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.File.html">File</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Log.html">Log</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Segment.html">Segment</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.SMS.html">SMS</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Survey.html">Survey</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailApi.Template.html">Template</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-997708916"></a>
+                                <a href="../namespaces/ElasticEmailClient.html" style="margin-left: 30px; padding-left: 0">ElasticEmailClient</a>
+            </div>
+            <div id="namespace-997708916" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/ElasticEmailClient.ElasticClient.html">ElasticClient</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailClient.ElasticRequest.html">ElasticRequest</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-650590501"></a>
+                                <a href="../namespaces/ElasticEmailEnums.html" style="margin-left: 30px; padding-left: 0">ElasticEmailEnums</a>
+            </div>
+            <div id="namespace-650590501" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AccessLevel.html">AccessLevel</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AccessToken.html">AccessToken</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Account.html">Account</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AccountOverview.html">AccountOverview</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AccountSendStatus.html">AccountSendStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.AdvancedOptions.html">AdvancedOptions</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.BlockedContact.html">BlockedContact</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.BouncedCategorySummary.html">BouncedCategorySummary</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Campaign.html">Campaign</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CampaignChannel.html">CampaignChannel</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CampaignStatus.html">CampaignStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CampaignTemplate.html">CampaignTemplate</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CampaignTriggerType.html">CampaignTriggerType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CertificateValidationStatus.html">CertificateValidationStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Channel.html">Channel</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CompressionFormat.html">CompressionFormat</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ConsentTracking.html">ConsentTracking</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Contact.html">Contact</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactCollection.html">ContactCollection</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactContainer.html">ContactContainer</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactHistEventType.html">ContactHistEventType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactHistory.html">ContactHistory</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactSource.html">ContactSource</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactStatus.html">ContactStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactStatusCounts.html">ContactStatusCounts</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ContactUnsubscribeReasonCounts.html">ContactUnsubscribeReasonCounts</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.CreditType.html">CreditType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.DailyLogStatusSummary.html">DailyLogStatusSummary</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.DomainDetail.html">DomainDetail</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EEList.html">EEList</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailCredits.html">EmailCredits</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailJobFailedStatus.html">EmailJobFailedStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailJobStatus.html">EmailJobStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailSend.html">EmailSend</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailStatus.html">EmailStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EmailView.html">EmailView</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.EncodingType.html">EncodingType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Export.html">Export</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ExportFileFormats.html">ExportFileFormats</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ExportLink.html">ExportLink</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ExportStatus.html">ExportStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ExportTypeCounts.html">ExportTypeCounts</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.File.html">File</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.IntervalType.html">IntervalType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LinkTrackingDetails.html">LinkTrackingDetails</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LitmusCredits.html">LitmusCredits</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Log.html">Log</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LogJobStatus.html">LogJobStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LogStatusSummary.html">LogStatusSummary</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.LogSummary.html">LogSummary</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.MessageCategory.html">MessageCategory</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.NotificationQueue.html">NotificationQueue</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.NotificationType.html">NotificationType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Payment.html">Payment</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Profile.html">Profile</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.QuestionType.html">QuestionType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Recipient.html">Recipient</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Referral.html">Referral</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ReputationDetail.html">ReputationDetail</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ReputationHistory.html">ReputationHistory</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.ReputationImpact.html">ReputationImpact</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Segment.html">Segment</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SegmentHistory.html">SegmentHistory</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SendingPermission.html">SendingPermission</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SpamCheck.html">SpamCheck</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SpamRule.html">SpamRule</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SplitOptimization.html">SplitOptimization</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SubAccount.html">SubAccount</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SubAccountSettings.html">SubAccountSettings</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Survey.html">Survey</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyResultAnswerInfo.html">SurveyResultAnswerInfo</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyResultInfo.html">SurveyResultInfo</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyResultsAnswer.html">SurveyResultsAnswer</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyResultsSummaryInfo.html">SurveyResultsSummaryInfo</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyStatus.html">SurveyStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyStep.html">SurveyStep</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyStepAnswer.html">SurveyStepAnswer</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.SurveyStepType.html">SurveyStepType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Template.html">Template</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TemplateList.html">TemplateList</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TemplateScope.html">TemplateScope</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TemplateType.html">TemplateType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TrackedLink.html">TrackedLink</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TrackingType.html">TrackingType</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.TrackingValidationStatus.html">TrackingValidationStatus</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.Usage.html">Usage</a></li>
+                                                    <li class="class"><a href="../classes/ElasticEmailEnums.UsageData.html">UsageData</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/ElasticEmailEnums.html">\ElasticEmailEnums</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\ElasticEmailEnums</small>AdvancedOptions</h1>
+                    <p><em></em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <em>No public methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_EnableClickTracking" class="">$EnableClickTracking</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_EnableLinkClickTracking" class="">$EnableLinkClickTracking</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_EnableTemplateScripting" class="">$EnableTemplateScripting</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_AutoTextFormat" class="">$AutoTextFormat</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_EmailNotificationForError" class="">$EmailNotificationForError</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_WebNotificationForSent" class="">$WebNotificationForSent</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_WebNotificationForOpened" class="">$WebNotificationForOpened</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_WebNotificationForClicked" class="">$WebNotificationForClicked</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_WebnotificationForUnsubscribed" class="">$WebnotificationForUnsubscribed</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_WebNotificationForAbuse" class="">$WebNotificationForAbuse</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_WebNotificationForError" class="">$WebNotificationForError</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_WebNotificationNotifyOncePerEmail" class="">$WebNotificationNotifyOncePerEmail</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_LowCreditNotification" class="">$LowCreditNotification</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_InboundContactsOnly" class="">$InboundContactsOnly</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_IsSubAccount" class="">$IsSubAccount</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_IsOwnedByReseller" class="">$IsOwnedByReseller</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_EnableUnsubscribeHeader" class="">$EnableUnsubscribeHeader</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_ManageSubscriptions" class="">$ManageSubscriptions</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_ManageSubscribedOnly" class="">$ManageSubscribedOnly</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_TransactionalOnUnsubscribe" class="">$TransactionalOnUnsubscribe</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_ConsentTrackingOnUnsubscribe" class="">$ConsentTrackingOnUnsubscribe</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_PreviewMessageID" class="">$PreviewMessageID</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_AllowCustomHeaders" class="">$AllowCustomHeaders</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_BccEmail" class="">$BccEmail</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_ContentTransferEncoding" class="">$ContentTransferEncoding</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_EmailNotification" class="">$EmailNotification</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_NotificationsEmails" class="">$NotificationsEmails</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_UnsubscribeNotificationEmails" class="">$UnsubscribeNotificationEmails</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_WebNotificationUrl" class="">$WebNotificationUrl</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_HubCallbackUrl" class="">$HubCallbackUrl</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_InboundDomain" class="">$InboundDomain</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_EnableUITooltips" class="">$EnableUITooltips</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_EnableContactFeatures" class="">$EnableContactFeatures</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_LogoUrl" class="">$LogoUrl</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_StaleContactScore" class="">$StaleContactScore</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_StaleContactInactiveDays" class="">$StaleContactInactiveDays</a><br />
+                                                                    <a href="../classes/ElasticEmailEnums.AdvancedOptions.html#property_DeliveryReason" class="">$DeliveryReason</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/ElasticEmailEnums.AdvancedOptions.html"><div class="path-wrapper">ElasticEmailEnums/AdvancedOptions.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\ElasticEmailEnums\AdvancedOptions</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_EnableClickTracking" name="property_EnableClickTracking" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$EnableClickTracking</h3>
+                <pre class="signature">$EnableClickTracking : </pre>
+                <p><em>True, if you want to track clicks. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_EnableLinkClickTracking" name="property_EnableLinkClickTracking" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$EnableLinkClickTracking</h3>
+                <pre class="signature">$EnableLinkClickTracking : </pre>
+                <p><em>True, if you want to track by link tracking. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_EnableTemplateScripting" name="property_EnableTemplateScripting" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$EnableTemplateScripting</h3>
+                <pre class="signature">$EnableTemplateScripting : </pre>
+                <p><em>True, if you want to use template scripting in your emails {{}}. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_AutoTextFormat" name="property_AutoTextFormat" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$AutoTextFormat</h3>
+                <pre class="signature">$AutoTextFormat : </pre>
+                <p><em>True, if text BODY of message should be created automatically. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_EmailNotificationForError" name="property_EmailNotificationForError" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$EmailNotificationForError</h3>
+                <pre class="signature">$EmailNotificationForError : </pre>
+                <p><em>True, if you want bounce notifications returned. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_WebNotificationForSent" name="property_WebNotificationForSent" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$WebNotificationForSent</h3>
+                <pre class="signature">$WebNotificationForSent : </pre>
+                <p><em>True, if you want to send web notifications for sent email. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_WebNotificationForOpened" name="property_WebNotificationForOpened" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$WebNotificationForOpened</h3>
+                <pre class="signature">$WebNotificationForOpened : </pre>
+                <p><em>True, if you want to send web notifications for opened email. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_WebNotificationForClicked" name="property_WebNotificationForClicked" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$WebNotificationForClicked</h3>
+                <pre class="signature">$WebNotificationForClicked : </pre>
+                <p><em>True, if you want to send web notifications for clicked email. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_WebnotificationForUnsubscribed" name="property_WebnotificationForUnsubscribed" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$WebnotificationForUnsubscribed</h3>
+                <pre class="signature">$WebnotificationForUnsubscribed : </pre>
+                <p><em>True, if you want to send web notifications for unsubscribed email. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_WebNotificationForAbuse" name="property_WebNotificationForAbuse" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$WebNotificationForAbuse</h3>
+                <pre class="signature">$WebNotificationForAbuse : </pre>
+                <p><em>True, if you want to send web notifications for complaint email. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_WebNotificationForError" name="property_WebNotificationForError" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$WebNotificationForError</h3>
+                <pre class="signature">$WebNotificationForError : </pre>
+                <p><em>True, if you want to send web notifications for bounced email. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_WebNotificationNotifyOncePerEmail" name="property_WebNotificationNotifyOncePerEmail" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$WebNotificationNotifyOncePerEmail</h3>
+                <pre class="signature">$WebNotificationNotifyOncePerEmail : </pre>
+                <p><em>True, if you want to receive notifications for each type only once per email. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_LowCreditNotification" name="property_LowCreditNotification" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$LowCreditNotification</h3>
+                <pre class="signature">$LowCreditNotification : </pre>
+                <p><em>True, if you want to receive low credit email notifications. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_InboundContactsOnly" name="property_InboundContactsOnly" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$InboundContactsOnly</h3>
+                <pre class="signature">$InboundContactsOnly : </pre>
+                <p><em>True, if you want inbound email to only process contacts from your account. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_IsSubAccount" name="property_IsSubAccount" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$IsSubAccount</h3>
+                <pre class="signature">$IsSubAccount : </pre>
+                <p><em>True, if this account is a sub-account. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_IsOwnedByReseller" name="property_IsOwnedByReseller" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$IsOwnedByReseller</h3>
+                <pre class="signature">$IsOwnedByReseller : </pre>
+                <p><em>True, if this account resells Elastic Email. Otherwise, false.</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_EnableUnsubscribeHeader" name="property_EnableUnsubscribeHeader" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$EnableUnsubscribeHeader</h3>
+                <pre class="signature">$EnableUnsubscribeHeader : </pre>
+                <p><em>True, if you want to enable list-unsubscribe header. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_ManageSubscriptions" name="property_ManageSubscriptions" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$ManageSubscriptions</h3>
+                <pre class="signature">$ManageSubscriptions : </pre>
+                <p><em>True, if you want to display your labels on your unsubscribe form. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_ManageSubscribedOnly" name="property_ManageSubscribedOnly" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$ManageSubscribedOnly</h3>
+                <pre class="signature">$ManageSubscribedOnly : </pre>
+                <p><em>True, if you want to only display labels that the contact is subscribed to on your unsubscribe form. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_TransactionalOnUnsubscribe" name="property_TransactionalOnUnsubscribe" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$TransactionalOnUnsubscribe</h3>
+                <pre class="signature">$TransactionalOnUnsubscribe : </pre>
+                <p><em>True, if you want to display an option for the contact to opt into transactional email only on your unsubscribe form. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_ConsentTrackingOnUnsubscribe" name="property_ConsentTrackingOnUnsubscribe" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$ConsentTrackingOnUnsubscribe</h3>
+                <pre class="signature">$ConsentTrackingOnUnsubscribe : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_PreviewMessageID" name="property_PreviewMessageID" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$PreviewMessageID</h3>
+                <pre class="signature">$PreviewMessageID : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_AllowCustomHeaders" name="property_AllowCustomHeaders" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$AllowCustomHeaders</h3>
+                <pre class="signature">$AllowCustomHeaders : </pre>
+                <p><em>True, if you want to apply custom headers to your emails. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_BccEmail" name="property_BccEmail" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$BccEmail</h3>
+                <pre class="signature">$BccEmail : </pre>
+                <p><em>Email address to send a copy of all email to.</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_ContentTransferEncoding" name="property_ContentTransferEncoding" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$ContentTransferEncoding</h3>
+                <pre class="signature">$ContentTransferEncoding : </pre>
+                <p><em>Type of content encoding</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_EmailNotification" name="property_EmailNotification" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$EmailNotification</h3>
+                <pre class="signature">$EmailNotification : </pre>
+                <p><em>True, if you want to receive bounce email notifications. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_NotificationsEmails" name="property_NotificationsEmails" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$NotificationsEmails</h3>
+                <pre class="signature">$NotificationsEmails : </pre>
+                <p><em>Email addresses to send a copy of all notifications from our system. Separated by semicolon</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_UnsubscribeNotificationEmails" name="property_UnsubscribeNotificationEmails" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$UnsubscribeNotificationEmails</h3>
+                <pre class="signature">$UnsubscribeNotificationEmails : </pre>
+                <p><em>Emails, separated by semicolon, to which the notification about contact unsubscribing should be sent to</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_WebNotificationUrl" name="property_WebNotificationUrl" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$WebNotificationUrl</h3>
+                <pre class="signature">$WebNotificationUrl : </pre>
+                <p><em>URL address to receive web notifications to parse and process.</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_HubCallbackUrl" name="property_HubCallbackUrl" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$HubCallbackUrl</h3>
+                <pre class="signature">$HubCallbackUrl : </pre>
+                <p><em>URL used for tracking action of inbound emails</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_InboundDomain" name="property_InboundDomain" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$InboundDomain</h3>
+                <pre class="signature">$InboundDomain : </pre>
+                <p><em>Domain you use as your inbound domain</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_EnableUITooltips" name="property_EnableUITooltips" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$EnableUITooltips</h3>
+                <pre class="signature">$EnableUITooltips : </pre>
+                <p><em>True, if account has tooltips active. Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_EnableContactFeatures" name="property_EnableContactFeatures" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$EnableContactFeatures</h3>
+                <pre class="signature">$EnableContactFeatures : </pre>
+                <p><em>True, if you want to use Contact Delivery Tools.  Otherwise, false</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_LogoUrl" name="property_LogoUrl" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$LogoUrl</h3>
+                <pre class="signature">$LogoUrl : </pre>
+                <p><em>URL to your logo image.</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_StaleContactScore" name="property_StaleContactScore" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$StaleContactScore</h3>
+                <pre class="signature">$StaleContactScore : </pre>
+                <p><em>(0 means this functionality is NOT enabled) Score, depending on the number of times you have sent to a recipient, at which the given recipient should be moved to the Stale status</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_StaleContactInactiveDays" name="property_StaleContactInactiveDays" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$StaleContactInactiveDays</h3>
+                <pre class="signature">$StaleContactInactiveDays : </pre>
+                <p><em>(0 means this functionality is NOT enabled) Number of days of inactivity for a contact after which the given recipient should be moved to the Stale status</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_DeliveryReason" name="property_DeliveryReason" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$DeliveryReason</h3>
+                <pre class="signature">$DeliveryReason : </pre>
+                <p><em>Why your clients are receiving your emails.</em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                            
+                                </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">AdvancedOptions.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/ElasticEmailEnums/AdvancedOptions.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/ElasticEmailApi.html">\ElasticEmailApi</a></li>
+                                                                            <li><a href="../namespaces/ElasticEmailClient.html">\ElasticEmailClient</a></li>
+                                                                            <li><a href="../namespaces/ElasticEmailEnums.html">\ElasticEmailEnums</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on June 16th, 2018 at 13:29.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

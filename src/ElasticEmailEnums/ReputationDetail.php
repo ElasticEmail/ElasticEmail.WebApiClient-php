@@ -59,7 +59,7 @@ class ReputationDetail
     public /*double*/ $NextPriceLevelReputation;
 
     /**
-     * Amount of emails sent from this account
+     * Amount of emails sent from this Account
      */
     public /*string*/ $PriceLevel;
 

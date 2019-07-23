@@ -29,57 +29,17 @@ class AdvancedOptions
     public /*bool*/ $EmailNotificationForError;
 
     /**
-     * True, if you want to send web notifications for sent email. Otherwise, false
-     */
-    public /*bool*/ $WebNotificationForSent;
-
-    /**
-     * True, if you want to send web notifications for opened email. Otherwise, false
-     */
-    public /*bool*/ $WebNotificationForOpened;
-
-    /**
-     * True, if you want to send web notifications for clicked email. Otherwise, false
-     */
-    public /*bool*/ $WebNotificationForClicked;
-
-    /**
-     * True, if you want to send web notifications for unsubscribed email. Otherwise, false
-     */
-    public /*bool*/ $WebnotificationForUnsubscribed;
-
-    /**
-     * True, if you want to send web notifications for complaint email. Otherwise, false
-     */
-    public /*bool*/ $WebNotificationForAbuse;
-
-    /**
-     * True, if you want to send web notifications for bounced email. Otherwise, false
-     */
-    public /*bool*/ $WebNotificationForError;
-
-    /**
-     * True, if you want to receive notifications for each type only once per email. Otherwise, false
-     */
-    public /*bool*/ $WebNotificationNotifyOncePerEmail;
-
-    /**
      * True, if you want to receive low credit email notifications. Otherwise, false
      */
     public /*bool*/ $LowCreditNotification;
 
     /**
-     * True, if you want inbound email to only process contacts from your account. Otherwise, false
-     */
-    public /*bool*/ $InboundContactsOnly;
-
-    /**
-     * True, if this account is a sub-account. Otherwise, false
+     * True, if this Account is a Sub-Account. Otherwise, false
      */
     public /*bool*/ $IsSubAccount;
 
     /**
-     * True, if this account resells Elastic Email. Otherwise, false.
+     * True, if this Account resells Elastic Email. Otherwise, false.
      */
     public /*bool*/ $IsOwnedByReseller;
 
@@ -144,22 +104,7 @@ class AdvancedOptions
     public /*string*/ $UnsubscribeNotificationEmails;
 
     /**
-     * URL address to receive web notifications to parse and process.
-     */
-    public /*string*/ $WebNotificationUrl;
-
-    /**
-     * URL used for tracking action of inbound emails
-     */
-    public /*string*/ $HubCallbackUrl;
-
-    /**
-     * Domain you use as your inbound domain
-     */
-    public /*string*/ $InboundDomain;
-
-    /**
-     * True, if account has tooltips active. Otherwise, false
+     * True, if Account has tooltips active. Otherwise, false
      */
     public /*bool*/ $EnableUITooltips;
 
@@ -187,5 +132,10 @@ class AdvancedOptions
      * Why your clients are receiving your emails.
      */
     public /*string*/ $DeliveryReason;
+
+    /**
+     * True, if you want to enable Dashboard Tutotials
+     */
+    public /*?bool*/ $TutorialsEnabled;
 
 }

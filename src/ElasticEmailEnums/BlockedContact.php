@@ -9,7 +9,7 @@ class BlockedContact
     public /*string*/ $Email;
 
     /**
-     * Name of status: Active, Engaged, Inactive, Abuse, Bounced, Unsubscribed.
+     * Status of the given resource
      */
     public /*string*/ $Status;
 

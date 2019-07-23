@@ -4,7 +4,7 @@
     class ElasticClient
     {
         /**
-         * ApiClient constructor.
+         * ElasticClient constructor.
          * @param \ElasticEmailClient\ApiConfiguration $apiConfiguration
          */
         public function __construct(\ElasticEmailClient\ApiConfiguration $apiConfiguration)
@@ -21,7 +21,6 @@
             $this->Log= new \ElasticEmailApi\Log($apiConfiguration);
             $this->Segment= new \ElasticEmailApi\Segment($apiConfiguration);
             $this->SMS= new \ElasticEmailApi\SMS($apiConfiguration);
-            $this->Survey= new \ElasticEmailApi\Survey($apiConfiguration);
             $this->Template= new \ElasticEmailApi\Template($apiConfiguration);
 
         }
@@ -38,7 +37,6 @@
         public $Log;
         public $Segment;
         public $SMS;
-        public $Survey;
         public $Template;
 
     }

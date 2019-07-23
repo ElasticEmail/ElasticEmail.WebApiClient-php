@@ -34,7 +34,7 @@ class ReputationHistory
     public /*double*/ $AverageSpamScore;
 
     /**
-     * Points from proper setup of your account
+     * Points from proper setup of your Account
      */
     public /*double*/ $SetupScore;
 

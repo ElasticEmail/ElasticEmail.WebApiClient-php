@@ -9,7 +9,7 @@ class Usage
     public /*string*/ $Email;
 
     /**
-     * True, if this account is a sub-account. Otherwise, false
+     * True, if this Account is a Sub-Account. Otherwise, false
      */
     public /*bool*/ $IsSubAccount;
 

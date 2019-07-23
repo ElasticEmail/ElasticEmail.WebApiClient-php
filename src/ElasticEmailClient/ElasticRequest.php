@@ -51,7 +51,7 @@
                 if (!empty($data) && empty($attachments) && $method === 'POST') {
                     $options['form_params'] = $data;
                 } else {
-                    $url.= '?'.http_build_query($data);
+                    $url.= '?'.http_build_query($data, null, '&');
                 }
             }
 
@@ -69,7 +69,9 @@
                 throw new \Exception($resp->error);
             }
 
-             return $resp->data;
+            if ($resp->data) { return $resp->data; }
+             
+            return $resp;
         }
 
         /**

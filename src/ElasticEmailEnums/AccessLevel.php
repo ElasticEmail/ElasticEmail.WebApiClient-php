@@ -41,7 +41,7 @@ abstract class AccessLevel
     /**
      * 
      */
-    const ViewJourneys = 64;
+    const ViewAutomations = 64;
 
     /**
      * 
@@ -111,7 +111,7 @@ abstract class AccessLevel
     /**
      * 
      */
-    const ModifyJourneys = 1048576;
+    const ModifyAutomations = 1048576;
 
     /**
      * 
@@ -176,16 +176,46 @@ abstract class AccessLevel
     /**
      * 
      */
-    const ModifySupport = 8589934592;
-
-    /**
-     * 
-     */
     const ViewSupport = 8589934592;
 
     /**
      * 
      */
     const SendHttp = 17179869184;
+
+    /**
+     * 
+     */
+    const Modify2FA = 34359738368;
+
+    /**
+     * 
+     */
+    const ModifySupport = 68719476736;
+
+    /**
+     * 
+     */
+    const ViewCustomFields = 137438953472;
+
+    /**
+     * 
+     */
+    const ModifyCustomFields = 274877906944;
+
+    /**
+     * 
+     */
+    const ModifyWebNotifications = 549755813888;
+
+    /**
+     * 
+     */
+    const ExtendedLogs = 1099511627776;
+
+    /**
+     * 
+     */
+    const VerifyEmails = 2199023255552;
 
 }

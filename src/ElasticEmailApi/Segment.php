@@ -17,8 +17,7 @@ class Segment extends \ElasticEmailClient\ElasticRequest
     public function Add($segmentName, $rule) {
         return $this->sendRequest('segment/add', array(
                     'segmentName' => $segmentName,
-                    'rule' => $rule
-        ));
+                    'rule' => $rule));
     }
 
     /**
@@ -33,8 +32,7 @@ class Segment extends \ElasticEmailClient\ElasticRequest
         return $this->sendRequest('segment/copy', array(
                     'sourceSegmentName' => $sourceSegmentName,
                     'newSegmentName' => $newSegmentName,
-                    'rule' => $rule
-        ));
+                    'rule' => $rule));
     }
 
     /**
@@ -44,8 +42,7 @@ class Segment extends \ElasticEmailClient\ElasticRequest
      */
     public function EEDelete($segmentName) {
         return $this->sendRequest('segment/delete', array(
-                    'segmentName' => $segmentName
-        ));
+                    'segmentName' => $segmentName));
     }
 
     /**
@@ -54,7 +51,7 @@ class Segment extends \ElasticEmailClient\ElasticRequest
      * @param string $segmentName Name of your segment.
      * @param \ElasticEmailEnums\ExportFileFormats $fileFormat Format of the exported file
      * @param \ElasticEmailEnums\CompressionFormat $compressionFormat FileResponse compression format. None or Zip.
-     * @param string $fileName Name of your file.
+     * @param string $fileName Name of your file including extension.
      * @return \ElasticEmailEnums\ExportLink
      */
     public function Export($segmentName, $fileFormat = \ElasticEmailEnums\ExportFileFormats::Csv, $compressionFormat = \ElasticEmailEnums\CompressionFormat::None, $fileName = null) {
@@ -62,8 +59,7 @@ class Segment extends \ElasticEmailClient\ElasticRequest
                     'segmentName' => $segmentName,
                     'fileFormat' => $fileFormat,
                     'compressionFormat' => $compressionFormat,
-                    'fileName' => $fileName
-        ));
+                    'fileName' => $fileName));
     }
 
     /**
@@ -78,8 +74,7 @@ class Segment extends \ElasticEmailClient\ElasticRequest
         return $this->sendRequest('segment/list', array(
                     'includeHistory' => $includeHistory,
                     'from' => $from,
-                    'to' => $to
-        ));
+                    'to' => $to));
     }
 
     /**
@@ -96,8 +91,7 @@ class Segment extends \ElasticEmailClient\ElasticRequest
                     'segmentNames' => (count($segmentNames) === 0) ? null : join(';', $segmentNames),
                     'includeHistory' => $includeHistory,
                     'from' => $from,
-                    'to' => $to
-        ));
+                    'to' => $to));
     }
 
     /**
@@ -112,8 +106,7 @@ class Segment extends \ElasticEmailClient\ElasticRequest
         return $this->sendRequest('segment/update', array(
                     'segmentName' => $segmentName,
                     'newSegmentName' => $newSegmentName,
-                    'rule' => $rule
-        ));
+                    'rule' => $rule));
     }
 
 }

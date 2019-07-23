@@ -4,9 +4,14 @@
 class CampaignTemplate
 {
     /**
-     * ID number of selected Channel.
+     * 
      */
-    public /*?int*/ $ChannelID;
+    public /*?int*/ $CampaignTemplateID;
+
+    /**
+     * 
+     */
+    public /*string*/ $CampaignTemplateName;
 
     /**
      * Name of campaign's status
@@ -22,6 +27,11 @@ class CampaignTemplate
      * ID number of template.
      */
     public /*?int*/ $TemplateID;
+
+    /**
+     * Name of template.
+     */
+    public /*string*/ $TemplateName;
 
     /**
      * Default subject of email.
@@ -47,5 +57,25 @@ class CampaignTemplate
      * Default Reply: name.
      */
     public /*string*/ $TemplateReplyName;
+
+    /**
+     * The utm_source marketing parameter appended to each link in the campaign.
+     */
+    public /*string*/ $UtmSource;
+
+    /**
+     * The utm_medium marketing parameter appended to each link in the campaign.
+     */
+    public /*string*/ $UtmMedium;
+
+    /**
+     * The utm_campaign marketing parameter appended to each link in the campaign.
+     */
+    public /*string*/ $UtmCampaign;
+
+    /**
+     * The utm_content marketing parameter appended to each link in the campaign.
+     */
+    public /*string*/ $UtmContent;
 
 }
