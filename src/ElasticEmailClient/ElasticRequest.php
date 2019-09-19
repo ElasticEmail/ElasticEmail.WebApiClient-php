@@ -69,8 +69,8 @@
                 throw new \Exception($resp->error);
             }
 
-            if ($resp->data) { return $resp->data; }
-             
+            if (isset($resp->data) && $resp->data) { return $resp->data; }
+
             return $resp;
         }
 
