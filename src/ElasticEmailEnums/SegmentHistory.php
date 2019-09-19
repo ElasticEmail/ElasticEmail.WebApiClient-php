@@ -23,34 +23,4 @@ class SegmentHistory
      */
     public /*long*/ $Count;
 
-    /**
-     * 
-     */
-    public /*long*/ $EngagedCount;
-
-    /**
-     * 
-     */
-    public /*long*/ $ActiveCount;
-
-    /**
-     * 
-     */
-    public /*long*/ $BouncedCount;
-
-    /**
-     * Total emails unsubscribed
-     */
-    public /*long*/ $UnsubscribedCount;
-
-    /**
-     * 
-     */
-    public /*long*/ $AbuseCount;
-
-    /**
-     * 
-     */
-    public /*long*/ $InactiveCount;
-
 }

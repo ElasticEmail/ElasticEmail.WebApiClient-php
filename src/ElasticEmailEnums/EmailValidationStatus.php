@@ -1,31 +1,31 @@
 <?php
 	namespace ElasticEmailEnums; 
 
-abstract class SurveyStepType
+abstract class EmailValidationStatus
 {
     /**
      * 
      */
-    const PageBreak = 1;
+    const None = 0;
 
     /**
      * 
      */
-    const Question = 2;
+    const Valid = 1;
 
     /**
      * 
      */
-    const TextMedia = 3;
+    const Unknown = 2;
 
     /**
      * 
      */
-    const ConfirmationPage = 4;
+    const Risky = 3;
 
     /**
      * 
      */
-    const ExpiredPage = 5;
+    const Invalid = 4;
 
 }

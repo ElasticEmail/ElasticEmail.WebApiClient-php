@@ -9,12 +9,12 @@ abstract class ExportFileFormats
     const Csv = 1;
 
     /**
-     * Export in xml format
+     * Export in xml format.
      */
     const Xml = 2;
 
     /**
-     * Export in json format
+     * Export in json format.
      */
     const Json = 3;
 

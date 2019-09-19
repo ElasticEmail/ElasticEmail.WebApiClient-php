@@ -4,47 +4,47 @@
 class Export
 {
     /**
-     * 
+     * ID of the exported file
      */
     public /*Guid*/ $PublicExportID;
 
     /**
-     * Date the export was created
+     * Date the export was created.
      */
     public /*DateTime*/ $DateAdded;
 
     /**
      * Type of export
      */
-    public /*string*/ $Type;
+    public /*\ElasticEmailEnums\ExportType*/ $ExportType;
 
     /**
-     * Current status of export
+     * Status of the export
      */
-    public /*string*/ $Status;
+    public /*\ElasticEmailEnums\ExportStatus*/ $ExportStatus;
 
     /**
-     * Long description of the export
+     * Long description of the export.
      */
     public /*string*/ $Info;
 
     /**
-     * Name of the file
+     * Name of the exported file.
      */
     public /*string*/ $Filename;
 
     /**
-     * Link to download the export
+     * Link to download the export.
      */
     public /*string*/ $Link;
 
     /**
-     * Log start date (for Type = Log only)
+     * Log start date (for Type = Log only).
      */
     public /*?DateTime*/ $LogFrom;
 
     /**
-     * Log end date (for Type = Log only)
+     * Log end date (for Type = Log only).
      */
     public /*?DateTime*/ $LogTo;
 

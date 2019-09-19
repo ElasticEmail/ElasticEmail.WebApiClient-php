@@ -33,14 +33,4 @@ class ReputationImpact
      */
     public /*double*/ $ServerFilter;
 
-    /**
-     * Tracking domain.
-     */
-    public /*double*/ $TrackingDomain;
-
-    /**
-     * Sending domain.
-     */
-    public /*double*/ $SenderDomain;
-
 }

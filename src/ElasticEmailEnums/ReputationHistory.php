@@ -34,12 +34,12 @@ class ReputationHistory
     public /*double*/ $AverageSpamScore;
 
     /**
-     * Points from proper setup of your account
+     * Points from proper setup of your Account
      */
     public /*double*/ $SetupScore;
 
     /**
-     * Points from quantity of your emails.
+     * Number of emails included in the current reputation score.
      */
     public /*double*/ $RepEmailsSent;
 

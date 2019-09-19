@@ -38,39 +38,4 @@ class ReputationDetail
      */
     public /*double*/ $FailedSpamPercent;
 
-    /**
-     * Points from quantity of your emails.
-     */
-    public /*double*/ $RepEmailsSent;
-
-    /**
-     * Average reputation.
-     */
-    public /*double*/ $AverageReputation;
-
-    /**
-     * Actual price level.
-     */
-    public /*double*/ $PriceLevelReputation;
-
-    /**
-     * Reputation needed to change pricing.
-     */
-    public /*double*/ $NextPriceLevelReputation;
-
-    /**
-     * Amount of emails sent from this account
-     */
-    public /*string*/ $PriceLevel;
-
-    /**
-     * True, if tracking domain is correctly configured. Otherwise, false.
-     */
-    public /*bool*/ $TrackingDomainValid;
-
-    /**
-     * True, if sending domain is correctly configured. Otherwise, false.
-     */
-    public /*bool*/ $SenderDomainValid;
-
 }

@@ -9,7 +9,7 @@ class Account
     public /*string*/ $TaxCode;
 
     /**
-     * Public key for limited access to your account such as contact/add so you can use it safely on public websites.
+     * 
      */
     public /*string*/ $PublicAccountID;
 
@@ -19,17 +19,17 @@ class Account
     public /*string*/ $ApiKey;
 
     /**
-     * Second ApiKey that gives you access to our SMTP and HTTP API's.  Used mainly for changing ApiKeys without disrupting services.
-     */
-    public /*string*/ $ApiKey2;
-
-    /**
-     * True, if account is a subaccount. Otherwise, false
+     * True, if Account is a Sub-Account. Otherwise, false
      */
     public /*bool*/ $IsSub;
 
     /**
-     * The number of subaccounts this account has.
+     * 
+     */
+    public /*bool*/ $IsUser;
+
+    /**
+     * The number of Sub-Accounts this Account has.
      */
     public /*long*/ $SubAccountsCount;
 
@@ -139,17 +139,17 @@ class Account
     public /*double*/ $Reputation;
 
     /**
-     * Amount of emails sent from this account
+     * Amount of emails sent from this Account
      */
     public /*long*/ $TotalEmailsSent;
 
     /**
-     * Amount of emails sent from this account
+     * Amount of emails sent from this Account
      */
     public /*?long*/ $MonthlyEmailsSent;
 
     /**
-     * Amount of emails sent from this account
+     * Current credit in Account for Pay as you go plans. 
      */
     public /*decimal*/ $Credit;
 
@@ -159,7 +159,7 @@ class Account
     public /*int*/ $EmailCredits;
 
     /**
-     * Amount of emails sent from this account
+     * Amount of emails sent from this Account
      */
     public /*decimal*/ $PricePerEmail;
 
@@ -199,7 +199,7 @@ class Account
     public /*decimal*/ $AutoCreditAmount;
 
     /**
-     * Amount of emails account can send daily
+     * Amount of emails Account can send daily
      */
     public /*int*/ $DailySendLimit;
 
@@ -219,11 +219,6 @@ class Account
     public /*string*/ $ContentTransferEncoding;
 
     /**
-     * Amount of Litmus credits
-     */
-    public /*decimal*/ $LitmusCredits;
-
-    /**
      * Enable contact delivery and optimization tools on your Account.
      */
     public /*bool*/ $EnableContactFeatures;
@@ -237,5 +232,10 @@ class Account
      * 
      */
     public /*bool*/ $DisableGlobalContacts;
+
+    /**
+     * 
+     */
+    public /*bool*/ $UntrustedDeviceAlertDisabled;
 
 }

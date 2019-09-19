@@ -13,4 +13,9 @@ abstract class TemplateScope
      */
     const EEPublic = 1;
 
+    /**
+     * Template is a temporary draft, not to be used permanently.
+     */
+    const Draft = 2;
+
 }

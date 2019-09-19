@@ -66,7 +66,7 @@ class Recipient
     /**
      * ID of message category
      */
-    public /*\ElasticEmailEnums\MessageCategory*/ $MessageCategoryID;
+    public /*?\ElasticEmailEnums\MessageCategory*/ $MessageCategoryID;
 
     /**
      * Date of last status change.
@@ -87,6 +87,11 @@ class Recipient
      * Default From: email address.
      */
     public /*string*/ $FromEmail;
+
+    /**
+     * 
+     */
+    public /*string*/ $EnvelopeFrom;
 
     /**
      * ID of certain mail job
@@ -112,5 +117,10 @@ class Recipient
      * Recipient's last bounce error because of which this e-mail was suppressed
      */
     public /*string*/ $ContactLastError;
+
+    /**
+     * 
+     */
+    public /*string*/ $IPAddress;
 
 }

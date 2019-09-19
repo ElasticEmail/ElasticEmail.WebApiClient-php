@@ -4,7 +4,7 @@
 class File
 {
     /**
-     * Name of your file.
+     * Name of your file including extension.
      */
     public /*string*/ $FileName;
 
@@ -19,12 +19,12 @@ class File
     public /*DateTime*/ $DateAdded;
 
     /**
-     * When will the file be deleted from the system
+     * Date when the file be deleted from your Account.
      */
     public /*?DateTime*/ $ExpirationDate;
 
     /**
-     * Content type of the file
+     * Content type of the file.
      */
     public /*string*/ $ContentType;
 

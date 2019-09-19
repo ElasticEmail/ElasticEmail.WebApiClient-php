@@ -18,4 +18,9 @@ class LogSummary
      */
     public /*Array<\ElasticEmailEnums\DailyLogStatusSummary>*/ $DailyLogStatusSummary;
 
+    /**
+     * 
+     */
+    public /*\ElasticEmailEnums\SubaccountSummary*/ $SubaccountSummary;
+
 }

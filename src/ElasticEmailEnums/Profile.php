@@ -63,4 +63,24 @@ class Profile
      */
     public /*string*/ $TaxCode;
 
+    /**
+     * Why your clients are receiving your emails.
+     */
+    public /*string*/ $DeliveryReason;
+
+    /**
+     * True if you want to receive newsletters from Elastic Email. Otherwise, false. Empty to leave the current value.
+     */
+    public /*?bool*/ $MarketingConsent;
+
+    /**
+     * HTTP address of your website.
+     */
+    public /*string*/ $Website;
+
+    /**
+     * URL to your logo image.
+     */
+    public /*string*/ $LogoUrl;
+
 }

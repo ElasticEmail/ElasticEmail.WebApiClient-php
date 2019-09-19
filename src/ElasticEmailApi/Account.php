@@ -8,33 +8,41 @@ class Account extends \ElasticEmailClient\ElasticRequest
         parent::__construct($apiConfiguration);
     }
     /**
+     * Request premium support for your account
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param \ElasticEmailEnums\SupportPlan $supportPlan 
+     */
+    public function AddDedicatedSupport($supportPlan) {
+        return $this->sendRequest('account/adddedicatedsupport', array(
+                    'supportPlan' => $supportPlan));
+    }
+
+    /**
      * Create new subaccount and provide most important data about it.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param string $email Proper email address.
      * @param string $password Current password.
      * @param string $confirmPassword Repeat new password.
-     * @param bool $requiresEmailCredits True, if account needs credits to send emails. Otherwise, false
-     * @param bool $enableLitmusTest True, if account is able to send template tests to Litmus. Otherwise, false
-     * @param bool $requiresLitmusCredits True, if account needs credits to send emails. Otherwise, false
-     * @param int $maxContacts Maximum number of contacts the account can have
-     * @param bool $enablePrivateIPRequest True, if account can request for private IP on its own. Otherwise, false
-     * @param bool $sendActivation True, if you want to send activation email to this account. Otherwise, false
-     * @param string $returnUrl URL to navigate to after account creation
-     * @param ?\ElasticEmailEnums\SendingPermission $sendingPermission Sending permission setting for account
-     * @param ?bool $enableContactFeatures True, if you want to use Contact Delivery Tools.  Otherwise, false
-     * @param string $poolName Private IP required. Name of the custom IP Pool which Sub Account should use to send its emails. Leave empty for the default one or if no Private IPs have been bought
+     * @param bool $allow2fa True, if you want to allow two-factor authentication.  Otherwise, false.
+     * @param bool $requiresEmailCredits True, if Account needs credits to send emails. Otherwise, false
+     * @param int $maxContacts Maximum number of contacts the Account can have
+     * @param bool $enablePrivateIPRequest True, if Account can request for private IP on its own. Otherwise, false
+     * @param bool $sendActivation True, if you want to send activation email to this Account. Otherwise, false
+     * @param string $returnUrl URL to navigate to after Account creation
+     * @param ?\ElasticEmailEnums\SendingPermission $sendingPermission Sending permission setting for Account
+     * @param ?bool $enableContactFeatures Private IP required. Name of the custom IP Pool which Sub Account should use to send its emails. Leave empty for the default one or if no Private IPs have been bought
+     * @param string $poolName Name of your custom IP Pool to be used in the sending process
      * @param int $emailSizeLimit Maximum size of email including attachments in MB's
-     * @param ?int $dailySendLimit Amount of emails account can send daily
+     * @param ?int $dailySendLimit Amount of emails Account can send daily
      * @return string
      */
-    public function AddSubAccount($email, $password, $confirmPassword, $requiresEmailCredits = false, $enableLitmusTest = false, $requiresLitmusCredits = false, $maxContacts = 0, $enablePrivateIPRequest = true, $sendActivation = false, $returnUrl = null, $sendingPermission = null, $enableContactFeatures = null, $poolName = null, $emailSizeLimit = 10, $dailySendLimit = null) {
+    public function AddSubAccount($email, $password, $confirmPassword, $allow2fa = false, $requiresEmailCredits = false, $maxContacts = 0, $enablePrivateIPRequest = true, $sendActivation = false, $returnUrl = null, $sendingPermission = null, $enableContactFeatures = null, $poolName = null, $emailSizeLimit = 10, $dailySendLimit = null) {
         return $this->sendRequest('account/addsubaccount', array(
                     'email' => $email,
                     'password' => $password,
                     'confirmPassword' => $confirmPassword,
+                    'allow2fa' => $allow2fa,
                     'requiresEmailCredits' => $requiresEmailCredits,
-                    'enableLitmusTest' => $enableLitmusTest,
-                    'requiresLitmusCredits' => $requiresLitmusCredits,
                     'maxContacts' => $maxContacts,
                     'enablePrivateIPRequest' => $enablePrivateIPRequest,
                     'sendActivation' => $sendActivation,
@@ -43,27 +51,50 @@ class Account extends \ElasticEmailClient\ElasticRequest
                     'enableContactFeatures' => $enableContactFeatures,
                     'poolName' => $poolName,
                     'emailSizeLimit' => $emailSizeLimit,
-                    'dailySendLimit' => $dailySendLimit
-        ));
+                    'dailySendLimit' => $dailySendLimit));
     }
 
     /**
-     * Add email, template or litmus credits to a sub-account
+     * Add email credits to a sub-account
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param int $credits Amount of credits to add
      * @param string $notes Specific notes about the transaction
-     * @param \ElasticEmailEnums\CreditType $creditType Type of credits to add (Email or Litmus)
-     * @param string $subAccountEmail Email address of sub-account
+     * @param string $subAccountEmail Email address of Sub-Account
      * @param string $publicAccountID Public key of sub-account to add credits to. Use subAccountEmail or publicAccountID not both.
      */
-    public function AddSubAccountCredits($credits, $notes, $creditType = \ElasticEmailEnums\CreditType::Email, $subAccountEmail = null, $publicAccountID = null) {
+    public function AddSubAccountCredits($credits, $notes, $subAccountEmail = null, $publicAccountID = null) {
         return $this->sendRequest('account/addsubaccountcredits', array(
                     'credits' => $credits,
                     'notes' => $notes,
-                    'creditType' => $creditType,
                     'subAccountEmail' => $subAccountEmail,
-                    'publicAccountID' => $publicAccountID
-        ));
+                    'publicAccountID' => $publicAccountID));
+    }
+
+    /**
+     * Add notifications webhook
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param string $webNotificationUrl URL address to receive web notifications to parse and process.
+     * @param string $name Filename
+     * @param ?bool $notifyOncePerEmail 
+     * @param ?bool $notificationForSent 
+     * @param ?bool $notificationForOpened 
+     * @param ?bool $notificationForClicked 
+     * @param ?bool $notificationForUnsubscribed 
+     * @param ?bool $notificationForAbuseReport 
+     * @param ?bool $notificationForError 
+     * @return string
+     */
+    public function AddWebhook($webNotificationUrl, $name, $notifyOncePerEmail = null, $notificationForSent = null, $notificationForOpened = null, $notificationForClicked = null, $notificationForUnsubscribed = null, $notificationForAbuseReport = null, $notificationForError = null) {
+        return $this->sendRequest('account/addwebhook', array(
+                    'webNotificationUrl' => $webNotificationUrl,
+                    'name' => $name,
+                    'notifyOncePerEmail' => $notifyOncePerEmail,
+                    'notificationForSent' => $notificationForSent,
+                    'notificationForOpened' => $notificationForOpened,
+                    'notificationForClicked' => $notificationForClicked,
+                    'notificationForUnsubscribed' => $notificationForUnsubscribed,
+                    'notificationForAbuseReport' => $notificationForAbuseReport,
+                    'notificationForError' => $notificationForError));
     }
 
     /**
@@ -78,64 +109,89 @@ class Account extends \ElasticEmailClient\ElasticRequest
         return $this->sendRequest('account/changeemail', array(
                     'newEmail' => $newEmail,
                     'confirmEmail' => $confirmEmail,
-                    'sourceUrl' => $sourceUrl
-        ));
+                    'sourceUrl' => $sourceUrl));
     }
 
     /**
      * Create new password for your account. Password needs to be at least 6 characters long.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $newPassword New password for account.
+     * @param string $newPassword New password for Account.
      * @param string $confirmPassword Repeat new password.
+     * @param bool $resetApiKey 
      * @param string $currentPassword Current password.
      */
-    public function ChangePassword($newPassword, $confirmPassword, $currentPassword = null) {
+    public function ChangePassword($newPassword, $confirmPassword, $resetApiKey = false, $currentPassword = null) {
         return $this->sendRequest('account/changepassword', array(
                     'newPassword' => $newPassword,
                     'confirmPassword' => $confirmPassword,
-                    'currentPassword' => $currentPassword
-        ));
+                    'resetApiKey' => $resetApiKey,
+                    'currentPassword' => $currentPassword));
+    }
+
+    /**
+     * Create new password for subaccount. Password needs to be at least 6 characters long.
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param string $newPassword New password for Account.
+     * @param string $confirmPassword Repeat new password.
+     * @param string $subAccountEmail Email address of Sub-Account
+     * @param bool $resetApiKey 
+     */
+    public function ChangeSubAccountPassword($newPassword, $confirmPassword, $subAccountEmail, $resetApiKey = false) {
+        return $this->sendRequest('account/changesubaccountpassword', array(
+                    'newPassword' => $newPassword,
+                    'confirmPassword' => $confirmPassword,
+                    'subAccountEmail' => $subAccountEmail,
+                    'resetApiKey' => $resetApiKey));
     }
 
     /**
      * Deletes specified Subaccount
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $subAccountEmail Email address of sub-account
+     * @param string $subAccountEmail Email address of Sub-Account
      * @param string $publicAccountID Public key of sub-account to delete. Use subAccountEmail or publicAccountID not both.
      */
     public function DeleteSubAccount($subAccountEmail = null, $publicAccountID = null) {
         return $this->sendRequest('account/deletesubaccount', array(
                     'subAccountEmail' => $subAccountEmail,
-                    'publicAccountID' => $publicAccountID
-        ));
+                    'publicAccountID' => $publicAccountID));
+    }
+
+    /**
+     * Delete notifications webhook
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param string $webhookID 
+     */
+    public function DeleteWebhook($webhookID) {
+        return $this->sendRequest('account/deletewebhook', array(
+                    'webhookID' => $webhookID));
     }
 
     /**
      * Returns API Key for the given Sub Account.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $subAccountEmail Email address of sub-account
+     * @param string $subAccountEmail Email address of Sub-Account
      * @param string $publicAccountID Public key of sub-account to retrieve sub-account API Key. Use subAccountEmail or publicAccountID not both.
      * @return string
      */
     public function GetSubAccountApiKey($subAccountEmail = null, $publicAccountID = null) {
         return $this->sendRequest('account/getsubaccountapikey', array(
                     'subAccountEmail' => $subAccountEmail,
-                    'publicAccountID' => $publicAccountID
-        ));
+                    'publicAccountID' => $publicAccountID));
     }
 
     /**
      * Lists all of your subaccounts
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param int $limit Maximum of loaded items.
-     * @param int $offset How many items should be loaded ahead.
+     * @param int $limit Maximum number of returned items.
+     * @param int $offset How many items should be returned ahead.
+     * @param string $email Proper email address.
      * @return Array<\ElasticEmailEnums\SubAccount>
      */
-    public function GetSubAccountList($limit = 0, $offset = 0) {
+    public function GetSubAccountList($limit = 0, $offset = 0, $email = null) {
         return $this->sendRequest('account/getsubaccountlist', array(
                     'limit' => $limit,
-                    'offset' => $offset
-        ));
+                    'offset' => $offset,
+                    'email' => $email));
     }
 
     /**
@@ -144,7 +200,7 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @return \ElasticEmailEnums\Account
      */
     public function Load() {
-        return $this->sendRequest('account/load');
+        return $this->sendRequest('account/load', array());
     }
 
     /**
@@ -153,7 +209,7 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @return \ElasticEmailEnums\AdvancedOptions
      */
     public function LoadAdvancedOptions() {
-        return $this->sendRequest('account/loadadvancedoptions');
+        return $this->sendRequest('account/loadadvancedoptions', array());
     }
 
     /**
@@ -162,41 +218,23 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @return Array<\ElasticEmailEnums\EmailCredits>
      */
     public function LoadEmailCreditsHistory() {
-        return $this->sendRequest('account/loademailcreditshistory');
+        return $this->sendRequest('account/loademailcreditshistory', array());
     }
 
     /**
-     * Loads your account. Returns detailed information about your account.
+     * Load inbound options of your account
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @return \ElasticEmailEnums\Account
+     * @return \ElasticEmailEnums\InboundOptions
      */
-    public function LoadInfo() {
-        return $this->sendRequest('account/loadinfo');
-    }
-
-    /**
-     * Lists litmus credits history
-     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @return Array<\ElasticEmailEnums\LitmusCredits>
-     */
-    public function LoadLitmusCreditsHistory() {
-        return $this->sendRequest('account/loadlitmuscreditshistory');
-    }
-
-    /**
-     * Shows queue of newest notifications - very useful when you want to check what happened with mails that were not received.
-     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @return Array<\ElasticEmailEnums\NotificationQueue>
-     */
-    public function LoadNotificationQueue() {
-        return $this->sendRequest('account/loadnotificationqueue');
+    public function LoadInboundOptions() {
+        return $this->sendRequest('account/loadinboundoptions', array());
     }
 
     /**
      * Lists all payments
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param int $limit Maximum of loaded items.
-     * @param int $offset How many items should be loaded ahead.
+     * @param int $limit Maximum number of returned items.
+     * @param int $offset How many items should be returned ahead.
      * @param DateTime $fromDate Starting date for search in YYYY-MM-DDThh:mm:ss format.
      * @param DateTime $toDate Ending date for search in YYYY-MM-DDThh:mm:ss format.
      * @return Array<\ElasticEmailEnums\Payment>
@@ -206,8 +244,7 @@ class Account extends \ElasticEmailClient\ElasticRequest
                     'limit' => $limit,
                     'offset' => $offset,
                     'fromDate' => $fromDate,
-                    'toDate' => $toDate
-        ));
+                    'toDate' => $toDate));
     }
 
     /**
@@ -216,7 +253,7 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @return Array<\ElasticEmailEnums\Payment>
      */
     public function LoadPayoutHistory() {
-        return $this->sendRequest('account/loadpayouthistory');
+        return $this->sendRequest('account/loadpayouthistory', array());
     }
 
     /**
@@ -225,21 +262,16 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @return \ElasticEmailEnums\Referral
      */
     public function LoadReferralDetails() {
-        return $this->sendRequest('account/loadreferraldetails');
+        return $this->sendRequest('account/loadreferraldetails', array());
     }
 
     /**
      * Shows latest changes in your sending reputation
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param int $limit Maximum of loaded items.
-     * @param int $offset How many items should be loaded ahead.
      * @return Array<\ElasticEmailEnums\ReputationHistory>
      */
-    public function LoadReputationHistory($limit = 20, $offset = 0) {
-        return $this->sendRequest('account/loadreputationhistory', array(
-                    'limit' => $limit,
-                    'offset' => $offset
-        ));
+    public function LoadReputationHistory() {
+        return $this->sendRequest('account/loadreputationhistory', array());
     }
 
     /**
@@ -248,63 +280,46 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @return \ElasticEmailEnums\ReputationDetail
      */
     public function LoadReputationImpact() {
-        return $this->sendRequest('account/loadreputationimpact');
+        return $this->sendRequest('account/loadreputationimpact', array());
     }
 
     /**
      * Returns detailed spam check.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param int $limit Maximum of loaded items.
-     * @param int $offset How many items should be loaded ahead.
+     * @param int $limit Maximum number of returned items.
+     * @param int $offset How many items should be returned ahead.
      * @return Array<\ElasticEmailEnums\SpamCheck>
      */
     public function LoadSpamCheck($limit = 20, $offset = 0) {
         return $this->sendRequest('account/loadspamcheck', array(
                     'limit' => $limit,
-                    'offset' => $offset
-        ));
+                    'offset' => $offset));
     }
 
     /**
      * Lists email credits history for sub-account
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $subAccountEmail Email address of sub-account
+     * @param string $subAccountEmail Email address of Sub-Account
      * @param string $publicAccountID Public key of sub-account to list history for. Use subAccountEmail or publicAccountID not both.
      * @return Array<\ElasticEmailEnums\EmailCredits>
      */
     public function LoadSubAccountsEmailCreditsHistory($subAccountEmail = null, $publicAccountID = null) {
         return $this->sendRequest('account/loadsubaccountsemailcreditshistory', array(
                     'subAccountEmail' => $subAccountEmail,
-                    'publicAccountID' => $publicAccountID
-        ));
+                    'publicAccountID' => $publicAccountID));
     }
 
     /**
      * Loads settings of subaccount
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $subAccountEmail Email address of sub-account
+     * @param string $subAccountEmail Email address of Sub-Account
      * @param string $publicAccountID Public key of sub-account to load settings for. Use subAccountEmail or publicAccountID not both.
      * @return \ElasticEmailEnums\SubAccountSettings
      */
     public function LoadSubAccountSettings($subAccountEmail = null, $publicAccountID = null) {
         return $this->sendRequest('account/loadsubaccountsettings', array(
                     'subAccountEmail' => $subAccountEmail,
-                    'publicAccountID' => $publicAccountID
-        ));
-    }
-
-    /**
-     * Lists litmus credits history for sub-account
-     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $subAccountEmail Email address of sub-account
-     * @param string $publicAccountID Public key of sub-account to list history for. Use subAccountEmail or publicAccountID not both.
-     * @return Array<\ElasticEmailEnums\LitmusCredits>
-     */
-    public function LoadSubAccountsLitmusCreditsHistory($subAccountEmail = null, $publicAccountID = null) {
-        return $this->sendRequest('account/loadsubaccountslitmuscreditshistory', array(
-                    'subAccountEmail' => $subAccountEmail,
-                    'publicAccountID' => $publicAccountID
-        ));
+                    'publicAccountID' => $publicAccountID));
     }
 
     /**
@@ -312,13 +327,36 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param DateTime $from Starting date for search in YYYY-MM-DDThh:mm:ss format.
      * @param DateTime $to Ending date for search in YYYY-MM-DDThh:mm:ss format.
+     * @param bool $loadSubaccountsUsage 
      * @return Array<\ElasticEmailEnums\Usage>
      */
-    public function LoadUsage($from, $to) {
+    public function LoadUsage($from, $to, $loadSubaccountsUsage = true) {
         return $this->sendRequest('account/loadusage', array(
                     'from' => $from,
-                    'to' => $to
-        ));
+                    'to' => $to,
+                    'loadSubaccountsUsage' => $loadSubaccountsUsage));
+    }
+
+    /**
+     * Load notifications webhooks
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param int $limit Maximum number of returned items.
+     * @param int $offset How many items should be returned ahead.
+     * @return Array<\ElasticEmailEnums\Webhook>
+     */
+    public function LoadWebhook($limit = 0, $offset = 0) {
+        return $this->sendRequest('account/loadwebhook', array(
+                    'limit' => $limit,
+                    'offset' => $offset));
+    }
+
+    /**
+     * Load web notification options of your account
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @return \ElasticEmailEnums\WebNotificationOptions
+     */
+    public function LoadWebNotificationOptions() {
+        return $this->sendRequest('account/loadwebnotificationoptions', array());
     }
 
     /**
@@ -327,7 +365,7 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @return \ElasticEmailEnums\AccountOverview
      */
     public function Overview() {
-        return $this->sendRequest('account/overview');
+        return $this->sendRequest('account/overview', array());
     }
 
     /**
@@ -336,28 +374,25 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @return \ElasticEmailEnums\Profile
      */
     public function ProfileOverview() {
-        return $this->sendRequest('account/profileoverview');
+        return $this->sendRequest('account/profileoverview', array());
     }
 
     /**
-     * Remove email, template or litmus credits from a sub-account
+     * Remove email credits from a sub-account
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param \ElasticEmailEnums\CreditType $creditType Type of credits to add (Email or Litmus)
      * @param string $notes Specific notes about the transaction
-     * @param string $subAccountEmail Email address of sub-account
+     * @param string $subAccountEmail Email address of Sub-Account
      * @param string $publicAccountID Public key of sub-account to remove credits from. Use subAccountEmail or publicAccountID not both.
      * @param ?int $credits Amount of credits to remove
      * @param bool $removeAll Remove all credits of this type from sub-account (overrides credits if provided)
      */
-    public function RemoveSubAccountCredits($creditType, $notes, $subAccountEmail = null, $publicAccountID = null, $credits = null, $removeAll = false) {
+    public function RemoveSubAccountCredits($notes, $subAccountEmail = null, $publicAccountID = null, $credits = null, $removeAll = false) {
         return $this->sendRequest('account/removesubaccountcredits', array(
-                    'creditType' => $creditType,
                     'notes' => $notes,
                     'subAccountEmail' => $subAccountEmail,
                     'publicAccountID' => $publicAccountID,
                     'credits' => $credits,
-                    'removeAll' => $removeAll
-        ));
+                    'removeAll' => $removeAll));
     }
 
     /**
@@ -366,7 +401,7 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @return string
      */
     public function RequestNewApiKey() {
-        return $this->sendRequest('account/requestnewapikey');
+        return $this->sendRequest('account/requestnewapikey', array());
     }
 
     /**
@@ -374,7 +409,7 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      */
     public function RequestPremiumSupport() {
-        return $this->sendRequest('account/requestpremiumsupport');
+        return $this->sendRequest('account/requestpremiumsupport', array());
     }
 
     /**
@@ -386,8 +421,7 @@ class Account extends \ElasticEmailClient\ElasticRequest
     public function RequestPrivateIP($count, $notes) {
         return $this->sendRequest('account/requestprivateip', array(
                     'count' => $count,
-                    'notes' => $notes
-        ));
+                    'notes' => $notes));
     }
 
     /**
@@ -405,20 +439,8 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @param string $contentTransferEncoding Type of content encoding
      * @param ?bool $emailNotificationForError True, if you want bounce notifications returned. Otherwise, false
      * @param string $emailNotificationEmail Specific email address to send bounce email notifications to.
-     * @param string $webNotificationUrl URL address to receive web notifications to parse and process.
-     * @param ?bool $webNotificationNotifyOncePerEmail True, if you want to receive notifications for each type only once per email. Otherwise, false
-     * @param ?bool $webNotificationForSent True, if you want to send web notifications for sent email. Otherwise, false
-     * @param ?bool $webNotificationForOpened True, if you want to send web notifications for opened email. Otherwise, false
-     * @param ?bool $webNotificationForClicked True, if you want to send web notifications for clicked email. Otherwise, false
-     * @param ?bool $webNotificationForUnsubscribed True, if you want to send web notifications for unsubscribed email. Otherwise, false
-     * @param ?bool $webNotificationForAbuseReport True, if you want to send web notifications for complaint email. Otherwise, false
-     * @param ?bool $webNotificationForError True, if you want to send web notifications for bounced email. Otherwise, false
-     * @param string $hubCallBackUrl URL used for tracking action of inbound emails
-     * @param string $inboundDomain Domain you use as your inbound domain
-     * @param ?bool $inboundContactsOnly True, if you want inbound email to only process contacts from your account. Otherwise, false
      * @param ?bool $lowCreditNotification True, if you want to receive low credit email notifications. Otherwise, false
-     * @param ?bool $enableUITooltips True, if account has tooltips active. Otherwise, false
-     * @param ?bool $enableContactFeatures True, if you want to use Contact Delivery Tools.  Otherwise, false
+     * @param ?bool $enableUITooltips True, if Account has tooltips active. Otherwise, false
      * @param string $notificationsEmails Email addresses to send a copy of all notifications from our system. Separated by semicolon
      * @param string $unsubscribeNotificationsEmails Emails, separated by semicolon, to which the notification about contact unsubscribing should be sent to
      * @param string $logoUrl URL to your logo image.
@@ -431,7 +453,7 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @param ?bool $consentTrackingOnUnsubscribe 
      * @return \ElasticEmailEnums\AdvancedOptions
      */
-    public function UpdateAdvancedOptions($enableClickTracking = null, $enableLinkClickTracking = null, $manageSubscriptions = null, $manageSubscribedOnly = null, $transactionalOnUnsubscribe = null, $skipListUnsubscribe = null, $autoTextFromHtml = null, $allowCustomHeaders = null, $bccEmail = null, $contentTransferEncoding = null, $emailNotificationForError = null, $emailNotificationEmail = null, $webNotificationUrl = null, $webNotificationNotifyOncePerEmail = null, $webNotificationForSent = null, $webNotificationForOpened = null, $webNotificationForClicked = null, $webNotificationForUnsubscribed = null, $webNotificationForAbuseReport = null, $webNotificationForError = null, $hubCallBackUrl = "", $inboundDomain = null, $inboundContactsOnly = null, $lowCreditNotification = null, $enableUITooltips = null, $enableContactFeatures = null, $notificationsEmails = null, $unsubscribeNotificationsEmails = null, $logoUrl = null, $enableTemplateScripting = true, $staleContactScore = null, $staleContactInactiveDays = null, $deliveryReason = null, $tutorialsEnabled = null, $enableOpenTracking = null, $consentTrackingOnUnsubscribe = null) {
+    public function UpdateAdvancedOptions($enableClickTracking = null, $enableLinkClickTracking = null, $manageSubscriptions = null, $manageSubscribedOnly = null, $transactionalOnUnsubscribe = null, $skipListUnsubscribe = null, $autoTextFromHtml = null, $allowCustomHeaders = null, $bccEmail = null, $contentTransferEncoding = null, $emailNotificationForError = null, $emailNotificationEmail = null, $lowCreditNotification = null, $enableUITooltips = null, $notificationsEmails = null, $unsubscribeNotificationsEmails = null, $logoUrl = null, $enableTemplateScripting = true, $staleContactScore = null, $staleContactInactiveDays = null, $deliveryReason = null, $tutorialsEnabled = null, $enableOpenTracking = null, $consentTrackingOnUnsubscribe = null) {
         return $this->sendRequest('account/updateadvancedoptions', array(
                     'enableClickTracking' => $enableClickTracking,
                     'enableLinkClickTracking' => $enableLinkClickTracking,
@@ -445,20 +467,8 @@ class Account extends \ElasticEmailClient\ElasticRequest
                     'contentTransferEncoding' => $contentTransferEncoding,
                     'emailNotificationForError' => $emailNotificationForError,
                     'emailNotificationEmail' => $emailNotificationEmail,
-                    'webNotificationUrl' => $webNotificationUrl,
-                    'webNotificationNotifyOncePerEmail' => $webNotificationNotifyOncePerEmail,
-                    'webNotificationForSent' => $webNotificationForSent,
-                    'webNotificationForOpened' => $webNotificationForOpened,
-                    'webNotificationForClicked' => $webNotificationForClicked,
-                    'webNotificationForUnsubscribed' => $webNotificationForUnsubscribed,
-                    'webNotificationForAbuseReport' => $webNotificationForAbuseReport,
-                    'webNotificationForError' => $webNotificationForError,
-                    'hubCallBackUrl' => $hubCallBackUrl,
-                    'inboundDomain' => $inboundDomain,
-                    'inboundContactsOnly' => $inboundContactsOnly,
                     'lowCreditNotification' => $lowCreditNotification,
                     'enableUITooltips' => $enableUITooltips,
-                    'enableContactFeatures' => $enableContactFeatures,
                     'notificationsEmails' => $notificationsEmails,
                     'unsubscribeNotificationsEmails' => $unsubscribeNotificationsEmails,
                     'logoUrl' => $logoUrl,
@@ -468,8 +478,7 @@ class Account extends \ElasticEmailClient\ElasticRequest
                     'deliveryReason' => $deliveryReason,
                     'tutorialsEnabled' => $tutorialsEnabled,
                     'enableOpenTracking' => $enableOpenTracking,
-                    'consentTrackingOnUnsubscribe' => $consentTrackingOnUnsubscribe
-        ));
+                    'consentTrackingOnUnsubscribe' => $consentTrackingOnUnsubscribe));
     }
 
     /**
@@ -482,8 +491,9 @@ class Account extends \ElasticEmailClient\ElasticRequest
      * @param string $smtpAddress Address of SMTP server.
      * @param string $smtpAlternative Address of alternative SMTP server.
      * @param string $paymentUrl URL for making payments.
+     * @param string $customBouncesDomain 
      */
-    public function UpdateCustomBranding($enablePrivateBranding = false, $logoUrl = null, $supportLink = null, $privateBrandingUrl = null, $smtpAddress = null, $smtpAlternative = null, $paymentUrl = null) {
+    public function UpdateCustomBranding($enablePrivateBranding = false, $logoUrl = null, $supportLink = null, $privateBrandingUrl = null, $smtpAddress = null, $smtpAlternative = null, $paymentUrl = null, $customBouncesDomain = null) {
         return $this->sendRequest('account/updatecustombranding', array(
                     'enablePrivateBranding' => $enablePrivateBranding,
                     'logoUrl' => $logoUrl,
@@ -491,23 +501,23 @@ class Account extends \ElasticEmailClient\ElasticRequest
                     'privateBrandingUrl' => $privateBrandingUrl,
                     'smtpAddress' => $smtpAddress,
                     'smtpAlternative' => $smtpAlternative,
-                    'paymentUrl' => $paymentUrl
-        ));
+                    'paymentUrl' => $paymentUrl,
+                    'customBouncesDomain' => $customBouncesDomain));
     }
 
     /**
-     * Update http notification URL.
+     * Update inbound notifications options of your account.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $url URL of notification.
-     * @param bool $notifyOncePerEmail True, if you want to receive notifications for each type only once per email. Otherwise, false
-     * @param string $settings Http notification settings serialized to JSON 
+     * @param ?bool $inboundContactsOnly True, if you want inbound email to only process contacts from your Account. Otherwise, false
+     * @param string $hubCallBackUrl URL used for tracking action of inbound emails
+     * @param string $inboundDomain Domain you use as your inbound domain
+     * @return \ElasticEmailEnums\InboundOptions
      */
-    public function UpdateHttpNotification($url, $notifyOncePerEmail = false, $settings = null) {
-        return $this->sendRequest('account/updatehttpnotification', array(
-                    'url' => $url,
-                    'notifyOncePerEmail' => $notifyOncePerEmail,
-                    'settings' => $settings
-        ));
+    public function UpdateInboundNotifications($inboundContactsOnly = null, $hubCallBackUrl = "", $inboundDomain = null) {
+        return $this->sendRequest('account/updateinboundnotifications', array(
+                    'inboundContactsOnly' => $inboundContactsOnly,
+                    'hubCallBackUrl' => $hubCallBackUrl,
+                    'inboundDomain' => $inboundDomain));
     }
 
     /**
@@ -543,33 +553,30 @@ class Account extends \ElasticEmailClient\ElasticRequest
                     'website' => $website,
                     'logoUrl' => $logoUrl,
                     'taxCode' => $taxCode,
-                    'phone' => $phone
-        ));
+                    'phone' => $phone));
     }
 
     /**
      * Updates settings of specified subaccount
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param bool $requiresEmailCredits True, if account needs credits to send emails. Otherwise, false
-     * @param int $monthlyRefillCredits Amount of credits added to account automatically
-     * @param bool $requiresLitmusCredits True, if account needs credits to send emails. Otherwise, false
-     * @param bool $enableLitmusTest True, if account is able to send template tests to Litmus. Otherwise, false
-     * @param ?int $dailySendLimit Amount of emails account can send daily
+     * @param bool $requiresEmailCredits True, if Account needs credits to send emails. Otherwise, false
+     * @param ?bool $allow2fa True, if you want to allow two-factor authentication.  Otherwise, false.
+     * @param int $monthlyRefillCredits Amount of credits added to Account automatically
+     * @param ?int $dailySendLimit Amount of emails Account can send daily
      * @param int $emailSizeLimit Maximum size of email including attachments in MB's
-     * @param bool $enablePrivateIPRequest True, if account can request for private IP on its own. Otherwise, false
-     * @param int $maxContacts Maximum number of contacts the account can have
-     * @param string $subAccountEmail Email address of sub-account
+     * @param bool $enablePrivateIPRequest True, if Account can request for private IP on its own. Otherwise, false
+     * @param int $maxContacts Maximum number of contacts the Account can have
+     * @param string $subAccountEmail Email address of Sub-Account
      * @param string $publicAccountID Public key of sub-account to update. Use subAccountEmail or publicAccountID not both.
-     * @param ?\ElasticEmailEnums\SendingPermission $sendingPermission Sending permission setting for account
+     * @param ?\ElasticEmailEnums\SendingPermission $sendingPermission Sending permission setting for Account
      * @param ?bool $enableContactFeatures True, if you want to use Contact Delivery Tools.  Otherwise, false
      * @param string $poolName Name of your custom IP Pool to be used in the sending process
      */
-    public function UpdateSubAccountSettings($requiresEmailCredits = false, $monthlyRefillCredits = 0, $requiresLitmusCredits = false, $enableLitmusTest = false, $dailySendLimit = null, $emailSizeLimit = 10, $enablePrivateIPRequest = false, $maxContacts = 0, $subAccountEmail = null, $publicAccountID = null, $sendingPermission = null, $enableContactFeatures = null, $poolName = null) {
+    public function UpdateSubAccountSettings($requiresEmailCredits = false, $allow2fa = null, $monthlyRefillCredits = 0, $dailySendLimit = null, $emailSizeLimit = 10, $enablePrivateIPRequest = false, $maxContacts = 0, $subAccountEmail = null, $publicAccountID = null, $sendingPermission = null, $enableContactFeatures = null, $poolName = null) {
         return $this->sendRequest('account/updatesubaccountsettings', array(
                     'requiresEmailCredits' => $requiresEmailCredits,
+                    'allow2fa' => $allow2fa,
                     'monthlyRefillCredits' => $monthlyRefillCredits,
-                    'requiresLitmusCredits' => $requiresLitmusCredits,
-                    'enableLitmusTest' => $enableLitmusTest,
                     'dailySendLimit' => $dailySendLimit,
                     'emailSizeLimit' => $emailSizeLimit,
                     'enablePrivateIPRequest' => $enablePrivateIPRequest,
@@ -578,8 +585,35 @@ class Account extends \ElasticEmailClient\ElasticRequest
                     'publicAccountID' => $publicAccountID,
                     'sendingPermission' => $sendingPermission,
                     'enableContactFeatures' => $enableContactFeatures,
-                    'poolName' => $poolName
-        ));
+                    'poolName' => $poolName));
+    }
+
+    /**
+     * Update notification webhook
+     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
+     * @param string $webhookID 
+     * @param string $name Filename
+     * @param string $webNotificationUrl URL address to receive web notifications to parse and process.
+     * @param ?bool $notifyOncePerEmail 
+     * @param ?bool $notificationForSent 
+     * @param ?bool $notificationForOpened 
+     * @param ?bool $notificationForClicked 
+     * @param ?bool $notificationForUnsubscribed 
+     * @param ?bool $notificationForAbuseReport 
+     * @param ?bool $notificationForError 
+     */
+    public function UpdateWebhook($webhookID, $name = null, $webNotificationUrl = null, $notifyOncePerEmail = null, $notificationForSent = null, $notificationForOpened = null, $notificationForClicked = null, $notificationForUnsubscribed = null, $notificationForAbuseReport = null, $notificationForError = null) {
+        return $this->sendRequest('account/updatewebhook', array(
+                    'webhookID' => $webhookID,
+                    'name' => $name,
+                    'webNotificationUrl' => $webNotificationUrl,
+                    'notifyOncePerEmail' => $notifyOncePerEmail,
+                    'notificationForSent' => $notificationForSent,
+                    'notificationForOpened' => $notificationForOpened,
+                    'notificationForClicked' => $notificationForClicked,
+                    'notificationForUnsubscribed' => $notificationForUnsubscribed,
+                    'notificationForAbuseReport' => $notificationForAbuseReport,
+                    'notificationForError' => $notificationForError));
     }
 
 }

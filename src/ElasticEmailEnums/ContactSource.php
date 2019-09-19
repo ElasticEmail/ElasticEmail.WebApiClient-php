@@ -28,4 +28,14 @@ abstract class ContactSource
      */
     const ContactApi = 4;
 
+    /**
+     * Contact was added via the verification api.
+     */
+    const VerificationApi = 5;
+
+    /**
+     * Contacts were added via bulk verification api.
+     */
+    const FileVerificationApi = 6;
+
 }

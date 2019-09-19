@@ -29,7 +29,7 @@ class Contact
     public /*string*/ $LastName;
 
     /**
-     * Name of status: Active, Engaged, Inactive, Abuse, Bounced, Unsubscribed.
+     * Status of the given resource
      */
     public /*\ElasticEmailEnums\ContactStatus*/ $Status;
 
@@ -139,7 +139,12 @@ class Contact
     public /*?DateTime*/ $LastClicked;
 
     /**
-     * Custom contact field like firstname, lastname, city etc. JSON serialized text like { "city":"london" } 
+     * 
+     */
+    public /*int*/ $BounceCount;
+
+    /**
+     * Custom contact field like companyname, customernumber, city etc. JSON serialized text like { "city":"london" } 
      */
     public /*array<string, string>*/ $CustomFields;
 

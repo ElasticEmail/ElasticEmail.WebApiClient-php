@@ -49,7 +49,7 @@ class DomainDetail
     public /*\ElasticEmailEnums\TrackingType*/ $Type;
 
     /**
-     * 0 - NotValidated, 1 - Validated successfully, 2 - Invalid, 3 - Broken (tracking was frequnetly verfied in given period and still is invalid). For statuses: 0, 1, 3 tracking will be verified in normal periods. For status 2 tracking will be verified in high frequent periods.
+     * 0 - Validated successfully, 1 - NotValidated , 2 - Invalid, 3 - Broken (tracking was frequnetly verfied in given period and still is invalid). For statuses: 0, 1, 3 tracking will be verified in normal periods. For status 2 tracking will be verified in high frequent periods.
      */
     public /*\ElasticEmailEnums\TrackingValidationStatus*/ $TrackingStatus;
 
@@ -67,5 +67,20 @@ class DomainDetail
      * 
      */
     public /*?\ElasticEmailEnums\TrackingType*/ $TrackingTypeUserRequest;
+
+    /**
+     * 
+     */
+    public /*bool*/ $VERP;
+
+    /**
+     * 
+     */
+    public /*string*/ $CustomBouncesDomain;
+
+    /**
+     * 
+     */
+    public /*bool*/ $IsCustomBouncesDomainDefault;
 
 }

@@ -34,7 +34,7 @@ class CampaignChannel
     public /*\ElasticEmailEnums\CampaignStatus*/ $Status;
 
     /**
-     * Date of last activity on account
+     * Date of last activity on Account
      */
     public /*?DateTime*/ $LastActivity;
 
@@ -47,6 +47,11 @@ class CampaignChannel
      * Id number of parent channel
      */
     public /*int*/ $ParentChannelID;
+
+    /**
+     * 
+     */
+    public /*string*/ $ParentChannelName;
 
     /**
      * List of Segment and List IDs, preceded with 'l' for Lists and 's' for Segments, comma separated
@@ -79,9 +84,14 @@ class CampaignChannel
     public /*int*/ $TriggerCount;
 
     /**
-     * ID number of transaction
+     * Which Channel's event should trigger this Campaign
      */
     public /*int*/ $TriggerChannelID;
+
+    /**
+     * 
+     */
+    public /*string*/ $TriggerChannelName;
 
     /**
      * Data for filtering event campaigns such as specific link addresses.
@@ -107,6 +117,11 @@ class CampaignChannel
      * ID number of template.
      */
     public /*?int*/ $TemplateID;
+
+    /**
+     * Name of template.
+     */
+    public /*string*/ $TemplateName;
 
     /**
      * Default subject of email.
@@ -174,13 +189,33 @@ class CampaignChannel
     public /*Array<\ElasticEmailEnums\CampaignChannel>*/ $TemplateChannels;
 
     /**
-     * Should the opens be tracked? If no value has been provided, account's default setting will be used.
+     * Should the opens be tracked? If no value has been provided, Account's default setting will be used.
      */
     public /*?bool*/ $TrackOpens;
 
     /**
-     * Should the clicks be tracked? If no value has been provided, account's default setting will be used.
+     * Should the clicks be tracked? If no value has been provided, Account's default setting will be used.
      */
     public /*?bool*/ $TrackClicks;
+
+    /**
+     * The utm_source marketing parameter appended to each link in the campaign.
+     */
+    public /*string*/ $UtmSource;
+
+    /**
+     * The utm_medium marketing parameter appended to each link in the campaign.
+     */
+    public /*string*/ $UtmMedium;
+
+    /**
+     * The utm_campaign marketing parameter appended to each link in the campaign.
+     */
+    public /*string*/ $UtmCampaign;
+
+    /**
+     * The utm_content marketing parameter appended to each link in the campaign.
+     */
+    public /*string*/ $UtmContent;
 
 }

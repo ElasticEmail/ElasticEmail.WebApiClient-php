@@ -4,7 +4,7 @@
 class AccessToken
 {
     /**
-     * Access which this Token grants
+     * Access level or permission to be assigned to this Access Token.
      */
     public /*\ElasticEmailEnums\AccessLevel*/ $AccessLevel;
 
@@ -14,7 +14,7 @@ class AccessToken
     public /*string*/ $Name;
 
     /**
-     * When was this AccessToken used last
+     * Date this AccessToken was last used.
      */
     public /*?DateTime*/ $LastUse;
 

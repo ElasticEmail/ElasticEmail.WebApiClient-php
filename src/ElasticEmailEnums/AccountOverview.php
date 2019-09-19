@@ -4,12 +4,12 @@
 class AccountOverview
 {
     /**
-     * Amount of emails sent from this account
+     * Amount of emails sent from this Account
      */
     public /*long*/ $TotalEmailsSent;
 
     /**
-     * Amount of emails sent from this account
+     * Current credit in Account for Pay as you go plans. 
      */
     public /*decimal*/ $Credit;
 
@@ -49,7 +49,7 @@ class AccountOverview
     public /*long*/ $TemplateCount;
 
     /**
-     * Number of created subaccounts
+     * Number of created Sub-Accounts
      */
     public /*long*/ $SubAccountCount;
 

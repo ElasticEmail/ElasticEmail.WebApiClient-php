@@ -25,8 +25,7 @@ class EEList extends \ElasticEmailClient\ElasticRequest
                     'allowUnsubscribe' => $allowUnsubscribe,
                     'rule' => $rule,
                     'emails' => (count($emails) === 0) ? null : join(';', $emails),
-                    'allContacts' => $allContacts
-        ));
+                    'allContacts' => $allContacts));
     }
 
     /**
@@ -42,8 +41,7 @@ class EEList extends \ElasticEmailClient\ElasticRequest
                     'listName' => $listName,
                     'rule' => $rule,
                     'emails' => (count($emails) === 0) ? null : join(';', $emails),
-                    'allContacts' => $allContacts
-        ));
+                    'allContacts' => $allContacts));
     }
 
     /**
@@ -62,8 +60,7 @@ class EEList extends \ElasticEmailClient\ElasticRequest
                     'newlistName' => $newlistName,
                     'createEmptyList' => $createEmptyList,
                     'allowUnsubscribe' => $allowUnsubscribe,
-                    'rule' => $rule
-        ));
+                    'rule' => $rule));
     }
 
     /**
@@ -72,14 +69,12 @@ class EEList extends \ElasticEmailClient\ElasticRequest
      * @param int $campaignID ID of the campaign which recipients you want to copy
      * @param string $listName Name of your list.
      * @param array<\ElasticEmailEnums\LogJobStatus> $statuses Statuses of a campaign's emails you want to include in the new list (but NOT the contacts' statuses)
-     * @return int
      */
     public function CreateFromCampaign($campaignID, $listName, array $statuses = array()) {
         return $this->sendRequest('list/createfromcampaign', array(
                     'campaignID' => $campaignID,
                     'listName' => $listName,
-                    'statuses' => (count($statuses) === 0) ? null : join(';', $statuses)
-        ));
+                    'statuses' => (count($statuses) === 0) ? null : join(';', $statuses)));
     }
 
     /**
@@ -99,8 +94,7 @@ class EEList extends \ElasticEmailClient\ElasticRequest
                     'excludeBlocked' => $excludeBlocked,
                     'allowUnsubscribe' => $allowUnsubscribe,
                     'rule' => $rule,
-                    'allContacts' => $allContacts
-        ));
+                    'allContacts' => $allContacts));
     }
 
     /**
@@ -121,8 +115,7 @@ class EEList extends \ElasticEmailClient\ElasticRequest
                     'excludeBlocked' => $excludeBlocked,
                     'allowUnsubscribe' => $allowUnsubscribe,
                     'rule' => $rule,
-                    'allContacts' => $allContacts
-        ));
+                    'allContacts' => $allContacts));
     }
 
     /**
@@ -132,8 +125,7 @@ class EEList extends \ElasticEmailClient\ElasticRequest
      */
     public function EEDelete($listName) {
         return $this->sendRequest('list/delete', array(
-                    'listName' => $listName
-        ));
+                    'listName' => $listName));
     }
 
     /**
@@ -142,7 +134,7 @@ class EEList extends \ElasticEmailClient\ElasticRequest
      * @param string $listName Name of your list.
      * @param \ElasticEmailEnums\ExportFileFormats $fileFormat Format of the exported file
      * @param \ElasticEmailEnums\CompressionFormat $compressionFormat FileResponse compression format. None or Zip.
-     * @param string $fileName Name of your file.
+     * @param string $fileName Name of your file including extension.
      * @return \ElasticEmailEnums\ExportLink
      */
     public function Export($listName, $fileFormat = \ElasticEmailEnums\ExportFileFormats::Csv, $compressionFormat = \ElasticEmailEnums\CompressionFormat::None, $fileName = null) {
@@ -150,8 +142,7 @@ class EEList extends \ElasticEmailClient\ElasticRequest
                     'listName' => $listName,
                     'fileFormat' => $fileFormat,
                     'compressionFormat' => $compressionFormat,
-                    'fileName' => $fileName
-        ));
+                    'fileName' => $fileName));
     }
 
     /**
@@ -164,8 +155,7 @@ class EEList extends \ElasticEmailClient\ElasticRequest
     public function EElist($from = null, $to = null) {
         return $this->sendRequest('list/list', array(
                     'from' => $from,
-                    'to' => $to
-        ));
+                    'to' => $to));
     }
 
     /**
@@ -176,8 +166,7 @@ class EEList extends \ElasticEmailClient\ElasticRequest
      */
     public function Load($listName) {
         return $this->sendRequest('list/load', array(
-                    'listName' => $listName
-        ));
+                    'listName' => $listName));
     }
 
     /**
@@ -197,8 +186,7 @@ class EEList extends \ElasticEmailClient\ElasticRequest
                     'emails' => (count($emails) === 0) ? null : join(';', $emails),
                     'moveAll' => $moveAll,
                     'statuses' => (count($statuses) === 0) ? null : join(';', $statuses),
-                    'rule' => $rule
-        ));
+                    'rule' => $rule));
     }
 
     /**
@@ -212,8 +200,7 @@ class EEList extends \ElasticEmailClient\ElasticRequest
         return $this->sendRequest('list/removecontacts', array(
                     'listName' => $listName,
                     'rule' => $rule,
-                    'emails' => (count($emails) === 0) ? null : join(';', $emails)
-        ));
+                    'emails' => (count($emails) === 0) ? null : join(';', $emails)));
     }
 
     /**
@@ -227,8 +214,7 @@ class EEList extends \ElasticEmailClient\ElasticRequest
         return $this->sendRequest('list/update', array(
                     'listName' => $listName,
                     'newListName' => $newListName,
-                    'allowUnsubscribe' => $allowUnsubscribe
-        ));
+                    'allowUnsubscribe' => $allowUnsubscribe));
     }
 
 }

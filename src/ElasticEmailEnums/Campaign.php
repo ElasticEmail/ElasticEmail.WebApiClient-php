@@ -49,9 +49,14 @@ class Campaign
     public /*int*/ $TriggerCount;
 
     /**
-     * ID number of transaction
+     * Which Channel's event should trigger this Campaign
      */
-    public /*int*/ $TriggerChannelID;
+    public /*?int*/ $TriggerChannelID;
+
+    /**
+     * 
+     */
+    public /*string*/ $TriggerChannelName;
 
     /**
      * Data for filtering event campaigns such as specific link addresses.
@@ -74,12 +79,12 @@ class Campaign
     public /*int*/ $TimingOption;
 
     /**
-     * Should the opens be tracked? If no value has been provided, account's default setting will be used.
+     * Should the opens be tracked? If no value has been provided, Account's default setting will be used.
      */
     public /*?bool*/ $TrackOpens;
 
     /**
-     * Should the clicks be tracked? If no value has been provided, account's default setting will be used.
+     * Should the clicks be tracked? If no value has been provided, Account's default setting will be used.
      */
     public /*?bool*/ $TrackClicks;
 

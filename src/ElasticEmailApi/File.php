@@ -8,78 +8,64 @@ class File extends \ElasticEmailClient\ElasticRequest
         parent::__construct($apiConfiguration);
     }
     /**
-     * Permanently deletes the file from your account
+     * Permanently deletes the file from your Account.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param ?int $fileID 
-     * @param string $filename Name of your file.
+     * @param ?int $fileID Unique identifier for the file stored in your Account.
+     * @param string $filename Name of your file including extension.
      */
     public function EEDelete($fileID = null, $filename = null) {
         return $this->sendRequest('file/delete', array(
                     'fileID' => $fileID,
-                    'filename' => $filename
-        ));
+                    'filename' => $filename));
     }
 
     /**
-     * Gets content of the chosen File
+     * Downloads the file to your local device.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $filename Name of your file.
-     * @param ?int $fileID 
+     * @param string $filename Name of your file including extension.
+     * @param ?int $fileID Unique identifier for the file stored in your Account.
      * @return File
      */
     public function Download($filename = null, $fileID = null) {
         return $this->sendRequest('file/download', array(
                     'filename' => $filename,
-                    'fileID' => $fileID
-        ));
+                    'fileID' => $fileID));
     }
 
     /**
-     * Lists your available Attachments in the given email
-     * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $msgID ID number of selected message.
-     * @return Array<\ElasticEmailEnums\File>
-     */
-    public function EEList($msgID) {
-        return $this->sendRequest('file/list', array(
-                    'msgID' => $msgID
-        ));
-    }
-
-    /**
-     * Lists all your available files
+     * Lists all your available files.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @return Array<\ElasticEmailEnums\File>
      */
     public function ListAll() {
-        return $this->sendRequest('file/listall');
+        return $this->sendRequest('file/listall', array());
     }
 
     /**
-     * Gets chosen File
+     * Returns detailed file information for the given file.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
-     * @param string $filename Name of your file.
+     * @param string $filename Name of your file including extension.
      * @return \ElasticEmailEnums\File
      */
     public function Load($filename) {
         return $this->sendRequest('file/load', array(
-                    'filename' => $filename
-        ));
+                    'filename' => $filename));
     }
 
     /**
-     * Uploads selected file to the server using http form upload format (MIME multipart/form-data) or PUT method.
+     * Uploads selected file to your Account using http form upload format (MIME multipart/form-data) or PUT method.
      * @param string $apikey ApiKey that gives you access to our SMTP and HTTP API's.
      * @param File $file 
      * @param string $name Filename
-     * @param ?int $expiresAfterDays After how many days should the file be deleted.
+     * @param ?int $expiresAfterDays Number of days the file should be stored for.
+     * @param bool $enforceUniqueFileName If a file exists with the same name do not upload and override the file.
      * @return \ElasticEmailEnums\File
      */
-    public function Upload($file, $name = null, $expiresAfterDays = 35) {
+    public function Upload($file, $name = null, $expiresAfterDays = 35, $enforceUniqueFileName = false) {
         return $this->sendRequest('file/upload', array(
                     'name' => $name,
-                    'expiresAfterDays' => $expiresAfterDays
-        ), "POST", $file);
+                    'expiresAfterDays' => $expiresAfterDays,
+                    'enforceUniqueFileName' => $enforceUniqueFileName), "POST", $file);
     }
 
 }

@@ -37,10 +37,10 @@
         {
             $method = strtoupper($method);
 
-            if (!in_array($method, ApiConfiguration::AVAILABLE_REQUEST_METHODS))
-            {
-                throw new \Exception('Unallowed request method type');
-            }
+                    if (!in_array($method, \ElasticEmailClient\ApiConfiguration::AVAILABLE_REQUEST_METHODS))
+                    {
+                        throw new \Exception('Unallowed request method type');
+                    }
 
             $options = [];
             $data['apikey'] = $this->configuration->getApiKey();
@@ -51,7 +51,7 @@
                 if (!empty($data) && empty($attachments) && $method === 'POST') {
                     $options['form_params'] = $data;
                 } else {
-                    $url.= '?'.http_build_query($data);
+                    $url.= '?'.http_build_query($data, null, '&');
                 }
             }
 
@@ -69,9 +69,7 @@
                 throw new \Exception($resp->error);
             }
 
-            if (isset($resp->data) && $resp->data) {
-                return $resp->data;
-            }
+            if ($resp->data) { return $resp->data; }
              
             return $resp;
         }
