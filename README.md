@@ -56,7 +56,7 @@ API documentation you can find on [Elastic Email website](https://api.elasticema
         null,
         null,
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        "utf-8"
+        null
     );
 ```
 
