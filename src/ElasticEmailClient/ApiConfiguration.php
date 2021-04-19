@@ -4,6 +4,8 @@
     class ApiConfiguration
     {
         const AVAILABLE_REQUEST_METHODS = ['GET', 'POST'];
+        const API_KEY = 'apiKey';
+        const API_URL = 'apiUrl';
 
         /**
          * @var string
@@ -31,8 +33,8 @@
          */
         public function __construct(array $params)
         {
-            $this->setApiKey($params['apiKey']);
-            $this->setApiUrl($params['apiUrl']);
+            $this->setApiKey($params[self::API_KEY]);
+            $this->setApiUrl($params[self::API_URL]);
         }
 
         /**
