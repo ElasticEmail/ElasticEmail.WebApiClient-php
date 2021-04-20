@@ -31,10 +31,14 @@
          * ApiConfiguration constructor.
          * @param array $params
          */
-        public function __construct(array $params)
+        public function __construct(array $params = [])
         {
-            $this->setApiKey($params[self::API_KEY]);
-            $this->setApiUrl($params[self::API_URL]);
+            if (isset($params[self::API_KEY])) {
+                $this->setApiKey($params[self::API_KEY]);
+            }
+            if (isset($params[self::API_URL])) {
+                $this->setApiUrl($params[self::API_URL]);
+            }
         }
 
         /**
