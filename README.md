@@ -1,6 +1,6 @@
-**LEGACY**
-
-New version of API - https://github.com/ElasticEmail/elasticemail-php
+> [!WARNING]
+> **Deprecated.** This is the legacy PHP client for the Elastic Email **Web API v2**. It is archived and no longer maintained.
+> Use the official [elasticemail-php](https://github.com/ElasticEmail/elasticemail-php) SDK for the [REST API v4](https://elasticemail.com/developers/api-documentation/rest-api) instead.
 
 **This library allows you to quickly and easily use the Elastic Email Web API v2 via PHP.**
 
